@@ -133,6 +133,16 @@ class CaptainCook4D_Dataset(Dataset):
 
     def __getitem__(self, idx):
         return self.X[idx], self.y[idx]
+    
+    # -------------------------------------------------------------
+    # 5) METODO PER RESTITUIRE LO SHAPE
+    # -------------------------------------------------------------
+    def shape(self):
+        """
+        Restituisce una tupla (num_samples, num_features) delle feature X.
+        """
+        return self.X.shape
+
 
 """
 class CaptainCook4D_Dataset(Dataset):
