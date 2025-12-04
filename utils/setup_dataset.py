@@ -1,33 +1,66 @@
 import os
 import shutil
 import zipfile
+from tqdm import tqdm  # Opzionale, per barra di progresso se installata
 
-def setup_dataset(base_path, project_root, data_dir_name="data"):
+def setup_dataset(source_path, project_root, data_dir_name="data"):
     """
-    Copia 'annotation_json' ed estrae zip nella cartella 'data/' nella root del progetto.
-    Funziona anche su Google Drive / Colab.
+    Copia cartelle ed estrae zip dalla 'source_path' alla cartella 'data/' del progetto.
+    Robusto: gestisce cartelle mancanti e sovrascritture.
     """
-    # Cartella data nella root del progetto
-    data_dir = os.path.join(project_root, data_dir_name)
-    os.makedirs(data_dir, exist_ok=True)
+    # 1. Definisci e crea la cartella di destinazione
+    dest_data_dir = os.path.join(project_root, data_dir_name)
+    os.makedirs(dest_data_dir, exist_ok=True)
 
-    # Copia annotation_json
-    annotation_src = os.path.join(base_path, "annotation_json")
-    annotation_dest = os.path.join(data_dir, "annotation_json")
+    print(f"Inizio setup dati...")
+    print(f"   Sorgente: {source_path}")
+    print(f"   Destinazione: {dest_data_dir}")
 
-    if not os.path.exists(annotation_src):
-        raise FileNotFoundError(f"Cartella '{annotation_src}' non trovata.")
+    # 2. Controllo Preliminare
+    if not os.path.exists(source_path):
+        print(f"⚠️ ATTENZIONE: La cartella sorgente '{source_path}' non esiste.")
+        print("   Assicurati di aver messo i file nella cartella '_file' (se in locale) o su Drive.")
+        return
 
-    if os.path.exists(annotation_dest):
-        shutil.rmtree(annotation_dest)
+    items = os.listdir(source_path)
+    if not items:
+        print(f"⚠️ ATTENZIONE: La cartella sorgente '{source_path}' è vuota.")
+        return
 
-    shutil.copytree(annotation_src, annotation_dest)
-    print(f"Cartella 'annotation_json' copiata in '{data_dir}/'.")
+    # 3. Iterazione sui contenuti (Dinamica)
+    files_processed = 0
+    
+    for item_name in items:
+        source_item = os.path.join(source_path, item_name)
+        dest_item = os.path.join(dest_data_dir, item_name)
 
-    # Estrai solo file .zip presenti nella cartella base_path
-    for file_name in os.listdir(base_path):
-        zip_path = os.path.join(base_path, file_name)
-        if os.path.isfile(zip_path) and file_name.endswith(".zip"):
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall(data_dir)
-            print(f"File ZIP '{zip_path}' estratto in '{data_dir}/'.")
+        try:
+            # CASO A: È un file ZIP -> Estrai
+            if os.path.isfile(source_item) and item_name.lower().endswith(".zip"):
+                print(f"Estrazione ZIP: {item_name}...")
+                with zipfile.ZipFile(source_item, 'r') as zip_ref:
+                    zip_ref.extractall(dest_data_dir)
+                files_processed += 1
+
+            # CASO B: È una Cartella (es. annotations, annotation_json) -> Copia
+            elif os.path.isdir(source_item):
+                print(f"Copia cartella: {item_name}...")
+                # Se esiste già, rimuovila per avere una copia pulita
+                if os.path.exists(dest_item):
+                    shutil.rmtree(dest_item)
+                shutil.copytree(source_item, dest_item)
+                files_processed += 1
+            
+            # (Opzionale) CASO C: Altri file (es. json singoli) -> Copia
+            elif os.path.isfile(source_item) and item_name.lower().endswith(".json"):
+                 print(f"Copia file: {item_name}...")
+                 shutil.copy2(source_item, dest_item)
+                 files_processed += 1
+
+        except Exception as e:
+            print(f"   ❌ Errore processando '{item_name}': {e}")
+
+    if files_processed > 0:
+        print(f"✅ Setup completato! Dati pronti in: {dest_data_dir}")
+    else:
+        print("⚠️ Nessun file compatibile (zip/cartelle) trovato nella sorgente.")

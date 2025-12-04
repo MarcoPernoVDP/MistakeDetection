@@ -1,6 +1,6 @@
 import torch.nn as nn
 
-class MLP_version1(nn.Module):
+class BaselineV1_MLP(nn.Module):
     def __init__(self, in_features: int, p: float = 0.5):
         super().__init__()
 

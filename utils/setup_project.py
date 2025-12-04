@@ -1,0 +1,79 @@
+import os
+import sys
+import subprocess
+import torch
+
+def is_colab():
+    return 'google.colab' in sys.modules
+
+def get_secret(key):
+    if is_colab():
+        try:
+            from google.colab import userdata
+            return userdata.get(key)
+        except: return None
+    return os.environ.get(key)
+
+def install_deps(root_dir):
+    """Installa dipendenze (solo su Colab)"""
+    req_file = os.path.join(root_dir, 'requirements.txt')
+    if is_colab() and os.path.exists(req_file):
+        print("📦 Installazione librerie...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", req_file, "-q"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "wandb", "-qU"])
+
+def setup_wandb():
+    """Login WandB"""
+    key = get_secret('WANDB_API_KEY')
+    if key:
+        import wandb
+        wandb.login(key=key)
+        print("WandB Logged in.")
+    else:
+        print("ℹWandB: Chiave non trovata (Offline/Manual).")
+
+def initialize(root_dir):
+    """
+    Funzione Unica di Inizializzazione Progetto.
+    Gestisce il caso di cartella dati vuota o inesistente.
+    """
+    print(f"Setup Progetto in: {root_dir}")
+    
+    install_deps(root_dir)
+    
+    setup_skipped = False
+    
+    if is_colab():
+        source_path = "/content/drive/MyDrive/AML_MistakeDetection_DATA"
+    else:
+        source_path = os.path.join(root_dir, "_file")
+    
+    if os.path.exists(source_path) and len(os.listdir(source_path)) > 0:
+        try:
+            from .setup_dataset import setup_dataset
+            print(f"Setup Dati da: {source_path}")
+            setup_dataset(source_path, root_dir)
+        except FileNotFoundError as e:
+            print(f"Errore durante il setup dati: {e}")
+            print("Controlla che i file zip o le cartelle siano dentro '_file'.")
+            setup_skipped = True
+        except Exception as e:
+            print(f"Errore generico setup dati: {e}")
+            setup_skipped = True
+    else:
+        print(f"Sorgente dati '{source_path}' non trovata o vuota.")
+        print("Se sei in locale, usare la cartella '_file'")
+        setup_skipped = True
+
+    # 3. WandB
+    # setup_wandb()
+    
+    # 4. Device
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Device: {device}")
+    
+    if setup_skipped:
+        print("\n⚠️ ATTENZIONE: Il setup dei dati è stato saltato.")
+        print("Il codice funzionerà, ma il Dataloader fallirà se provi ad addestrare senza dati.")
+    
+    return device
