@@ -9,8 +9,6 @@ from exceptions import (
     AnnotationNotFoundError,
     FeatureFileNotFoundError,
     EmptyDatasetError,
-    CorruptedFeatureFileError,
-    MissingAnnotationKeyError,
 )
 
 class DatasetSource(Enum):

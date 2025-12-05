@@ -50,13 +50,13 @@ def get_secret(key: str) -> str:
 
 def setup_wandb():
     """Login WandB"""
-    key = get_secret('WANDB_API_KEY')
+    key = get_secret('WANDB_TOKEN')
     if key:
         import wandb
         wandb.login(key=key)
         print("WandB Logged in.")
     else:
-        print("ℹWandB: Chiave non trovata (Offline/Manual).")
+        print("WandB: Chiave non trovata (Offline/Manual).")
 
 def initialize(root_dir):
     """
@@ -92,7 +92,7 @@ def initialize(root_dir):
         setup_skipped = True
 
     # 3. WandB
-    # setup_wandb()
+    setup_wandb()
     
     # 4. Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
