@@ -6,7 +6,7 @@ import torch
 def is_colab():
     return 'google.colab' in sys.modules
 
-def get_secret(key):
+def get_colab_secret(key):
     if is_colab():
         try:
             from google.colab import userdata
@@ -38,7 +38,7 @@ def get_secret(key):
 
 def setup_wandb():
     """Login WandB"""
-    key = get_secret('WANDB_API_KEY')
+    key = get_colab_secret('WANDB_API_KEY')
     if key:
         import wandb
         wandb.login(key=key)
