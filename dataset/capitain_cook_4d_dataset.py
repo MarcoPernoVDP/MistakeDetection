@@ -1,8 +1,14 @@
+from enum import Enum
 import os
 import json
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader, random_split, Subset
+from utils.setup_project import is_colab
+
+class DatasetSource(Enum):
+    OMNIVORE = "omnivore"
+    SLOWFAST = "slowfast"
 
 class CaptainCook4D_Dataset(Dataset):
     """
@@ -10,33 +16,43 @@ class CaptainCook4D_Dataset(Dataset):
     e annotazioni JSON (complete_step_annotations.json).
     """
     
-    def __init__(self, features_dir, annotations_dir):
+    def __init__(self, dataset_source: DatasetSource, root_dir: str):
         """
         Args:
             omnivore_dir (str): path alla cartella con i file .npz
             annotations_dir (str): path alla cartella con complete_step_annotations.json
         """
-        self.annotations = self._load_annotations(annotations_dir)
-        self.X, self.y = self._load_all_npz(features_dir, self.annotations)
+        self.dataset_source = dataset_source
+        self.root_dir = root_dir
+
+        print(f"Loading from: {self.features_dir()}...")
+
+        self.annotations = self._load_annotations()
+        self.X, self.y = self._load_all_npz(self.annotations)
 
         # conversione a tensori
         self.X = torch.from_numpy(self.X).float()
         self.y = torch.from_numpy(self.y).long()
+        
 
+    def features_dir(self):
+        return self.root_dir + "\\data\\" + self.dataset_source.value
+    
+    def annotations_dir(self):
+        return self.root_dir + "\\data\\annotation_json\\"
 
     # -------------------------------------------------------------
     # 1) CARICAMENTO ANNOTAZIONI
     # -------------------------------------------------------------
-    @staticmethod
-    def _load_annotations(annotations_dir):
+    def _load_annotations(self):
         """
         Carica esclusivamente il file 'complete_step_annotations.json'.
         """
-        json_path = os.path.join(annotations_dir, "complete_step_annotations.json")
+        json_path = os.path.join(self.annotations_dir(), "complete_step_annotations.json")
 
         if not os.path.exists(json_path):
             raise FileNotFoundError(
-                f"File 'complete_step_annotations.json' non trovato in: {annotations_dir}"
+                f"File 'complete_step_annotations.json' non trovato in: {self.annotations_dir()}"
             )
 
         with open(json_path, "r") as f:
@@ -48,18 +64,18 @@ class CaptainCook4D_Dataset(Dataset):
     # -------------------------------------------------------------
     # 2) CARICAMENTO DI TUTTI GLI NPZ
     # -------------------------------------------------------------
-    def _load_all_npz(self, features_dir, annotations):
+    def _load_all_npz(self, annotations):
         """
         Carica tutti i file .npz, genera le label e concatena tutto.
         """
         all_features = []
         all_labels = []
 
-        for file in sorted(os.listdir(features_dir)):
+        for file in sorted(os.listdir(self.features_dir())):
             if not file.endswith(".npz"):
                 continue
             
-            file_path = os.path.join(features_dir, file)
+            file_path = os.path.join(self.features_dir(), file)
 
             try:
                 features, labels = self._get_labels_for_npz(file_path, annotations)

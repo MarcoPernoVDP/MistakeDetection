@@ -22,6 +22,7 @@ source venv/bin/activate
 ## Install Dependencies
 
 ```bash
+pip install torch==2.9.0+cu126 torchvision==0.24.0+cu126 torchaudio==2.9.0 --index-url https://download.pytorch.org/whl/cu126
 pip install -r requirements.txt
 ```
 

@@ -14,12 +14,27 @@ def get_secret(key):
         except: return None
     return os.environ.get(key)
 
-def install_deps(root_dir):
-    """Installa dipendenze (solo su Colab)"""
-    req_file = os.path.join(root_dir, 'requirements.txt')
-    if is_colab() and os.path.exists(req_file):
-        print("📦 Installazione librerie...")   
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", req_file])
+# def install_deps(root_dir):
+#     """Installa dipendenze (solo su Colab)"""
+#     req_file = os.path.join(root_dir, 'requirements.txt')
+#     if os.path.exists(req_file):
+#         print("📦 Installazione PyTorch con CUDA 12.4...")
+#         subprocess.check_call([
+#             sys.executable, "-m", "pip", "install",
+#             "torch==2.9.0+cu124",
+#             "torchvision==0.24.0+cu124",
+#             "torchaudio==2.9.0",
+#             "--index-url", "https://download.pytorch.org/whl/cu124"
+#         ])
+
+#         print("📦 Installazione delle altre librerie dal requirements...")
+#         subprocess.check_call([
+#             sys.executable, "-m", "pip", "install", "-r", req_file
+#         ])
+
+#         print("✅ Installazione completata!")
+#     else:
+#         print("requirements.txt non trovato")
 
 def setup_wandb():
     """Login WandB"""
@@ -37,8 +52,6 @@ def initialize(root_dir):
     Gestisce il caso di cartella dati vuota o inesistente.
     """
     print(f"Setup Progetto in: {root_dir}")
-    
-    install_deps(root_dir)
     
     setup_skipped = False
     
