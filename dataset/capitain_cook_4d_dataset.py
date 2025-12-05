@@ -5,6 +5,13 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader, random_split, Subset
 from utils.setup_project import is_colab
+from exceptions import (
+    AnnotationNotFoundError,
+    FeatureFileNotFoundError,
+    EmptyDatasetError,
+    CorruptedFeatureFileError,
+    MissingAnnotationKeyError,
+)
 
 class DatasetSource(Enum):
     OMNIVORE = "omnivore"
@@ -53,12 +60,19 @@ class CaptainCook4D_Dataset(Dataset):
         json_path = os.path.join(self.annotations_dir(), "complete_step_annotations.json")
 
         if not os.path.exists(json_path):
-            raise FileNotFoundError(
-                f"File 'complete_step_annotations.json' non trovato in: {self.annotations_dir()}"
+            raise AnnotationNotFoundError(
+                annotation_file="complete_step_annotations.json",
+                searched_path=self.annotations_dir()
             )
 
-        with open(json_path, "r") as f:
-            annotations = json.load(f)
+        try:
+            with open(json_path, "r") as f:
+                annotations = json.load(f)
+        except json.JSONDecodeError as e:
+            raise CorruptedFeatureFileError(
+                file_path=json_path,
+                original_error=f"JSON non valido: {e}"
+            )
 
         return annotations
 
@@ -83,10 +97,20 @@ class CaptainCook4D_Dataset(Dataset):
                 features, labels = self._get_labels_for_npz(file_path, annotations)
                 all_features.append(features)
                 all_labels.append(labels)
-            except KeyError:
+            except KeyError as e:
                 # npz non presente nelle annotazioni
                 print(f"[WARN] Nessuna annotazione trovata per: {file}")
                 continue
+            except Exception as e:
+                raise CorruptedFeatureFileError(
+                    file_path=file_path,
+                    original_error=str(e)
+                )
+
+        if not all_features:
+            raise EmptyDatasetError(
+                reason="Nessun file .npz valido trovato o caricato"
+            )
 
         return np.concatenate(all_features, axis=0), np.concatenate(all_labels, axis=0)
 

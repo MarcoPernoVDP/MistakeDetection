@@ -3,7 +3,8 @@ import os
 import sys
 from io import StringIO
 from unittest.mock import patch, MagicMock
-from utils.setup_project import is_colab, get_colab_secret, initialize
+from exceptions.config_exceptions import MissingConfigKeyError
+from utils.setup_project import is_colab, get_secret, initialize
 
 
 class TestSetupProject(unittest.TestCase):
@@ -23,14 +24,14 @@ class TestSetupProject(unittest.TestCase):
     def test_get_secret_from_env(self):
         """Test recupero secret da variabile d'ambiente"""
         os.environ['TEST_KEY'] = 'test_value'
-        result = get_colab_secret('TEST_KEY')
+        result = get_secret('TEST_KEY')
         self.assertEqual(result, 'test_value')
         del os.environ['TEST_KEY']
     
     def test_get_secret_missing(self):
         """Test secret non trovato"""
-        result = get_colab_secret('NONEXISTENT_KEY')
-        self.assertIsNone(result)
+        with self.assertRaises(MissingConfigKeyError):
+            get_secret('NONEXISTENT_KEY')
     
     @patch('torch.cuda.is_available', return_value=False)
     @patch('utils.setup_project.is_colab', return_value=False)

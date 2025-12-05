@@ -1,18 +1,30 @@
 import os
 import sys
 import subprocess
+from typing import Union
 import torch
+
+from exceptions.config_exceptions import MissingConfigKeyError
 
 def is_colab():
     return 'google.colab' in sys.modules
 
-def get_colab_secret(key):
+def get_secret(key: str) -> str:
+    """Restituisce il secret per Colab o l'ambiente locale, solleva MissingConfigKeyError se non trovato."""
     if is_colab():
         try:
             from google.colab import userdata
             return userdata.get(key)
-        except: return None
-    return os.environ.get(key)
+        except KeyError:
+            raise MissingConfigKeyError(f"Chiave mancante in Colab: {key}")
+    else:
+        value = os.environ.get(key)
+        if value is None:
+            raise MissingConfigKeyError(f"Chiave mancante in ambiente locale: {key}")
+        return value
+
+
+
 
 # def install_deps(root_dir):
 #     """Installa dipendenze (solo su Colab)"""
@@ -38,7 +50,7 @@ def get_colab_secret(key):
 
 def setup_wandb():
     """Login WandB"""
-    key = get_colab_secret('WANDB_API_KEY')
+    key = get_secret('WANDB_API_KEY')
     if key:
         import wandb
         wandb.login(key=key)
