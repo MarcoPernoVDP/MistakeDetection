@@ -56,9 +56,11 @@ def initialize(root_dir):
     setup_skipped = False
     
     if is_colab():
-        source_path = "\\content\\drive\\MyDrive\\AML_MistakeDetection_DATA"
+        source_path = "\\content\\drive\\MyDrive\\MistakeDetection"
     else:
         source_path = os.path.join(root_dir, "_file")
+
+    print(f"source_path: {source_path}")
     
     if os.path.exists(source_path) and len(os.listdir(source_path)) > 0:
         try:
