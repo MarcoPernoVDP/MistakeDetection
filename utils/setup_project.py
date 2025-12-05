@@ -56,7 +56,7 @@ def initialize(root_dir):
     setup_skipped = False
     
     if is_colab():
-        source_path = os.path.join(root_dir, "data")
+        source_path = root_dir
     else:
         source_path = os.path.join(root_dir, "_file")
 
