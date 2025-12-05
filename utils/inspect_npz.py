@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-def inspect_npz_from_dataset(root_dir: str, dataset_folder: str, npz_filename: str, n_rows: int = 5):
+def inspect_npz_from_dataset(dataset_features_dir: str, npz_filename: str, n_rows: int = 5):
     """
     Ispeziona un file .npz partendo dal nome della cartella dataset e dal nome del file.
 
@@ -12,7 +12,7 @@ def inspect_npz_from_dataset(root_dir: str, dataset_folder: str, npz_filename: s
         n_rows (int): numero di righe da mostrare per ogni array.
     """
 
-    npz_path = os.path.join(root_dir, "data", dataset_folder, npz_filename)
+    npz_path = os.path.join(dataset_features_dir, npz_filename)
 
     if not os.path.exists(npz_path):
         print(f"[ERROR] File non trovato: {npz_path}")
