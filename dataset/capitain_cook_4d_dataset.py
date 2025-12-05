@@ -36,10 +36,12 @@ class CaptainCook4D_Dataset(Dataset):
         
 
     def features_dir(self):
-        return self.root_dir + "\\data\\" + self.dataset_source.value
+        # Combina la root con 'data' e il dataset_source
+        return os.path.join(self.root_dir, "data", self.dataset_source.value)
     
     def annotations_dir(self):
-        return self.root_dir + "\\data\\annotation_json\\"
+        # Combina la root con 'data/annotation_json'
+        return os.path.join(self.root_dir, "data", "annotation_json")
 
     # -------------------------------------------------------------
     # 1) CARICAMENTO ANNOTAZIONI

@@ -2,6 +2,11 @@
 
 ## Virtual Environment
 
+Install virtualenv if you haven't already:
+```bash
+pip install virtualenv
+```
+
 Create a virtual environment:
 ```bash
 virtualenv venv --python=3.12
