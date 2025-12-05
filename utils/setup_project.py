@@ -18,9 +18,8 @@ def install_deps(root_dir):
     """Installa dipendenze (solo su Colab)"""
     req_file = os.path.join(root_dir, 'requirements.txt')
     if is_colab() and os.path.exists(req_file):
-        print("📦 Installazione librerie...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", req_file, "-q"])
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "wandb", "-qU"])
+        print("📦 Installazione librerie...")   
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", req_file])
 
 def setup_wandb():
     """Login WandB"""
