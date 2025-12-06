@@ -15,6 +15,12 @@ class DatasetSource(Enum):
     OMNIVORE = "omnivore"
     SLOWFAST = "slowfast"
 
+    def input_dims(self) -> int:
+        if self == DatasetSource.OMNIVORE:
+            return 1024
+        elif self == DatasetSource.SLOWFAST:
+            return 400
+
 class CaptainCook4D_Dataset(Dataset):
     """
     Dataset per CaptainCook4D basato su file .npz (es. feature Omnivore)
