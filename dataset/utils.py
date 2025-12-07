@@ -1,9 +1,14 @@
 from collections import defaultdict
+from enum import Enum
 import os
 import json
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader, random_split, Subset
+
+class SplitType(Enum):
+    STEP_ID = "step_id"
+    VIDEO_ID = "video_id"
 
 # --- UTILS INTEGATE ---
 
@@ -90,7 +95,7 @@ def custom_collate_fn(batch):
             'seq_len': seq_len             # scalare
         }
 
-def get_mlp_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42):
+def get_mlp_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42, split_type: SplitType = SplitType.STEP_ID):
     # 1. Stampa Info Generali
     print("\n" + "="*85)
     shape = dataset.shape()
@@ -105,8 +110,11 @@ def get_mlp_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 
     train_len = total - test_len - val_len
     
     gen = torch.Generator().manual_seed(seed)
-    train_ds, val_ds, test_ds = split_by_step(dataset, [train_len, val_len, test_len], generator=gen)
-    
+    if split_type == SplitType.STEP_ID:
+        train_ds, val_ds, test_ds = split_by_step(dataset, [train_len, val_len, test_len], generator=gen)
+    else:
+        train_ds, val_ds, test_ds = split_by_video(dataset, [train_len, val_len, test_len], generator=gen)
+
     # 3. Stampa Bilanciamento
     print_class_balance(dataset, "FULL DATASET")
     print("-" * 85)
