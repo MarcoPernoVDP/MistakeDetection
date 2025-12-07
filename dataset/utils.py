@@ -68,11 +68,15 @@ def print_class_balance_v2(dataset: Dataset, name: str = "Dataset"):
 def custom_collate_fn(batch):
     """
     Custom collate per gestire:
-    - V1: batch di (X, y) singoli
+    - V1: batch di (X, y, steps, videos) 
     - V2: batch di sequenze (X_seq, y_seq, step_id, seq_len)
            senza padding (batch_size sempre 1)
     """
-    if len(batch[0]) == 2:  # V1
+    if len(batch[0]) == 4:  # V1 - con steps e videos
+        X, y, steps, videos = zip(*batch)
+        return torch.stack(X), torch.stack(y), torch.tensor(steps), list(videos)
+    
+    elif len(batch[0]) == 2:  # V1 - senza steps/videos (retrocompatibilità)
         X, y = zip(*batch)
         return torch.stack(X), torch.stack(y)
     
