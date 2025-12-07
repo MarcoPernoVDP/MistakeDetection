@@ -4,6 +4,7 @@ import json
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader, random_split, Subset
+from dataset.capitain_cook_4d_mlp_dataset import DatasetSource
 from utils.setup_project import is_colab
 from exceptions import (
     AnnotationNotFoundError,
@@ -12,63 +13,36 @@ from exceptions import (
     CorruptedFeatureFileError,
 )
 
-class DatasetSource(Enum):
-    OMNIVORE = "omnivore"
-    SLOWFAST = "slowfast"
-
-    def input_dims(self) -> int:
-        if self == DatasetSource.OMNIVORE:
-            return 1024
-        elif self == DatasetSource.SLOWFAST:
-            return 400
-
-class DatasetVersion(Enum):
-    V1 = 1  # Restituisce (X, y)
-    V2 = 2  # Restituisce (X, y, step_id)
-
-class CaptainCook4D_Dataset(Dataset):
+class CaptainCook4DTransformer_Dataset(Dataset):
     """
     Dataset per CaptainCook4D basato su file .npz (es. feature Omnivore)
     e annotazioni JSON (complete_step_annotations.json).
-    
-    Supporta due versioni:
-    - V1: restituisce (X, y) per singoli sotto-step da 1s
-    - V2: restituisce tutti i sotto-step da 1s di uno step per il Transformer
     """
     
-    def __init__(self, dataset_source: DatasetSource, root_dir: str, version: DatasetVersion = DatasetVersion.V1):
+    def __init__(self, dataset_source: DatasetSource, root_dir: str):
         """
         Args:
             dataset_source (DatasetSource): fonte delle feature (OMNIVORE o SLOWFAST)
             root_dir (str): path alla cartella root del dataset
-            version (DatasetVersion): versione del dataset (V1 o V2)
         """
         self.dataset_source = dataset_source
         self.root_dir = root_dir
-        self.version = version
 
         print(f"Loading from: {self.features_dir()}...")
-        print(f"Dataset Version: {self.version.name}")
 
         self.annotations = self._load_annotations()
         
-        if self.version == DatasetVersion.V2:
-            self.X, self.y, self.step_ids = self._load_all_npz(self.annotations)
-            # conversione a tensori
-            self.X = torch.from_numpy(self.X).float()
-            self.y = torch.from_numpy(self.y).long()
-            self.step_ids = self.step_ids  # Mantieni come numpy array di stringhe
+        self.X, self.y, self.step_ids = self._load_all_npz(self.annotations)
+        # conversione a tensori
+        self.X = torch.from_numpy(self.X).float()
+        self.y = torch.from_numpy(self.y).long()
+        self.step_ids = self.step_ids  # Mantieni come numpy array di stringhe
             
-            # V2: crea lista di step_ids univoci FILTRANDO I NONE
-            valid_step_ids = self.step_ids[self.step_ids != None]
-            self.unique_step_ids = np.unique(valid_step_ids).tolist()
-            
-            print(f"[V2] Numero di step univoci: {len(self.unique_step_ids)}")
-        else:  # V1
-            self.X, self.y = self._load_all_npz(self.annotations)
-            # conversione a tensori
-            self.X = torch.from_numpy(self.X).float()
-            self.y = torch.from_numpy(self.y).long()
+        # V2: crea lista di step_ids univoci FILTRANDO I NONE
+        valid_step_ids = self.step_ids[self.step_ids != None]
+        self.unique_step_ids = np.unique(valid_step_ids).tolist()
+        
+        print(f"[V2] Numero di step univoci: {len(self.unique_step_ids)}")
 
     def features_dir(self):
         # Combina la root con 'data' e il dataset_source
@@ -114,7 +88,7 @@ class CaptainCook4D_Dataset(Dataset):
         """
         all_features = []
         all_labels = []
-        all_step_ids = [] if self.version == DatasetVersion.V2 else None
+        all_step_ids = []
 
         for file in sorted(os.listdir(self.features_dir())):
             if not file.endswith(".npz"):
@@ -125,11 +99,8 @@ class CaptainCook4D_Dataset(Dataset):
             try:
                 result = self._get_labels_for_npz(file_path, annotations)
                 
-                if self.version == DatasetVersion.V2:
-                    features, labels, step_ids = result
-                    all_step_ids.append(step_ids)
-                else:  # V1
-                    features, labels = result
+                features, labels, step_ids = result
+                all_step_ids.append(step_ids)
                 
                 all_features.append(features)
                 all_labels.append(labels)
@@ -149,12 +120,9 @@ class CaptainCook4D_Dataset(Dataset):
                 reason="Nessun file .npz valido trovato o caricato"
             )
 
-        if self.version == DatasetVersion.V2:
-            return (np.concatenate(all_features, axis=0), 
-                    np.concatenate(all_labels, axis=0),
-                    np.concatenate(all_step_ids, axis=0))
-        else:  # V1
-            return np.concatenate(all_features, axis=0), np.concatenate(all_labels, axis=0)
+        return (np.concatenate(all_features, axis=0), 
+                np.concatenate(all_labels, axis=0),
+                np.concatenate(all_step_ids, axis=0))
 
 
     # -------------------------------------------------------------
@@ -181,7 +149,7 @@ class CaptainCook4D_Dataset(Dataset):
 
         # default: tutti 0 = nessun errore
         labels = np.zeros(N, dtype=np.int64)
-        step_ids = np.empty(N, dtype=object) if self.version == DatasetVersion.V2 else None
+        step_ids = np.empty(N, dtype=object)
 
         # recupero annotazioni del video
         info = annotations[recording_id]
@@ -200,8 +168,7 @@ class CaptainCook4D_Dataset(Dataset):
             # V2: step_id univoco che include timing
             # formato: "{recording_id}_{step_idx}_{start_time:.3f}_{end_time:.3f}"
             # es: "10_3_5_7.072_46.288"
-            if self.version == DatasetVersion.V2:
-                step_id = f"{recording_id}_{step_idx}_{start:.3f}_{end:.3f}"
+            step_id = f"{recording_id}_{step_idx}_{start:.3f}_{end:.3f}"
 
             # Assegna label e step_id per TUTTI i secondi di questo step
             for sec in range(int(start), int(end) + 1, 1):
@@ -209,46 +176,33 @@ class CaptainCook4D_Dataset(Dataset):
                     labels[sec] = has_error
                     
                     # V2: traccia lo step di appartenenza per TUTTI gli step
-                    if self.version == DatasetVersion.V2:
-                        step_ids[sec] = step_id
+                    step_ids[sec] = step_id
 
-        if self.version == DatasetVersion.V2:
-            return arr, labels, step_ids
-        else:  # V1
-            return arr, labels
+        return arr, labels, step_ids
 
 
     # -------------------------------------------------------------
     # 4) METODI STANDARD DEL DATASET
     # -------------------------------------------------------------
     def __len__(self):
-        if self.version == DatasetVersion.V2:
-            # V2: numero di step univoci
-            return len(self.unique_step_ids)
-        else:
-            # V1: numero di sotto-step da 1s
-            return len(self.X)
+        return len(self.unique_step_ids)
 
     def __getitem__(self, idx):
-        if self.version == DatasetVersion.V2:
-            # V2: restituisce TUTTI i sotto-step di uno step
-            step_id = self.unique_step_ids[idx]
-            
-            # Converti esplicitamente a numpy array di stringhe per la comparazione
-            step_ids_array = np.array(self.step_ids, dtype=str)
-            mask = step_ids_array == step_id
-            indices = np.where(mask)[0]
-            
-            # Ritorna: (X_seq, y_seq, step_id, num_substeps)
-            return (
-                self.X[indices],           # sequenza di feature
-                self.y[indices],           # sequenza di label
-                step_id,                   # ID dello step (stringa)
-                len(indices)               # lunghezza della sequenza
-            )
-        else:  # V1
-            # V1: restituisce singolo sotto-step
-            return self.X[idx], self.y[idx]
+        # V2: restituisce TUTTI i sotto-step di uno step
+        step_id = self.unique_step_ids[idx]
+        
+        # Converti esplicitamente a numpy array di stringhe per la comparazione
+        step_ids_array = np.array(self.step_ids, dtype=str)
+        mask = step_ids_array == step_id
+        indices = np.where(mask)[0]
+        
+        # Ritorna: (X_seq, y_seq, step_id, num_substeps)
+        return (
+            self.X[indices],           # sequenza di feature
+            self.y[indices],           # sequenza di label
+            step_id,                   # ID dello step (stringa)
+            len(indices)               # lunghezza della sequenza
+        )
     
     # -------------------------------------------------------------
     # 5) METODI SPECIFICI PER V2
@@ -263,9 +217,6 @@ class CaptainCook4D_Dataset(Dataset):
         Returns:
             tuple: (X, y, step_ids, indices) - features, labels, step_ids e indici dei sotto-step
         """
-        if self.version != DatasetVersion.V2:
-            raise RuntimeError("Questo metodo è disponibile solo per la versione V2 del dataset")
-        
         mask = self.step_ids == step_id
         indices = torch.where(mask)[0]
         return self.X[indices], self.y[indices], self.step_ids[indices], indices.numpy()
@@ -280,9 +231,6 @@ class CaptainCook4D_Dataset(Dataset):
         Returns:
             list: lista degli step_ids univoci (stringhe come "10_3_0", "10_3_1", ...)
         """
-        if self.version != DatasetVersion.V2:
-            raise RuntimeError("Questo metodo è disponibile solo per la versione V2 del dataset")
-        
         mask = np.array([sid.startswith(recording_id) for sid in self.step_ids])
         unique_steps = np.unique(self.step_ids[mask])
         return unique_steps.tolist()
@@ -307,38 +255,26 @@ class CaptainCook4D_Dataset(Dataset):
             idx: indice dell'elemento
         """
         item = self[idx]
+        X_seq, y_seq, step_id, seq_len = item
         
-        if self.version == DatasetVersion.V2:
-            X_seq, y_seq, step_id, seq_len = item
-            
-            print("=" * 80)
-            print(f"V2 DATASET ITEM [{idx}]")
-            print("=" * 80)
-            print(f"Step ID:              {step_id}")
-            print(f"Sequence length:      {seq_len} seconds")
-            print(f"Features shape:       {X_seq.shape} (seconds x features)")
-            print(f"Labels shape:         {y_seq.shape} (seconds)")
-            
-            # Parse step_id
-            parts = step_id.split("_")
-            recording_id = f"{parts[0]}_{parts[1]}"
-            step_idx = parts[2]
-            start_time = float(parts[3])
-            end_time = float(parts[4])
-            
-            print(f"\nStep details:")
-            print(f"  Video ID:             {recording_id}")
-            print(f"  Step index:           {step_idx}")
-            print(f"  Timing:               {start_time:.3f}s - {end_time:.3f}s ({end_time - start_time:.3f}s)")
-            print(f"  Label sequence:       {y_seq.tolist()}")
-            print("=" * 80)
-            
-        else:  # V1
-            X, y = item
-            
-            print("=" * 80)
-            print(f"V1 DATASET ITEM [{idx}]")
-            print("=" * 80)
-            print(f"Features shape:       {X.shape} (features)")
-            print(f"Label:                {y.item()} ({'OK' if y.item() == 0 else 'ERR'})")
-            print("=" * 80)
+        print("=" * 80)
+        print(f"V2 DATASET ITEM [{idx}]")
+        print("=" * 80)
+        print(f"Step ID:              {step_id}")
+        print(f"Sequence length:      {seq_len} seconds")
+        print(f"Features shape:       {X_seq.shape} (seconds x features)")
+        print(f"Labels shape:         {y_seq.shape} (seconds)")
+        
+        # Parse step_id
+        parts = step_id.split("_")
+        recording_id = f"{parts[0]}_{parts[1]}"
+        step_idx = parts[2]
+        start_time = float(parts[3])
+        end_time = float(parts[4])
+        
+        print(f"\nStep details:")
+        print(f"  Video ID:             {recording_id}")
+        print(f"  Step index:           {step_idx}")
+        print(f"  Timing:               {start_time:.3f}s - {end_time:.3f}s ({end_time - start_time:.3f}s)")
+        print(f"  Label sequence:       {y_seq.tolist()}")
+        print("=" * 80)

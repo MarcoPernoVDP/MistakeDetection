@@ -7,7 +7,7 @@ import shutil
 import json
 import numpy as np
 import torch
-from dataset.capitain_cook_4d_dataset import CaptainCook4D_Dataset, DatasetSource
+from dataset.capitain_cook_4d_mlp_dataset import CaptainCook4DMLP_Dataset, DatasetSource
 
 
 class TestCaptainCook4DDataset(unittest.TestCase):
@@ -49,7 +49,7 @@ class TestCaptainCook4DDataset(unittest.TestCase):
         old_stdout = sys.stdout
         sys.stdout = StringIO()
         try:
-            dataset = CaptainCook4D_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
+            dataset = CaptainCook4DMLP_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
         finally:
             sys.stdout = old_stdout
         self.assertIsNotNone(dataset)
@@ -60,7 +60,7 @@ class TestCaptainCook4DDataset(unittest.TestCase):
         old_stdout = sys.stdout
         sys.stdout = StringIO()
         try:
-            dataset = CaptainCook4D_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
+            dataset = CaptainCook4DMLP_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
         finally:
             sys.stdout = old_stdout
         shape = dataset.shape()
@@ -72,7 +72,7 @@ class TestCaptainCook4DDataset(unittest.TestCase):
         old_stdout = sys.stdout
         sys.stdout = StringIO()
         try:
-            dataset = CaptainCook4D_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
+            dataset = CaptainCook4DMLP_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
         finally:
             sys.stdout = old_stdout
         x, y = dataset[0]
@@ -85,7 +85,7 @@ class TestCaptainCook4DDataset(unittest.TestCase):
         old_stdout = sys.stdout
         sys.stdout = StringIO()
         try:
-            dataset = CaptainCook4D_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
+            dataset = CaptainCook4DMLP_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
         finally:
             sys.stdout = old_stdout
         unique_labels = torch.unique(dataset.y)

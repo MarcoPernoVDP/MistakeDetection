@@ -89,7 +89,7 @@ def get_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1,
     # Determina la versione
     is_v2 = hasattr(dataset, 'version')
     if is_v2:
-        from .capitain_cook_4d_dataset import DatasetVersion
+        from .capitain_cook_4d_mlp_dataset import DatasetVersion
         is_v2 = dataset.version == DatasetVersion.V2
     
     # 1. Stampa Info Generali
