@@ -20,13 +20,90 @@ def print_class_balance(dataset: Dataset, name: str = "Dataset"):
     if cnt_1 > 0: print(f" | Ratio: 1:{cnt_0/cnt_1:.1f}")
     else: print("")
 
-def get_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: int = 0.2, seed: int = 42):
-    # 1. Stampa Info Generali (Shape)
-    shape = dataset.shape()
-    print("\n" + "="*65)
-    print(f"DATASET INFO")
-    print(f"   Shape: {shape} -> {shape[0]} Campioni, {shape[1]} Features")
-    print("="*65)
+def print_class_balance_v2(dataset: Dataset, name: str = "Dataset"):
+    """Stampa il bilanciamento per V2 (conteggio a livello di step e sottosecondi)"""
+    
+    if isinstance(dataset, Subset):
+        base_dataset = dataset.dataset
+        step_indices = dataset.indices
+    else:
+        base_dataset = dataset
+        step_indices = list(range(len(dataset)))
+    
+    # Numero di step nel subset
+    num_steps = len(step_indices)
+    
+    # Raccogliere tutti i sotto-secondi di questi step
+    all_subsec_labels = []
+    
+    for step_idx in step_indices:
+        # Ottieni lo step_id dalla lista di unique_step_ids
+        step_id = base_dataset.unique_step_ids[step_idx]
+        
+        # Trova tutti i sotto-secondi che appartengono a questo step
+        import numpy as np
+        mask = base_dataset.step_ids == step_id
+        subsec_labels = base_dataset.y[mask]
+        all_subsec_labels.append(subsec_labels)
+    
+    # Concatena tutti i label
+    if all_subsec_labels:
+        y = torch.cat(all_subsec_labels)
+    else:
+        y = torch.tensor([])
+    
+    # Conteggio
+    cnt_0 = (y == 0).sum().item()
+    cnt_1 = (y == 1).sum().item()
+    total_subsecs = cnt_0 + cnt_1
+    
+    if total_subsecs == 0:
+        print(f"{name:<18} | Steps: {num_steps:<4} | Subsecs: 0      | OK: 0     (N/A) | ERR: 0     (N/A)")
+    else:
+        print(f"{name:<18} | Steps: {num_steps:<4} | Subsecs: {total_subsecs:<5} | OK: {cnt_0:<5} ({cnt_0/total_subsecs:.1%}) | ERR: {cnt_1:<5} ({cnt_1/total_subsecs:.1%})", end="")
+        if cnt_1 > 0: print(f" | Ratio: 1:{cnt_0/cnt_1:.1f}")
+        else: print("")
+
+def custom_collate_fn(batch):
+    """
+    Custom collate per gestire:
+    - V1: batch di (X, y) singoli
+    - V2: batch di sequenze (X_seq, y_seq, step_id, seq_len)
+           senza padding (batch_size sempre 1)
+    """
+    if len(batch[0]) == 2:  # V1
+        X, y = zip(*batch)
+        return torch.stack(X), torch.stack(y)
+    
+    else:  # V2 - batch_size = 1, niente padding
+        X_seq, y_seq, step_id, seq_len = batch[0]
+        
+        return {
+            'X': X_seq,                    # shape: (seq_len, 1024)
+            'y': y_seq,                    # shape: (seq_len,)
+            'step_id': step_id,            # stringa es: "10_3_5"
+            'seq_len': seq_len             # scalare
+        }
+
+def get_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42):
+    # Determina la versione
+    is_v2 = hasattr(dataset, 'version')
+    if is_v2:
+        from .capitain_cook_4d_dataset import DatasetVersion
+        is_v2 = dataset.version == DatasetVersion.V2
+    
+    # 1. Stampa Info Generali
+    print("\n" + "="*85)
+    if is_v2:
+        print(f"DATASET INFO [V2 - STEP-BASED]")
+        print(f"   Total Steps: {len(dataset)}")
+        print(f"   Total Sub-seconds: {len(dataset.X)}")
+        print(f"   Avg seconds per step: {len(dataset.X) / len(dataset):.2f}")
+    else:
+        shape = dataset.shape()
+        print(f"DATASET INFO [V1 - SUBSECOND-BASED]")
+        print(f"   Shape: {shape} -> {shape[0]} Campioni, {shape[1]} Features")
+    print("="*85)
 
     # 2. Split
     total = len(dataset)
@@ -38,15 +115,30 @@ def get_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1,
     train_ds, val_ds, test_ds = random_split(dataset, [train_len, val_len, test_len], generator=gen)
     
     # 3. Stampa Bilanciamento
-    print_class_balance(dataset, "FULL DATASET")
-    print("-" * 65)
-    print_class_balance(train_ds, "TRAIN SET")
-    print_class_balance(val_ds, "VALIDATION SET")
-    print_class_balance(test_ds, "TEST SET")
-    print("="*65 + "\n")
+    if is_v2:
+        print_class_balance_v2(dataset, "FULL DATASET")
+        print("-" * 85)
+        print_class_balance_v2(train_ds, "TRAIN SET")
+        print_class_balance_v2(val_ds, "VALIDATION SET")
+        print_class_balance_v2(test_ds, "TEST SET")
+    else:
+        print_class_balance(dataset, "FULL DATASET")
+        print("-" * 85)
+        print_class_balance(train_ds, "TRAIN SET")
+        print_class_balance(val_ds, "VALIDATION SET")
+        print_class_balance(test_ds, "TEST SET")
     
-    # 4. Crea Loaders
-    kwargs = {'num_workers': 0, 'pin_memory': True}
+    print("="*85 + "\n")
+    
+    # 4. Crea Loaders (con custom collate per V2)
+    kwargs = {'num_workers': 0, 'pin_memory': True, 'collate_fn': custom_collate_fn}
+    
+    # V2: batch_size 1 per avere uno step per batch
+    if is_v2:
+        batch_size = 1
+        print(f"[V2] Batch size forzato a 1 (uno step per batch)")
+        print(f"[V2] Training loop itererà su {len(train_ds)} step\n")
+    
     return (
         DataLoader(train_ds, batch_size=batch_size, shuffle=True, **kwargs),
         DataLoader(val_ds, batch_size=batch_size, shuffle=False, **kwargs),

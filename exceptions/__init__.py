@@ -13,6 +13,8 @@ from .dataset_exceptions import (
     InvalidDatasetSourceError,
     MismatchedDataShapeError,
     EmptyDatasetError,
+    CorruptedFeatureFileError,
+    MissingAnnotationKeyError
 )
 from .model_exceptions import (
     ModelError,
@@ -43,6 +45,8 @@ __all__ = [
     "InvalidDatasetSourceError",
     "MismatchedDataShapeError",
     "EmptyDatasetError",
+    "CorruptedFeatureFileError",
+    "MissingAnnotationKeyError",
     # Model
     "ModelError",
     "InvalidModelConfigError",
