@@ -1,3 +1,4 @@
+from collections import defaultdict
 import os
 import json
 import numpy as np
@@ -100,7 +101,7 @@ def get_mlp_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 
     train_len = total - test_len - val_len
     
     gen = torch.Generator().manual_seed(seed)
-    train_ds, val_ds, test_ds = random_split(dataset, [train_len, val_len, test_len], generator=gen)
+    train_ds, val_ds, test_ds = split_by_step(dataset, [train_len, val_len, test_len], generator=gen)
     
     # 3. Stampa Bilanciamento
     print_class_balance(dataset, "FULL DATASET")
@@ -159,3 +160,54 @@ def get_tranformer_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: f
         DataLoader(val_ds, batch_size=batch_size, shuffle=False, **kwargs),
         DataLoader(test_ds, batch_size=batch_size, shuffle=False, **kwargs)
     )
+
+def split_by_step(dataset: Dataset, lengths: list[int], generator: torch.Generator):
+    """
+    Divide il dataset in train/val/test garantendo che tutti gli elementi
+    con lo stesso (video, step) rimangano insieme nello stesso split.
+    """
+
+    # ---- 1. Raggruppa per (video, step) ----
+    groups = defaultdict(list)
+
+    for idx in range(len(dataset)):
+        X, y, step_id, video_id = dataset[idx]   # ← struttura del tuo dataset
+
+        groups[(video_id, step_id)].append(idx)
+
+    # ---- 2. Shuffle dei gruppi ----
+    group_keys = list(groups.keys())
+    perm = torch.randperm(len(group_keys), generator=generator)
+    group_keys = [group_keys[i] for i in perm]
+
+    # ---- 3. Assegnazione ai tre split ----
+    train_len, val_len, test_len = lengths
+    train_idx, val_idx, test_idx = [], [], []
+
+    count_train = count_val = count_test = 0
+
+    for key in group_keys:
+        idxs = groups[key]
+        group_size = len(idxs)
+
+        if count_train + group_size <= train_len:
+            train_idx.extend(idxs)
+            count_train += group_size
+
+        elif count_val + group_size <= val_len:
+            val_idx.extend(idxs)
+            count_val += group_size
+
+        else:
+            test_idx.extend(idxs)
+            count_test += group_size
+
+    # ---- 4. Restituisce i Subset ----
+    return (
+        Subset(dataset, train_idx),
+        Subset(dataset, val_idx),
+        Subset(dataset, test_idx),
+    )
+
+def split_by_video():
+    pass

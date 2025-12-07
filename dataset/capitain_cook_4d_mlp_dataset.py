@@ -41,7 +41,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
 
         self.annotations = self._load_annotations()
         
-        self.X, self.y = self._load_all_npz(self.annotations)
+        self.X, self.y, self.steps, self.videos = self._load_all_npz(self.annotations)
         # conversione a tensori
         self.X = torch.from_numpy(self.X).float()
         self.y = torch.from_numpy(self.y).long()
@@ -90,6 +90,8 @@ class CaptainCook4DMLP_Dataset(Dataset):
         """
         all_features = []
         all_labels = []
+        all_steps = []
+        all_videos = []
 
         for file in sorted(os.listdir(self.features_dir())):
             if not file.endswith(".npz"):
@@ -100,10 +102,12 @@ class CaptainCook4DMLP_Dataset(Dataset):
             try:
                 result = self._get_labels_for_npz(file_path, annotations)
                 
-                features, labels = result
+                features, labels, steps, videos = result
                 
                 all_features.append(features)
                 all_labels.append(labels)
+                all_steps.append(steps)
+                all_videos.append(videos)
                 
             except KeyError as e:
                 # npz non presente nelle annotazioni
@@ -120,7 +124,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
                 reason="Nessun file .npz valido trovato o caricato"
             )
 
-        return np.concatenate(all_features, axis=0), np.concatenate(all_labels, axis=0)
+        return np.concatenate(all_features, axis=0), np.concatenate(all_labels, axis=0), np.concatenate(all_steps, axis=0), np.concatenate(all_videos, axis=0)
 
 
     # -------------------------------------------------------------
@@ -131,8 +135,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
         Genera le label (e step_ids se V2) per un singolo file .npz usando le annotazioni JSON.
         
         Returns:
-            V1: tuple (features, labels)
-            V2: tuple (features, labels, step_ids)
+            tuple (features, labels, steps, videos)
         """
 
         # es: "10_3_360.mp4_1s_1s.npz" → recording_id = "10_3"
@@ -147,16 +150,18 @@ class CaptainCook4DMLP_Dataset(Dataset):
 
         # default: tutti -1 -> non classificati
         labels = np.ones(N, dtype=np.int64) * -1
+        steps = np.ones(N, dtype=np.int64) * -1
+        videos = np.empty(N, dtype=object)
 
         # recupero annotazioni del video
         info = annotations[recording_id]
-        steps = info["steps"]
+        steps_dict = info["steps"]
 
         # assegnazione errore (e step_id per V2) per ogni secondo
-        for step_idx, step in enumerate(steps):
-            has_error = int(step["has_errors"])
-            start = step.get("start_time", -1)
-            end = step.get("end_time", -1)
+        for step_idx, step_dict in enumerate(steps_dict):
+            has_error = int(step_dict["has_errors"])
+            start = step_dict.get("start_time", -1)
+            end = step_dict.get("end_time", -1)
 
             # skip intervalli non validi
             if start == -1 or end == -1:
@@ -166,14 +171,19 @@ class CaptainCook4DMLP_Dataset(Dataset):
             for sec in range(int(start), int(end) + 1, 1):
                 if sec < N:  # check boundary
                     labels[sec] = has_error
+                    steps[sec] = step_dict["step_id"]
+                    videos[sec] = recording_id
+
 
         # Rimuovi i records che non fanno parte di uno step
         # Crea una maschera per tenere solo i records che hanno una label valida (0 o 1)
         valid_mask = (labels == 0) | (labels == 1)
         arr = arr[valid_mask]
         labels = labels[valid_mask]
+        steps = steps[valid_mask]
+        videos = videos[valid_mask]
 
-        return arr, labels
+        return arr, labels, steps, videos
 
 
     # -------------------------------------------------------------
@@ -185,7 +195,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
 
     def __getitem__(self, idx):
         # V1: restituisce singolo sotto-step
-        return self.X[idx], self.y[idx]
+        return self.X[idx], self.y[idx], self.steps[idx], self.videos[idx]
     
     # -------------------------------------------------------------
     # 6) METODO PER RESTITUIRE LO SHAPE
@@ -208,11 +218,13 @@ class CaptainCook4DMLP_Dataset(Dataset):
         """
         item = self[idx]
         
-        X, y = item
+        X, y, step_id, video_id = item
             
         print("=" * 80)
         print(f"V1 DATASET ITEM [{idx}]")
         print("=" * 80)
         print(f"Features shape:       {X.shape} (features)")
         print(f"Label:                {y.item()} ({'OK' if y.item() == 0 else 'ERR'})")
+        print(f"Step id:             {step_id}")
+        print(f"Video id:             {video_id}")
         print("=" * 80)

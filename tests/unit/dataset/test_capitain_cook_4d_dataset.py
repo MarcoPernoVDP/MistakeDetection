@@ -31,9 +31,11 @@ class TestCaptainCook4DDataset(unittest.TestCase):
         # Crea annotazioni di test
         annotations = {
             "1_10": {
+                "recording_id": "1_10",
+                "activity_id": 1,
                 "steps": [
-                    {"start_time": 2, "end_time": 5, "has_errors": 1},
-                    {"start_time": 7, "end_time": 8, "has_errors": 0}
+                    {"start_time": 2, "end_time": 5, "has_errors": 1, "step_id": 3},
+                    {"start_time": 7, "end_time": 8, "has_errors": 0, "step_id": 4}
                 ]
             }
         }
@@ -75,7 +77,7 @@ class TestCaptainCook4DDataset(unittest.TestCase):
             dataset = CaptainCook4DMLP_Dataset(DatasetSource.OMNIVORE, self.temp_dir)
         finally:
             sys.stdout = old_stdout
-        x, y = dataset[0]
+        x, y, step_id, video_id = dataset[0]
         self.assertIsInstance(x, torch.Tensor)
         self.assertIsInstance(y, torch.Tensor)
         self.assertEqual(x.shape[0], 1024)
