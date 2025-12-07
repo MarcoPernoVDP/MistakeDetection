@@ -145,8 +145,8 @@ class CaptainCook4DMLP_Dataset(Dataset):
         arr = data[list(data.keys())[0]]  # shape (N, 1024)
         N = arr.shape[0]
 
-        # default: tutti 0 = nessun errore
-        labels = np.zeros(N, dtype=np.int64)
+        # default: tutti -1 -> non classificati
+        labels = np.ones(N, dtype=np.int64) * -1
 
         # recupero annotazioni del video
         info = annotations[recording_id]
@@ -166,6 +166,12 @@ class CaptainCook4DMLP_Dataset(Dataset):
             for sec in range(int(start), int(end) + 1, 1):
                 if sec < N:  # check boundary
                     labels[sec] = has_error
+
+        # Rimuovi i records che non fanno parte di uno step
+        # Crea una maschera per tenere solo i records che hanno una label valida (0 o 1)
+        valid_mask = (labels == 0) | (labels == 1)
+        arr = arr[valid_mask]
+        labels = labels[valid_mask]
 
         return arr, labels
 

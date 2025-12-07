@@ -85,24 +85,12 @@ def custom_collate_fn(batch):
             'seq_len': seq_len             # scalare
         }
 
-def get_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42):
-    # Determina la versione
-    is_v2 = hasattr(dataset, 'version')
-    if is_v2:
-        from .capitain_cook_4d_mlp_dataset import DatasetVersion
-        is_v2 = dataset.version == DatasetVersion.V2
-    
+def get_mlp_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42):
     # 1. Stampa Info Generali
     print("\n" + "="*85)
-    if is_v2:
-        print(f"DATASET INFO [V2 - STEP-BASED]")
-        print(f"   Total Steps: {len(dataset)}")
-        print(f"   Total Sub-seconds: {len(dataset.X)}")
-        print(f"   Avg seconds per step: {len(dataset.X) / len(dataset):.2f}")
-    else:
-        shape = dataset.shape()
-        print(f"DATASET INFO [V1 - SUBSECOND-BASED]")
-        print(f"   Shape: {shape} -> {shape[0]} Campioni, {shape[1]} Features")
+    shape = dataset.shape()
+    print(f"DATASET INFO [V1 - SUBSECOND-BASED]")
+    print(f"   Shape: {shape} -> {shape[0]} Campioni, {shape[1]} Features")
     print("="*85)
 
     # 2. Split
@@ -115,18 +103,46 @@ def get_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1,
     train_ds, val_ds, test_ds = random_split(dataset, [train_len, val_len, test_len], generator=gen)
     
     # 3. Stampa Bilanciamento
-    if is_v2:
-        print_class_balance_v2(dataset, "FULL DATASET")
-        print("-" * 85)
-        print_class_balance_v2(train_ds, "TRAIN SET")
-        print_class_balance_v2(val_ds, "VALIDATION SET")
-        print_class_balance_v2(test_ds, "TEST SET")
-    else:
-        print_class_balance(dataset, "FULL DATASET")
-        print("-" * 85)
-        print_class_balance(train_ds, "TRAIN SET")
-        print_class_balance(val_ds, "VALIDATION SET")
-        print_class_balance(test_ds, "TEST SET")
+    print_class_balance(dataset, "FULL DATASET")
+    print("-" * 85)
+    print_class_balance(train_ds, "TRAIN SET")
+    print_class_balance(val_ds, "VALIDATION SET")
+    print_class_balance(test_ds, "TEST SET")
+    
+    print("="*85 + "\n")
+    
+    # 4. Crea Loaders (con custom collate per V2)
+    kwargs = {'num_workers': 0, 'pin_memory': True, 'collate_fn': custom_collate_fn}
+    
+    return (
+        DataLoader(train_ds, batch_size=batch_size, shuffle=True, **kwargs),
+        DataLoader(val_ds, batch_size=batch_size, shuffle=False, **kwargs),
+        DataLoader(test_ds, batch_size=batch_size, shuffle=False, **kwargs)
+    )
+
+def get_tranformer_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42):
+    # 1. Stampa Info Generali
+    print("\n" + "="*85)
+    print(f"DATASET INFO [V2 - STEP-BASED]")
+    print(f"   Total Steps: {len(dataset)}")
+    print(f"   Total Sub-seconds: {len(dataset.X)}")
+    print(f"   Avg seconds per step: {len(dataset.X) / len(dataset):.2f}")
+
+    # 2. Split
+    total = len(dataset)
+    test_len = int(test_ratio * total)
+    val_len = int(val_ratio * total)
+    train_len = total - test_len - val_len
+    
+    gen = torch.Generator().manual_seed(seed)
+    train_ds, val_ds, test_ds = random_split(dataset, [train_len, val_len, test_len], generator=gen)
+    
+    # 3. Stampa Bilanciamento
+    print_class_balance_v2(dataset, "FULL DATASET")
+    print("-" * 85)
+    print_class_balance_v2(train_ds, "TRAIN SET")
+    print_class_balance_v2(val_ds, "VALIDATION SET")
+    print_class_balance_v2(test_ds, "TEST SET")
     
     print("="*85 + "\n")
     
@@ -134,10 +150,9 @@ def get_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1,
     kwargs = {'num_workers': 0, 'pin_memory': True, 'collate_fn': custom_collate_fn}
     
     # V2: batch_size 1 per avere uno step per batch
-    if is_v2:
-        batch_size = 1
-        print(f"[V2] Batch size forzato a 1 (uno step per batch)")
-        print(f"[V2] Training loop itererà su {len(train_ds)} step\n")
+    batch_size = 1
+    print(f"[V2] Batch size forzato a 1 (uno step per batch)")
+    print(f"[V2] Training loop itererà su {len(train_ds)} step\n")
     
     return (
         DataLoader(train_ds, batch_size=batch_size, shuffle=True, **kwargs),

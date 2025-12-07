@@ -130,11 +130,10 @@ class CaptainCook4DTransformer_Dataset(Dataset):
     # -------------------------------------------------------------
     def _get_labels_for_npz(self, npz_file, annotations):
         """
-        Genera le label (e step_ids se V2) per un singolo file .npz usando le annotazioni JSON.
+        Genera le label per un singolo file .npz usando le annotazioni JSON.
         
         Returns:
-            V1: tuple (features, labels)
-            V2: tuple (features, labels, step_ids)
+            tuple (features, labels, step_ids)
         """
 
         # es: "10_3_360.mp4_1s_1s.npz" → recording_id = "10_3"
@@ -147,9 +146,9 @@ class CaptainCook4DTransformer_Dataset(Dataset):
         arr = data[list(data.keys())[0]]  # shape (N, 1024)
         N = arr.shape[0]
 
-        # default: tutti 0 = nessun errore
-        labels = np.zeros(N, dtype=np.int64)
-        step_ids = np.empty(N, dtype=object)
+        # default: tutti -1 -> non classificati
+        labels = np.ones(N, dtype=np.int64) * -1
+        step_ids = np.ones(N, dtype=np.int64) * -1
 
         # recupero annotazioni del video
         info = annotations[recording_id]
@@ -177,6 +176,13 @@ class CaptainCook4DTransformer_Dataset(Dataset):
                     
                     # V2: traccia lo step di appartenenza per TUTTI gli step
                     step_ids[sec] = step_id
+        
+        # Rimuovi i records che non fanno parte di uno step
+        # Crea una maschera per tenere solo i records che hanno una label valida (0 o 1)
+        valid_mask = (labels == 0) | (labels == 1)
+        arr = arr[valid_mask]
+        labels = labels[valid_mask]
+        step_ids = step_ids[valid_mask]
 
         return arr, labels, step_ids
 

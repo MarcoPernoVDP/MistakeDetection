@@ -3,7 +3,7 @@ import sys
 from io import StringIO
 import torch
 from torch.utils.data import Dataset, Subset
-from dataset.utils import print_class_balance, get_loaders
+from dataset.utils import print_class_balance, get_mlp_loaders
 
 
 class MockDataset(Dataset):
@@ -65,7 +65,7 @@ class TestUtils(unittest.TestCase):
         old_stdout = sys.stdout
         sys.stdout = StringIO()
         try:
-            train_loader, val_loader, test_loader = get_loaders(
+            train_loader, val_loader, test_loader = get_mlp_loaders(
                 dataset, 
                 batch_size=16, 
                 val_ratio=0.1, 
@@ -90,7 +90,7 @@ class TestUtils(unittest.TestCase):
         old_stdout = sys.stdout
         sys.stdout = StringIO()
         try:
-            train_loader, val_loader, test_loader = get_loaders(
+            train_loader, val_loader, test_loader = get_mlp_loaders(
                 dataset,
                 batch_size=100,  # Batch grande per contare facilmente
                 val_ratio=0.1,
