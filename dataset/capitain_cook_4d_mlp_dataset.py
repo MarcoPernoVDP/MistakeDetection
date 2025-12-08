@@ -225,6 +225,6 @@ class CaptainCook4DMLP_Dataset(Dataset):
         print("=" * 80)
         print(f"Features shape:       {X.shape} (features)")
         print(f"Label:                {y.item()} ({'OK' if y.item() == 0 else 'ERR'})")
-        print(f"Step id:             {step_id}")
+        print(f"Step id:              {step_id}")
         print(f"Video id:             {video_id}")
         print("=" * 80)

@@ -221,5 +221,52 @@ def split_by_step(dataset: Dataset, lengths: list[int], generator: torch.Generat
         Subset(dataset, test_idx),
     )
 
-def split_by_video():
-    pass
+def split_by_video(dataset: Dataset, lengths: list[int], generator: torch.Generator):
+    """
+    Divide il dataset in train/val/test garantendo che TUTTI gli step dello stesso video
+    rimangano nello stesso split (split a livello di recording).
+    """
+
+    # ---- 1. Raggruppa SOLO per video_id ----
+    groups = defaultdict(list)   # video_id -> [idx1, idx2, ...]
+
+    for idx in range(len(dataset)):
+        _, _, _, video_id = dataset[idx]   # X, y, step, video
+        groups[video_id].append(idx)
+
+    # ---- 2. Shuffle dei video ----
+    video_ids = list(groups.keys())
+    perm = torch.randperm(len(video_ids), generator=generator)
+    video_ids = [video_ids[i] for i in perm]
+
+    # ---- 3. Assegnazione ai tre split ----
+    train_len, val_len, test_len = lengths
+    train_idx, val_idx, test_idx = [], [], []
+    count_train = count_val = count_test = 0
+
+    for vid in video_ids:
+        idxs = groups[vid]
+        group_size = len(idxs)
+
+        # Prova ad assegnare al TRAIN
+        if count_train + group_size <= train_len:
+            train_idx.extend(idxs)
+            count_train += group_size
+            continue
+
+        # Prova ad assegnare alla VALIDATION
+        if count_val + group_size <= val_len:
+            val_idx.extend(idxs)
+            count_val += group_size
+            continue
+
+        # Altrimenti finisce nel TEST
+        test_idx.extend(idxs)
+        count_test += group_size
+
+    # ---- 4. Restituisce i 3 subset ----
+    return (
+        Subset(dataset, train_idx),
+        Subset(dataset, val_idx),
+        Subset(dataset, test_idx),
+    )
