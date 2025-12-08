@@ -133,13 +133,19 @@ def get_mlp_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 
         DataLoader(test_ds, batch_size=batch_size, shuffle=False, **kwargs)
     )
 
-def get_tranformer_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42):
+def get_transformer_loaders(dataset: Dataset, batch_size: int = 1, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42, split_type: SplitType = SplitType.STEP_ID):
+    """
+    Crea DataLoader per il dataset Transformer (step completi).
+    Nota: batch_size è tipicamente 1 per sequenze di lunghezza variabile.
+    """
     # 1. Stampa Info Generali
     print("\n" + "="*85)
-    print(f"DATASET INFO [V2 - STEP-BASED]")
-    print(f"   Total Steps: {len(dataset)}")
-    print(f"   Total Sub-seconds: {len(dataset.X)}")
-    print(f"   Avg seconds per step: {len(dataset.X) / len(dataset):.2f}")
+    shape_info = dataset.shape()
+    print(f"DATASET INFO [TRANSFORMER - STEP-BASED]")
+    print(f"   Total Steps: {shape_info['num_steps']}")
+    print(f"   Features per second: {shape_info['n_features']}")
+    print(f"   Step duration: min={shape_info['min_duration']}s, max={shape_info['max_duration']}s, avg={shape_info['avg_duration']:.2f}s")
+    print("="*85)
 
     # 2. Split
     total = len(dataset)
@@ -148,24 +154,22 @@ def get_tranformer_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: f
     train_len = total - test_len - val_len
     
     gen = torch.Generator().manual_seed(seed)
-    train_ds, val_ds, test_ds = random_split(dataset, [train_len, val_len, test_len], generator=gen)
-    
+    if split_type == SplitType.STEP_ID:
+        train_ds, val_ds, test_ds = split_by_step_transformer(dataset, [train_len, val_len, test_len], generator=gen)
+    else:
+        train_ds, val_ds, test_ds = split_by_video_transformer(dataset, [train_len, val_len, test_len], generator=gen)
+
     # 3. Stampa Bilanciamento
-    print_class_balance_v2(dataset, "FULL DATASET")
+    print_class_balance_transformer(dataset, "FULL DATASET")
     print("-" * 85)
-    print_class_balance_v2(train_ds, "TRAIN SET")
-    print_class_balance_v2(val_ds, "VALIDATION SET")
-    print_class_balance_v2(test_ds, "TEST SET")
+    print_class_balance_transformer(train_ds, "TRAIN SET")
+    print_class_balance_transformer(val_ds, "VALIDATION SET")
+    print_class_balance_transformer(test_ds, "TEST SET")
     
     print("="*85 + "\n")
     
-    # 4. Crea Loaders (con custom collate per V2)
-    kwargs = {'num_workers': 0, 'pin_memory': True, 'collate_fn': custom_collate_fn}
-    
-    # V2: batch_size 1 per avere uno step per batch
-    batch_size = 1
-    print(f"[V2] Batch size forzato a 1 (uno step per batch)")
-    print(f"[V2] Training loop itererà su {len(train_ds)} step\n")
+    # 4. Crea Loaders
+    kwargs = {'num_workers': 0, 'pin_memory': True}
     
     return (
         DataLoader(train_ds, batch_size=batch_size, shuffle=True, **kwargs),
@@ -270,3 +274,127 @@ def split_by_video(dataset: Dataset, lengths: list[int], generator: torch.Genera
         Subset(dataset, val_idx),
         Subset(dataset, test_idx),
     )
+
+def split_by_step_transformer(dataset: Dataset, lengths: list[int], generator: torch.Generator):
+    """
+    Divide il dataset Transformer in train/val/test garantendo che tutti gli step
+    di ciascun recording siano rappresentati in tutti e tre gli split.
+    
+    Per il dataset Transformer: ogni record è già uno step completo (video_id, step_id).
+    Raggruppiamo per (video_id, step_id) in modo che lo stesso step dello stesso video
+    rimanga insieme, ma step diversi dello stesso video possano finire in split diversi.
+    """
+    # ---- 1. Raggruppa per (video_id, step_id) ----
+    groups = defaultdict(list)   # (video_id, step_id) -> [idx1, idx2, ...]
+
+    for idx in range(len(dataset)):
+        _, _, step_id, video_id = dataset[idx]   # X, y, step_id, video_id
+        groups[(video_id, step_id)].append(idx)
+
+    # ---- 2. Shuffle dei gruppi ----
+    group_keys = list(groups.keys())
+    perm = torch.randperm(len(group_keys), generator=generator)
+    group_keys = [group_keys[i] for i in perm]
+
+    # ---- 3. Assegnazione ai tre split ----
+    train_len, val_len, test_len = lengths
+    train_idx, val_idx, test_idx = [], [], []
+    count_train = count_val = count_test = 0
+
+    for key in group_keys:
+        idxs = groups[key]
+        group_size = len(idxs)
+
+        if count_train + group_size <= train_len:
+            train_idx.extend(idxs)
+            count_train += group_size
+        elif count_val + group_size <= val_len:
+            val_idx.extend(idxs)
+            count_val += group_size
+        else:
+            test_idx.extend(idxs)
+            count_test += group_size
+
+    # ---- 4. Restituisce i Subset ----
+    return (
+        Subset(dataset, train_idx),
+        Subset(dataset, val_idx),
+        Subset(dataset, test_idx),
+    )
+
+def split_by_video_transformer(dataset: Dataset, lengths: list[int], generator: torch.Generator):
+    """
+    Divide il dataset Transformer in train/val/test garantendo che TUTTI gli step
+    dello stesso video rimangano nello stesso split.
+    
+    Per il dataset Transformer: ogni record è già uno step completo (video_id, step_id).
+    """
+    # ---- 1. Raggruppa SOLO per video_id ----
+    groups = defaultdict(list)   # video_id -> [idx1, idx2, ...]
+
+    for idx in range(len(dataset)):
+        _, _, _, video_id = dataset[idx]   # X, y, step_id, video_id
+        groups[video_id].append(idx)
+
+    # ---- 2. Shuffle dei video ----
+    video_ids = list(groups.keys())
+    perm = torch.randperm(len(video_ids), generator=generator)
+    video_ids = [video_ids[i] for i in perm]
+
+    # ---- 3. Assegnazione ai tre split ----
+    train_len, val_len, test_len = lengths
+    train_idx, val_idx, test_idx = [], [], []
+    count_train = count_val = count_test = 0
+
+    for vid in video_ids:
+        idxs = groups[vid]
+        group_size = len(idxs)
+
+        # Prova ad assegnare al TRAIN
+        if count_train + group_size <= train_len:
+            train_idx.extend(idxs)
+            count_train += group_size
+            continue
+
+        # Prova ad assegnare alla VALIDATION
+        if count_val + group_size <= val_len:
+            val_idx.extend(idxs)
+            count_val += group_size
+            continue
+
+        # Altrimenti finisce nel TEST
+        test_idx.extend(idxs)
+        count_test += group_size
+
+    # ---- 4. Restituisce i 3 subset ----
+    return (
+        Subset(dataset, train_idx),
+        Subset(dataset, val_idx),
+        Subset(dataset, test_idx),
+    )
+
+def print_class_balance_transformer(dataset, name: str = "Dataset"):
+    """
+    Stampa il bilanciamento delle classi per il dataset Transformer.
+    Nel dataset Transformer: ogni record è uno step completo con una singola label.
+    """
+    if isinstance(dataset, Subset):
+        # Estrai le label dai record del subset
+        labels = [dataset.dataset.y[i] for i in dataset.indices]
+        labels = torch.stack(labels)
+    else:
+        # Converti la lista di tensor in un singolo tensor
+        labels = torch.stack(dataset.y)
+    
+    cnt_0 = (labels == 0).sum().item()
+    cnt_1 = (labels == 1).sum().item()
+    total = cnt_0 + cnt_1
+    
+    if total == 0:
+        print(f"{name:<18} | Tot: 0      | OK: 0     (N/A) | ERR: 0     (N/A)")
+    else:
+        print(f"{name:<18} | Tot: {total:<6} | OK: {cnt_0:<5} ({cnt_0/total:.1%}) | ERR: {cnt_1:<5} ({cnt_1/total:.1%})", end="")
+        if cnt_1 > 0: 
+            print(f" | Ratio: 1:{cnt_0/cnt_1:.1f}")
+        else: 
+            print("")

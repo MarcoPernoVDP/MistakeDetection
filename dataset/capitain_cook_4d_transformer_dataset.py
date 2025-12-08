@@ -1,22 +1,20 @@
-from enum import Enum
-import os
-import json
-import numpy as np
 import torch
-from torch.utils.data import Dataset, DataLoader, random_split, Subset
-from dataset.capitain_cook_4d_mlp_dataset import DatasetSource
-from utils.setup_project import is_colab
-from exceptions import (
-    AnnotationNotFoundError,
-    FeatureFileNotFoundError,
-    EmptyDatasetError,
-    CorruptedFeatureFileError,
-)
+from torch.utils.data import Dataset
+import numpy as np
+from .capitain_cook_4d_mlp_dataset import CaptainCook4DMLP_Dataset, DatasetSource
+
 
 class CaptainCook4DTransformer_Dataset(Dataset):
     """
-    Dataset per CaptainCook4D basato su file .npz (es. feature Omnivore)
-    e annotazioni JSON (complete_step_annotations.json).
+    Dataset per CaptainCook4D dove ogni record rappresenta uno step completo.
+    
+    A differenza del dataset base (dove ogni record è 1 secondo di uno step),
+    qui ogni record contiene TUTTI i secondi di uno specifico step in un video.
+    
+    Ogni elemento X[i] ha shape: (durata_step_in_secondi, n_features)
+    
+    Nota: uno stesso step_id può apparire in video diversi, ma vengono 
+    mantenuti come record separati (uno per ogni combinazione video_id + step_id).
     """
     
     def __init__(self, dataset_source: DatasetSource, root_dir: str):
@@ -25,234 +23,102 @@ class CaptainCook4DTransformer_Dataset(Dataset):
             dataset_source (DatasetSource): fonte delle feature (OMNIVORE o SLOWFAST)
             root_dir (str): path alla cartella root del dataset
         """
-        self.dataset_source = dataset_source
-        self.root_dir = root_dir
-
-        print(f"Loading from: {self.features_dir()}...")
-
-        self.annotations = self._load_annotations()
+        # Carica il dataset base (1 secondo per record)
+        self.base_dataset = CaptainCook4DMLP_Dataset(dataset_source, root_dir)
         
-        self.X, self.y, self.step_ids = self._load_all_npz(self.annotations)
-        # conversione a tensori
-        self.X = torch.from_numpy(self.X).float()
-        self.y = torch.from_numpy(self.y).long()
-        self.step_ids = self.step_ids  # Mantieni come numpy array di stringhe
-            
-        # V2: crea lista di step_ids univoci FILTRANDO I NONE
-        valid_step_ids = self.step_ids[self.step_ids != None]
-        self.unique_step_ids = np.unique(valid_step_ids).tolist()
+        # Raggruppa i record per (video_id, step_id)
+        self.X, self.y, self.step_ids, self.video_ids = self._group_by_steps()
         
-        print(f"[V2] Numero di step univoci: {len(self.unique_step_ids)}")
-
-    def features_dir(self):
-        # Combina la root con 'data' e il dataset_source
-        return os.path.join(self.root_dir, "data", self.dataset_source.value)
+        print(f"Dataset creato: {len(self)} step completi da {len(self.base_dataset)} secondi")
     
-    def annotations_dir(self):
-        # Combina la root con 'data/annotation_json'
-        return os.path.join(self.root_dir, "data", "annotation_json")
-
-    # -------------------------------------------------------------
-    # 1) CARICAMENTO ANNOTAZIONI
-    # -------------------------------------------------------------
-    def _load_annotations(self):
+    def _group_by_steps(self):
         """
-        Carica esclusivamente il file 'complete_step_annotations.json'.
-        """
-        json_path = os.path.join(self.annotations_dir(), "complete_step_annotations.json")
-
-        if not os.path.exists(json_path):
-            raise AnnotationNotFoundError(
-                annotation_file="complete_step_annotations.json",
-                searched_path=self.annotations_dir()
-            )
-
-        try:
-            with open(json_path, "r") as f:
-                annotations = json.load(f)
-        except json.JSONDecodeError as e:
-            raise CorruptedFeatureFileError(
-                file_path=json_path,
-                original_error=f"JSON non valido: {e}"
-            )
-
-        return annotations
-
-
-    # -------------------------------------------------------------
-    # 2) CARICAMENTO DI TUTTI GLI NPZ
-    # -------------------------------------------------------------
-    def _load_all_npz(self, annotations):
-        """
-        Carica tutti i file .npz, genera le label (e step_ids se V2) e concatena tutto.
-        """
-        all_features = []
-        all_labels = []
-        all_step_ids = []
-
-        for file in sorted(os.listdir(self.features_dir())):
-            if not file.endswith(".npz"):
-                continue
-            
-            file_path = os.path.join(self.features_dir(), file)
-
-            try:
-                result = self._get_labels_for_npz(file_path, annotations)
-                
-                features, labels, step_ids = result
-                all_step_ids.append(step_ids)
-                
-                all_features.append(features)
-                all_labels.append(labels)
-                
-            except KeyError as e:
-                # npz non presente nelle annotazioni
-                print(f"[WARN] Nessuna annotazione trovata per: {file}")
-                continue
-            except Exception as e:
-                raise CorruptedFeatureFileError(
-                    file_path=file_path,
-                    original_error=str(e)
-                )
-
-        if not all_features:
-            raise EmptyDatasetError(
-                reason="Nessun file .npz valido trovato o caricato"
-            )
-
-        return (np.concatenate(all_features, axis=0), 
-                np.concatenate(all_labels, axis=0),
-                np.concatenate(all_step_ids, axis=0))
-
-
-    # -------------------------------------------------------------
-    # 3) GENERAZIONE LABEL DA NPZ
-    # -------------------------------------------------------------
-    def _get_labels_for_npz(self, npz_file, annotations):
-        """
-        Genera le label per un singolo file .npz usando le annotazioni JSON.
+        Raggruppa i record del dataset base per (video_id, step_id).
         
         Returns:
-            tuple (features, labels, step_ids)
+            tuple: (X_list, y_list, step_ids_list, video_ids_list)
+                - X_list: lista di matrici (durata_step, n_features)
+                - y_list: lista di label (1 per step)
+                - step_ids_list: lista di step_id
+                - video_ids_list: lista di video_id
         """
-
-        # es: "10_3_360.mp4_1s_1s.npz" → recording_id = "10_3"
-        base = os.path.basename(npz_file)
-        activity, attempt = base.split("_")[:2]
-        recording_id = f"{activity}_{attempt}"
-
-        # features
-        data = np.load(npz_file)
-        arr = data[list(data.keys())[0]]  # shape (N, 1024)
-        N = arr.shape[0]
-
-        # default: tutti -1 -> non classificati
-        labels = np.ones(N, dtype=np.int64) * -1
-        step_ids = np.ones(N, dtype=np.int64) * -1
-
-        # recupero annotazioni del video
-        info = annotations[recording_id]
-        steps = info["steps"]
-
-        # assegnazione errore (e step_id per V2) per ogni secondo
-        for step_idx, step in enumerate(steps):
-            has_error = int(step["has_errors"])
-            start = step.get("start_time", -1)
-            end = step.get("end_time", -1)
-
-            # skip intervalli non validi
-            if start == -1 or end == -1:
-                continue
-
-            # V2: step_id univoco che include timing
-            # formato: "{recording_id}_{step_idx}_{start_time:.3f}_{end_time:.3f}"
-            # es: "10_3_5_7.072_46.288"
-            step_id = f"{recording_id}_{step_idx}_{start:.3f}_{end:.3f}"
-
-            # Assegna label e step_id per TUTTI i secondi di questo step
-            for sec in range(int(start), int(end) + 1, 1):
-                if sec < N:  # check boundary
-                    labels[sec] = has_error
-                    
-                    # V2: traccia lo step di appartenenza per TUTTI gli step
-                    step_ids[sec] = step_id
+        X_grouped = []
+        y_grouped = []
+        step_ids_grouped = []
+        video_ids_grouped = []
         
-        # Rimuovi i records che non fanno parte di uno step
-        # Crea una maschera per tenere solo i records che hanno una label valida (0 o 1)
-        valid_mask = (labels == 0) | (labels == 1)
-        arr = arr[valid_mask]
-        labels = labels[valid_mask]
-        step_ids = step_ids[valid_mask]
-
-        return arr, labels, step_ids
-
-
-    # -------------------------------------------------------------
-    # 4) METODI STANDARD DEL DATASET
-    # -------------------------------------------------------------
+        # Dizionario per raggruppare: chiave = (video_id, step_id)
+        groups = {}
+        
+        # Raggruppa tutti i record per (video_id, step_id)
+        for idx in range(len(self.base_dataset)):
+            features, label, step_id, video_id = self.base_dataset[idx]
+            
+            key = (video_id, step_id)
+            
+            if key not in groups:
+                groups[key] = {
+                    'features': [],
+                    'label': label.item()  # Assumiamo che tutti i secondi dello step abbiano la stessa label
+                }
+            
+            groups[key]['features'].append(features.numpy())
+        
+        # Converte i gruppi in liste
+        for (video_id, step_id), data in sorted(groups.items()):
+            # Stack dei features: da lista di vettori a matrice (n_secondi, n_features)
+            step_features = np.stack(data['features'], axis=0)
+            
+            X_grouped.append(torch.from_numpy(step_features).float())
+            y_grouped.append(torch.tensor(data['label'], dtype=torch.long))
+            step_ids_grouped.append(step_id)
+            video_ids_grouped.append(video_id)
+        
+        return X_grouped, y_grouped, step_ids_grouped, video_ids_grouped
+    
     def __len__(self):
-        return len(self.unique_step_ids)
-
+        return len(self.X)
+    
     def __getitem__(self, idx):
-        # V2: restituisce TUTTI i sotto-step di uno step
-        step_id = self.unique_step_ids[idx]
-        
-        # Converti esplicitamente a numpy array di stringhe per la comparazione
-        step_ids_array = np.array(self.step_ids, dtype=str)
-        mask = step_ids_array == step_id
-        indices = np.where(mask)[0]
-        
-        # Ritorna: (X_seq, y_seq, step_id, num_substeps)
-        return (
-            self.X[indices],           # sequenza di feature
-            self.y[indices],           # sequenza di label
-            step_id,                   # ID dello step (stringa)
-            len(indices)               # lunghezza della sequenza
-        )
-    
-    # -------------------------------------------------------------
-    # 5) METODI SPECIFICI PER V2
-    # -------------------------------------------------------------
-    def get_substeps_for_step(self, step_id):
         """
-        [Solo V2] Restituisce tutti i sotto-step da 1s che appartengono a uno specifico step.
+        Restituisce uno step completo.
         
-        Args:
-            step_id: ID dello step (formato: recording_id_numeric * 1000 + step_index)
-            
         Returns:
-            tuple: (X, y, step_ids, indices) - features, labels, step_ids e indici dei sotto-step
+            tuple: (features, label, step_id, video_id)
+                - features: Tensor di shape (durata_step, n_features)
+                - label: Tensor scalare (0=OK, 1=ERR)
+                - step_id: int
+                - video_id: str
         """
-        mask = self.step_ids == step_id
-        indices = torch.where(mask)[0]
-        return self.X[indices], self.y[indices], self.step_ids[indices], indices.numpy()
+        return self.X[idx], self.y[idx], self.step_ids[idx], self.video_ids[idx]
     
-    def get_steps_for_recording(self, recording_id):
-        """
-        [Solo V2] Restituisce tutti gli step_ids univoci per una specifica registrazione.
-        
-        Args:
-            recording_id: ID della registrazione come stringa (es: "10_3")
-            
-        Returns:
-            list: lista degli step_ids univoci (stringhe come "10_3_0", "10_3_1", ...)
-        """
-        mask = np.array([sid.startswith(recording_id) for sid in self.step_ids])
-        unique_steps = np.unique(self.step_ids[mask])
-        return unique_steps.tolist()
-
-    # -------------------------------------------------------------
-    # 6) METODO PER RESTITUIRE LO SHAPE
-    # -------------------------------------------------------------
     def shape(self):
         """
-        Restituisce una tupla (num_samples, num_features) delle feature X.
+        Restituisce informazioni sulla forma del dataset.
+        
+        Returns:
+            dict: informazioni sulla struttura
         """
-        return self.X.shape
-
-    # -------------------------------------------------------------
-    # 7) METODI PER LA STAMPA
-    # -------------------------------------------------------------
+        if len(self) == 0:
+            return {
+                'num_steps': 0,
+                'n_features': 0,
+                'min_duration': 0,
+                'max_duration': 0,
+                'avg_duration': 0.0
+            }
+        
+        durations = [x.shape[0] for x in self.X]
+        n_features = self.X[0].shape[1] if len(self.X) > 0 else 0
+        
+        return {
+            'num_steps': len(self),
+            'n_features': n_features,
+            'min_duration': min(durations),
+            'max_duration': max(durations),
+            'avg_duration': np.mean(durations)
+        }
+    
     def print_item(self, idx):
         """
         Stampa formattata di un elemento del dataset.
@@ -260,27 +126,72 @@ class CaptainCook4DTransformer_Dataset(Dataset):
         Args:
             idx: indice dell'elemento
         """
-        item = self[idx]
-        X_seq, y_seq, step_id, seq_len = item
+        X, y, step_id, video_id = self[idx]
         
         print("=" * 80)
-        print(f"V2 DATASET ITEM [{idx}]")
+        print(f"STEP DATASET ITEM [{idx}]")
         print("=" * 80)
+        print(f"Features shape:       {X.shape} (durata_step, n_features)")
+        print(f"Step duration:        {X.shape[0]} secondi")
+        print(f"Label:                {y.item()} ({'OK' if y.item() == 0 else 'ERR'})")
         print(f"Step ID:              {step_id}")
-        print(f"Sequence length:      {seq_len} seconds")
-        print(f"Features shape:       {X_seq.shape} (seconds x features)")
-        print(f"Labels shape:         {y_seq.shape} (seconds)")
+        print(f"Video ID:             {video_id}")
+        print("=" * 80)
+    
+    def get_step_info(self, video_id=None, step_id=None):
+        """
+        Restituisce gli indici dei record che corrispondono a un certo video_id e/o step_id.
         
-        # Parse step_id
-        parts = step_id.split("_")
-        recording_id = f"{parts[0]}_{parts[1]}"
-        step_idx = parts[2]
-        start_time = float(parts[3])
-        end_time = float(parts[4])
+        Args:
+            video_id (str, optional): filtra per video_id
+            step_id (int, optional): filtra per step_id
+            
+        Returns:
+            list: lista di indici che corrispondono ai criteri
+        """
+        indices = []
         
-        print(f"\nStep details:")
-        print(f"  Video ID:             {recording_id}")
-        print(f"  Step index:           {step_idx}")
-        print(f"  Timing:               {start_time:.3f}s - {end_time:.3f}s ({end_time - start_time:.3f}s)")
-        print(f"  Label sequence:       {y_seq.tolist()}")
+        for idx in range(len(self)):
+            match = True
+            
+            if video_id is not None and self.video_ids[idx] != video_id:
+                match = False
+            
+            if step_id is not None and self.step_ids[idx] != step_id:
+                match = False
+            
+            if match:
+                indices.append(idx)
+        
+        return indices
+    
+    def print_summary(self):
+        """
+        Stampa un riassunto del dataset.
+        """
+        shape_info = self.shape()
+        
+        print("=" * 80)
+        print("DATASET SUMMARY")
+        print("=" * 80)
+        print(f"Total steps:          {shape_info['num_steps']}")
+        print(f"Features per second:  {shape_info['n_features']}")
+        print(f"Step duration (min):  {shape_info['min_duration']} secondi")
+        print(f"Step duration (max):  {shape_info['max_duration']} secondi")
+        print(f"Step duration (avg):  {shape_info['avg_duration']:.2f} secondi")
+        
+        # Conta label
+        num_errors = sum(1 for y in self.y if y.item() == 1)
+        num_ok = sum(1 for y in self.y if y.item() == 0)
+        
+        print(f"\nLabel distribution:")
+        print(f"  OK (0):             {num_ok} ({num_ok/len(self)*100:.1f}%)")
+        print(f"  ERR (1):            {num_errors} ({num_errors/len(self)*100:.1f}%)")
+        
+        # Conta video unici
+        unique_videos = len(set(self.video_ids))
+        unique_steps = len(set(self.step_ids))
+        
+        print(f"\nUnique videos:        {unique_videos}")
+        print(f"Unique step IDs:      {unique_steps}")
         print("=" * 80)
