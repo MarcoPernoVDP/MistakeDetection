@@ -169,7 +169,7 @@ def get_transformer_loaders(dataset: Dataset, batch_size: int = 1, val_ratio: fl
     print("="*85 + "\n")
     
     # 4. Crea Loaders
-    kwargs = {'num_workers': 0, 'pin_memory': True}
+    kwargs = {'num_workers': 2, 'pin_memory': True}
     
     return (
         DataLoader(train_ds, batch_size=batch_size, shuffle=True, **kwargs),
