@@ -31,6 +31,12 @@ class CaptainCook4DTransformer_Dataset(Dataset):
         
         print(f"Dataset creato: {len(self)} step completi da {len(self.base_dataset)} secondi")
     
+    def features_dir(self) -> str:
+        return self.base_dataset.features_dir()
+    
+    def annotations_dir(self) -> str:
+        return self.base_dataset.annotations_dir()
+
     def _group_by_steps(self):
         """
         Raggruppa i record del dataset base per (video_id, step_id).
