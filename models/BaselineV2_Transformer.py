@@ -20,7 +20,7 @@ class PositionalEncoding(nn.Module):
         
 
 class BaselineV2_Transformer(nn.Module):
-    def __init__(self, feature_dim=1024, n_heads=8, num_layers=2, dropout=0.1):
+    def __init__(self, feature_dim=1024, n_heads=8, num_layers=2, dropout=0.5):
         super().__init__()
 
         self.pos_enc = PositionalEncoding(feature_dim)
