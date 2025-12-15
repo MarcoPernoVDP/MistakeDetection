@@ -75,10 +75,10 @@ class PerceptionFeatureExtractor:
             "1s"
         )
         os.makedirs(self.save_dir, exist_ok=True)
-        print(f"📁 Directory Output configurata: {self.save_dir}")
+        print(f"Directory Output configurata: {self.save_dir}")
 
     def _setup_model(self):
-        print(f"🔄 Caricamento Modello: {self.cfg.model_name}...")
+        print(f"Caricamento Modello: {self.cfg.model_name}...")
         # num_classes=0 rimuove l'ultimo layer per ottenere l'embedding puro
         self.model = timm.create_model(
             self.cfg.model_name, 
@@ -97,8 +97,6 @@ class PerceptionFeatureExtractor:
         if not videos:
             print(f"❌ Nessun video trovato in {self.cfg.video_dir}")
             return
-
-        print(f"🚀 Inizio estrazione su {len(videos)} video...")
         
         for video_path in tqdm(videos, desc="Estrazione Feature"):
             filename = os.path.basename(video_path)
@@ -128,4 +126,4 @@ class PerceptionFeatureExtractor:
                 final_features = np.vstack(features_list)
                 np.savez_compressed(save_path, features=final_features)
                 
-        print("🎉 Estrazione Completata!")
+        print("Estrazione Completata!")
