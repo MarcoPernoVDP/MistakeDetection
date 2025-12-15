@@ -11,39 +11,34 @@ from timm.data.transforms_factory import create_transform
 from tqdm.auto import tqdm
 from dataclasses import dataclass
 from typing import Optional
+from torch.utils.data import Dataset, DataLoader
 
 @dataclass
 class ExtractionConfig:
     """Configurazione per l'estrazione delle feature."""
-    video_dir: str              # Cartella dove si trovano i video .mp4
-    output_root: str            # Cartella radice dove salvare le feature
-    model_name: str = 'vit_base_patch16_224.fb_pe_core' # Modello Perception Encoder
-    batch_size: int = 64        # Dimensione batch per la GPU
+    video_dir: str              
+    output_root: str            
+    model_name: str = 'vit_base_patch16_224.fb_pe_core' 
+    batch_size: int = 64        # Batch per l'inferenza GPU
     device: str = 'cuda' if torch.cuda.is_available() else 'cpu'
-    fps_target: int = 1         # Quante feature per secondo estrarre (Default: 1)
-    
+    fps_target: int = 1         
+    num_workers: int = 4        # NUOVO: Numero di processi paralleli per caricare i video
+
 class VideoLoader:
-    """Gestisce il caricamento video e il preprocessing dei frame."""
-    
+    """Gestisce il preprocessing dei frame."""
     def __init__(self, model_config):
-        # Crea le trasformazioni (resize, norm) specifiche del modello
         self.transform = create_transform(**model_config)
     
     def process_video(self, video_path: str) -> Optional[torch.Tensor]:
         try:
-            # Decord: lettura efficiente senza decoding completo
             vr = VideoReader(video_path, ctx=cpu(0))
             video_fps = vr.get_avg_fps()
             duration = len(vr) / video_fps
             frames_tensor_list = []
             
-            # Logica: 1 frame al centro di ogni secondo
             num_seconds = int(np.ceil(duration))
             for sec in range(num_seconds):
-                # Calcola indice frame
                 frame_idx = int(min((sec + 0.5) * video_fps, len(vr) - 1))
-                
-                # Converti in PIL e applica trasformazioni
                 frame_np = vr[frame_idx].asnumpy()
                 frame_pil = Image.fromarray(frame_np)
                 frames_tensor_list.append(self.transform(frame_pil))
@@ -51,79 +46,119 @@ class VideoLoader:
             if not frames_tensor_list:
                 return None
                 
-            # Restituisce tensore (T, C, H, W)
             return torch.stack(frames_tensor_list)
-            
         except Exception as e:
+            # Stampiamo l'errore ma non blocchiamo il worker
             print(f"⚠️ Errore lettura {os.path.basename(video_path)}: {e}")
             return None
 
+class VideoDataset(Dataset):
+    """Dataset PyTorch per caricare i video in parallelo."""
+    def __init__(self, video_paths, loader, save_dir):
+        self.video_paths = video_paths
+        self.loader = loader
+        self.save_dir = save_dir
+
+    def __len__(self):
+        return len(self.video_paths)
+
+    def __getitem__(self, idx):
+        video_path = self.video_paths[idx]
+        filename = os.path.basename(video_path)
+        save_path = os.path.join(self.save_dir, f"{filename}_1s_1s.npz")
+        
+        # Check esistenza file (Resume) fatto nel worker
+        if os.path.exists(save_path):
+            return None # Skip segnalato con None
+            
+        video_tensor = self.loader.process_video(video_path)
+        
+        if video_tensor is None:
+            return None # Skip per errore lettura
+            
+        return video_tensor, save_path
+
+def collate_fn_skip_none(batch):
+    """
+    Gestisce il caso in cui un video sia skippato (None).
+    Poiché usiamo batch_size=1 nel DataLoader, 'batch' è una lista di 1 elemento.
+    """
+    item = batch[0]
+    if item is None:
+        return None
+    return item
+
 class PerceptionFeatureExtractor:
-    """Motore principale per l'estrazione delle feature con Perception Encoder."""
+    """Motore principale per l'estrazione delle feature."""
     
     def __init__(self, config: ExtractionConfig):
         self.cfg = config
         self._setup_model()
+        # Inizializza il loader che verrà passato ai worker
         self.loader = VideoLoader(resolve_data_config({}, model=self.model))
         
-        # Struttura output standard per il progetto:
-        # {output_root}/perception_encoder/segment/1s/
         self.save_dir = os.path.join(
-            self.cfg.output_root, 
-            "perception_encoder", 
-            "segment", 
-            "1s"
+            self.cfg.output_root, "perception_encoder", "segment", "1s"
         )
         os.makedirs(self.save_dir, exist_ok=True)
         print(f"Directory Output configurata: {self.save_dir}")
 
     def _setup_model(self):
         print(f"Caricamento Modello: {self.cfg.model_name}...")
-        # num_classes=0 rimuove l'ultimo layer per ottenere l'embedding puro
         self.model = timm.create_model(
-            self.cfg.model_name, 
-            pretrained=True, 
-            num_classes=0
+            self.cfg.model_name, pretrained=True, num_classes=0
         )
         self.model.to(self.cfg.device).eval()
         print("✅ Modello pronto.")
 
     def run(self):
-        """Esegue l'estrazione su tutti i video nella cartella configurata."""
-        # Cerca video ricorsivamente (.mp4)
+        # 1. Trova i file video
         search_pattern = os.path.join(self.cfg.video_dir, "**", "*.mp4")
         videos = glob.glob(search_pattern, recursive=True)
         
         if not videos:
             print(f"❌ Nessun video trovato in {self.cfg.video_dir}")
             return
+
+        # 2. Crea Dataset e DataLoader
+        # Passiamo il loader esistente al dataset
+        dataset = VideoDataset(videos, self.loader, self.save_dir)
         
-        for video_path in tqdm(videos, desc="Estrazione Feature"):
-            filename = os.path.basename(video_path)
-            # Nome file output: video.mp4_1s_1s.npz
-            save_path = os.path.join(self.save_dir, f"{filename}_1s_1s.npz")
-            
-            # Skip se esiste già (Resume automatico)
-            if os.path.exists(save_path): 
-                continue
+        # batch_size=1 nel DataLoader perché i video hanno lunghezza diversa.
+        # Il parallelismo reale avviene grazie a num_workers che pre-carica i prossimi N video.
+        dataloader = DataLoader(
+            dataset, 
+            batch_size=1, 
+            shuffle=False, 
+            num_workers=self.cfg.num_workers,
+            collate_fn=collate_fn_skip_none,
+            pin_memory=True if self.cfg.device == 'cuda' else False
+        )
 
-            # 1. Carica e trasforma i frame
-            video_tensor = self.loader.process_video(video_path)
-            if video_tensor is None: 
-                continue
+        print(f"Avvio estrazione con {self.cfg.num_workers} workers...")
 
-            # 2. Inferenza in Batch (per non saturare la VRAM)
-            features_list = []
-            with torch.no_grad():
+        # 3. Ciclo di inferenza
+        with torch.no_grad():
+            for batch in tqdm(dataloader, total=len(videos), desc="Estrazione Feature"):
+                # Se il worker ha ritornato None (video già esistente o errore), saltiamo
+                if batch is None:
+                    continue
+                
+                video_tensor, save_path = batch
+                
+                # video_tensor arriva dal loader con dimensione [T, C, H, W]
+                # Non c'è la dimensione batch extra perché collate_fn l'ha rimossa o non aggiunta
+                
+                # Inferenza a blocchi (GPU Batching)
+                features_list = []
                 for i in range(0, len(video_tensor), self.cfg.batch_size):
-                    batch = video_tensor[i : i + self.cfg.batch_size].to(self.cfg.device)
-                    # Forward pass
-                    emb = self.model(batch)
+                    batch_gpu = video_tensor[i : i + self.cfg.batch_size].to(self.cfg.device)
+                    emb = self.model(batch_gpu)
                     features_list.append(emb.cpu().numpy())
 
-            # 3. Salvataggio
-            if features_list:
-                final_features = np.vstack(features_list)
-                np.savez_compressed(save_path, features=final_features)
+                # Salvataggio
+                if features_list:
+                    final_features = np.vstack(features_list)
+                    np.savez_compressed(save_path, features=final_features)
                 
         print("Estrazione Completata!")
