@@ -41,7 +41,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
 
         self.annotations = self._load_annotations()
         
-        self.X, self.y, self.steps, self.videos = self._load_all_npz(self.annotations)
+        self.X, self.y, self.steps, self.videos, self.start_times = self._load_all_npz(self.annotations)
         # conversione a tensori
         self.X = torch.from_numpy(self.X).float()
         self.y = torch.from_numpy(self.y).long()
@@ -92,6 +92,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
         all_labels = []
         all_steps = []
         all_videos = []
+        all_start_times = []
 
         for file in sorted(os.listdir(self.features_dir())):
             if not file.endswith(".npz"):
@@ -102,12 +103,13 @@ class CaptainCook4DMLP_Dataset(Dataset):
             try:
                 result = self._get_labels_for_npz(file_path, annotations)
                 
-                features, labels, steps, videos = result
+                features, labels, steps, videos, start_times = result
                 
                 all_features.append(features)
                 all_labels.append(labels)
                 all_steps.append(steps)
                 all_videos.append(videos)
+                all_start_times.append(start_times)
                 
             except KeyError as e:
                 # npz non presente nelle annotazioni
@@ -124,7 +126,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
                 reason="Nessun file .npz valido trovato o caricato"
             )
 
-        return np.concatenate(all_features, axis=0), np.concatenate(all_labels, axis=0), np.concatenate(all_steps, axis=0), np.concatenate(all_videos, axis=0)
+        return np.concatenate(all_features, axis=0), np.concatenate(all_labels, axis=0), np.concatenate(all_steps, axis=0), np.concatenate(all_videos, axis=0), np.concatenate(all_start_times, axis=0)
 
 
     # -------------------------------------------------------------
@@ -135,7 +137,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
         Genera le label (e step_ids se V2) per un singolo file .npz usando le annotazioni JSON.
         
         Returns:
-            tuple (features, labels, steps, videos)
+            tuple (features, labels, steps, videos, start_times)
         """
 
         # es: "10_3_360.mp4_1s_1s.npz" → recording_id = "10_3"
@@ -152,6 +154,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
         labels = np.ones(N, dtype=np.int64) * -1
         steps = np.ones(N, dtype=np.int64) * -1
         videos = np.empty(N, dtype=object)
+        start_times = np.empty(N, dtype=np.float64)
 
         # recupero annotazioni del video
         info = annotations[recording_id]
@@ -173,6 +176,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
                     labels[sec] = has_error
                     steps[sec] = step_dict["step_id"]
                     videos[sec] = recording_id
+                    start_times[sec] = start
 
 
         # Rimuovi i records che non fanno parte di uno step
@@ -182,8 +186,9 @@ class CaptainCook4DMLP_Dataset(Dataset):
         labels = labels[valid_mask]
         steps = steps[valid_mask]
         videos = videos[valid_mask]
+        start_times = start_times[valid_mask]
 
-        return arr, labels, steps, videos
+        return arr, labels, steps, videos, start_times
 
 
     # -------------------------------------------------------------
@@ -195,7 +200,7 @@ class CaptainCook4DMLP_Dataset(Dataset):
 
     def __getitem__(self, idx):
         # V1: restituisce singolo sotto-step
-        return self.X[idx], self.y[idx], self.steps[idx], self.videos[idx]
+        return self.X[idx], self.y[idx], self.steps[idx], self.videos[idx], self.start_times[idx]
     
     # -------------------------------------------------------------
     # 6) METODO PER RESTITUIRE LO SHAPE
@@ -227,4 +232,5 @@ class CaptainCook4DMLP_Dataset(Dataset):
         print(f"Label:                {y.item()} ({'OK' if y.item() == 0 else 'ERR'})")
         print(f"Step id:              {step_id}")
         print(f"Video id:             {video_id}")
+        print(f"Start time:           {self.start_times[idx]} seconds")
         print("=" * 80)

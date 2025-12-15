@@ -77,23 +77,11 @@ def custom_collate_fn(batch):
     - V2: batch di sequenze (X_seq, y_seq, step_id, seq_len)
            senza padding (batch_size sempre 1)
     """
-    if len(batch[0]) == 4:  # V1 - con steps e videos
-        X, y, steps, videos = zip(*batch)
-        return torch.stack(X), torch.stack(y), torch.tensor(steps), list(videos)
-    
-    elif len(batch[0]) == 2:  # V1 - senza steps/videos (retrocompatibilità)
-        X, y = zip(*batch)
-        return torch.stack(X), torch.stack(y)
-    
-    else:  # V2 - batch_size = 1, niente padding
-        X_seq, y_seq, step_id, seq_len = batch[0]
-        
-        return {
-            'X': X_seq,                    # shape: (seq_len, 1024)
-            'y': y_seq,                    # shape: (seq_len,)
-            'step_id': step_id,            # stringa es: "10_3_5"
-            'seq_len': seq_len             # scalare
-        }
+    if len(batch[0]) == 5:  # V1 - con steps e videos
+        X, y, steps, videos, start_times = zip(*batch)
+        return torch.stack(X), torch.stack(y), torch.tensor(steps), list(videos), list(start_times)
+    else:
+        raise ValueError("Batch items have unexpected structure.")
 
 def get_mlp_loaders(dataset: Dataset, batch_size: int = 512, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42, split_type: SplitType = SplitType.STEP_ID):
     # 1. Stampa Info Generali
@@ -288,8 +276,8 @@ def split_by_step_transformer(dataset: Dataset, lengths: list[int], generator: t
     groups = defaultdict(list)   # (video_id, step_id) -> [idx1, idx2, ...]
 
     for idx in range(len(dataset)):
-        _, _, step_id, video_id = dataset[idx]   # X, y, step_id, video_id
-        groups[(video_id, step_id)].append(idx)
+        _, _, step_id, video_id, start_time = dataset[idx]   # X, y, step_id, video_id, start_time
+        groups[(video_id, step_id, start_time)].append(idx)
 
     # ---- 2. Shuffle dei gruppi ----
     group_keys = list(groups.keys())
@@ -333,7 +321,7 @@ def split_by_video_transformer(dataset: Dataset, lengths: list[int], generator: 
     groups = defaultdict(list)   # video_id -> [idx1, idx2, ...]
 
     for idx in range(len(dataset)):
-        _, _, _, video_id = dataset[idx]   # X, y, step_id, video_id
+        _, _, _, video_id, _ = dataset[idx]   # X, y, step_id, video_id, start_time
         groups[video_id].append(idx)
 
     # ---- 2. Shuffle dei video ----

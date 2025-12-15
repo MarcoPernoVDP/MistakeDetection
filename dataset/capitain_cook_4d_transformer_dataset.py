@@ -27,7 +27,7 @@ class CaptainCook4DTransformer_Dataset(Dataset):
         self.base_dataset = CaptainCook4DMLP_Dataset(dataset_source, root_dir)
         
         # Raggruppa i record per (video_id, step_id)
-        self.X, self.y, self.step_ids, self.video_ids = self._group_by_steps()
+        self.X, self.y, self.step_ids, self.video_ids, self.start_times = self._group_by_steps()
         
         print(f"Dataset creato: {len(self)} step completi da {len(self.base_dataset)} secondi")
     
@@ -47,20 +47,22 @@ class CaptainCook4DTransformer_Dataset(Dataset):
                 - y_list: lista di label (1 per step)
                 - step_ids_list: lista di step_id
                 - video_ids_list: lista di video_id
+                - start_times_list: lista di start_time
         """
         X_grouped = []
         y_grouped = []
         step_ids_grouped = []
         video_ids_grouped = []
+        start_times_grouped = []
         
         # Dizionario per raggruppare: chiave = (video_id, step_id)
         groups = {}
         
         # Raggruppa tutti i record per (video_id, step_id)
         for idx in range(len(self.base_dataset)):
-            features, label, step_id, video_id = self.base_dataset[idx]
+            features, label, step_id, video_id, start_time = self.base_dataset[idx]
             
-            key = (video_id, step_id)
+            key = (video_id, start_time, step_id)
             
             if key not in groups:
                 groups[key] = {
@@ -71,7 +73,7 @@ class CaptainCook4DTransformer_Dataset(Dataset):
             groups[key]['features'].append(features.numpy())
         
         # Converte i gruppi in liste
-        for (video_id, step_id), data in sorted(groups.items()):
+        for (video_id, start_time, step_id), data in sorted(groups.items()):
             # Stack dei features: da lista di vettori a matrice (n_secondi, n_features)
             step_features = np.stack(data['features'], axis=0)
             
@@ -79,8 +81,9 @@ class CaptainCook4DTransformer_Dataset(Dataset):
             y_grouped.append(torch.tensor(data['label'], dtype=torch.long))
             step_ids_grouped.append(step_id)
             video_ids_grouped.append(video_id)
+            start_times_grouped.append(start_time)
         
-        return X_grouped, y_grouped, step_ids_grouped, video_ids_grouped
+        return X_grouped, y_grouped, step_ids_grouped, video_ids_grouped, start_times_grouped
     
     def __len__(self):
         return len(self.X)
@@ -96,7 +99,7 @@ class CaptainCook4DTransformer_Dataset(Dataset):
                 - step_id: int
                 - video_id: str
         """
-        return self.X[idx], self.y[idx], self.step_ids[idx], self.video_ids[idx]
+        return self.X[idx], self.y[idx], self.step_ids[idx], self.video_ids[idx], self.start_times[idx]
     
     def shape(self):
         """
@@ -132,7 +135,7 @@ class CaptainCook4DTransformer_Dataset(Dataset):
         Args:
             idx: indice dell'elemento
         """
-        X, y, step_id, video_id = self[idx]
+        X, y, step_id, video_id, start_time = self[idx]
         
         print("=" * 80)
         print(f"STEP DATASET ITEM [{idx}]")
@@ -142,10 +145,12 @@ class CaptainCook4DTransformer_Dataset(Dataset):
         print(f"Label:                {y.item()} ({'OK' if y.item() == 0 else 'ERR'})")
         print(f"Step ID:              {step_id}")
         print(f"Video ID:             {video_id}")
+        print(f"Start time:           {self.start_times[idx]} seconds")
         print("=" * 80)
     
+    """
     def get_step_info(self, video_id=None, step_id=None):
-        """
+        
         Restituisce gli indici dei record che corrispondono a un certo video_id e/o step_id.
         
         Args:
@@ -154,7 +159,7 @@ class CaptainCook4DTransformer_Dataset(Dataset):
             
         Returns:
             list: lista di indici che corrispondono ai criteri
-        """
+        
         indices = []
         
         for idx in range(len(self)):
@@ -170,6 +175,7 @@ class CaptainCook4DTransformer_Dataset(Dataset):
                 indices.append(idx)
         
         return indices
+    """
     
     def print_summary(self):
         """
