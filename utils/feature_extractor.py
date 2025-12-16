@@ -121,44 +121,75 @@ class PerceptionFeatureExtractor:
             return
 
         # 2. Crea Dataset e DataLoader
-        # Passiamo il loader esistente al dataset
         dataset = VideoDataset(videos, self.loader, self.save_dir)
         
-        # batch_size=1 nel DataLoader perché i video hanno lunghezza diversa.
-        # Il parallelismo reale avviene grazie a num_workers che pre-carica i prossimi N video.
+        # MODIFICA CRITICA 1: Riduciamo la pressione sul DataLoader
+        # Su Colab con poca RAM, pin_memory può essere dannoso se la RAM è al limite.
+        # num_workers > 0 copia i dati in memoria condivisa, che consuma molta RAM.
         dataloader = DataLoader(
             dataset, 
             batch_size=1, 
             shuffle=False, 
-            num_workers=self.cfg.num_workers,
+            num_workers=self.cfg.num_workers, # Consiglio: metti a 0 o 1 nel Config se crasha ancora
             collate_fn=collate_fn_skip_none,
-            pin_memory=True if self.cfg.device == 'cuda' else False
+            pin_memory=False # Mettiamo False per sicurezza su Colab
         )
 
         print(f"Avvio estrazione con {self.cfg.num_workers} workers...")
 
         # 3. Ciclo di inferenza
         with torch.no_grad():
-            for batch in tqdm(dataloader, total=len(videos), desc="Estrazione Feature"):
-                # Se il worker ha ritornato None (video già esistente o errore), saltiamo
+            # Usiamo enumerate per poter chiamare il GC ogni tot cicli
+            for batch_idx, batch in tqdm(enumerate(dataloader), total=len(videos), desc="Estrazione Feature"):
+                
                 if batch is None:
                     continue
                 
                 video_tensor, save_path = batch
                 
-                # video_tensor arriva dal loader con dimensione [T, C, H, W]
-                # Non c'è la dimensione batch extra perché collate_fn l'ha rimossa o non aggiunta
+                # MODIFICA CRITICA 2: Gestione Tensori
+                # video_tensor qui è [1, T, C, H, W] (per via del batch_size=1 del loader)
+                # Lo rimuoviamo dalla dimensione batch inutile per lavorarci meglio
+                if video_tensor.dim() == 5:
+                    video_tensor = video_tensor.squeeze(0)
                 
-                # Inferenza a blocchi (GPU Batching)
                 features_list = []
-                for i in range(0, len(video_tensor), self.cfg.batch_size):
-                    batch_gpu = video_tensor[i : i + self.cfg.batch_size].to(self.cfg.device)
-                    emb = self.model(batch_gpu)
-                    features_list.append(emb.cpu().numpy())
-
-                # Salvataggio
-                if features_list:
-                    final_features = np.vstack(features_list)
-                    np.savez_compressed(save_path, features=final_features)
                 
+                try:
+                    # Inferenza a blocchi (GPU Batching)
+                    for i in range(0, len(video_tensor), self.cfg.batch_size):
+                        # Spostiamo su GPU SOLO il pezzettino che serve ora
+                        batch_gpu = video_tensor[i : i + self.cfg.batch_size].to(self.cfg.device, non_blocking=True)
+                        
+                        emb = self.model(batch_gpu)
+                        
+                        # Spostiamo subito su CPU e in Numpy per liberare VRAM
+                        features_list.append(emb.cpu().numpy())
+                        
+                        # Pulizia variabili temporanee loop
+                        del batch_gpu, emb
+
+                    # Salvataggio
+                    if features_list:
+                        final_features = np.vstack(features_list)
+                        np.savez_compressed(save_path, features=final_features)
+                
+                except Exception as e:
+                    print(f"Errore durante inferenza: {e}")
+                
+                finally:
+                    # MODIFICA CRITICA 3: Pulizia Aggressiva della Memoria
+                    # Cancelliamo esplicitamente le variabili grandi
+                    del video_tensor
+                    del features_list
+                    if 'final_features' in locals(): del final_features
+                    if 'batch' in locals(): del batch
+                    
+                    # Svuota la cache CUDA
+                    torch.cuda.empty_cache()
+                    
+                    # Forza il Garbage Collector di Python ogni 5 video (o anche 1 se necessario)
+                    if batch_idx % 5 == 0:
+                        gc.collect()
+
         print("Estrazione Completata!")
