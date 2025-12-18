@@ -1,5 +1,6 @@
 # feature_extractor.py
 import os
+import gc
 import glob
 import numpy as np
 import torch
