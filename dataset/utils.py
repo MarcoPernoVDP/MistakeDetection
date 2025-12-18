@@ -386,3 +386,134 @@ def print_class_balance_transformer(dataset, name: str = "Dataset"):
             print(f" | Ratio: 1:{cnt_0/cnt_1:.1f}")
         else: 
             print("")
+
+def split_by_video_task2subtask2(dataset: Dataset, lengths: list[int], generator: torch.Generator):
+    """
+    Divide il dataset Task2Subtask2 in train/val/test.
+    Ogni record è già un video completo, quindi semplicemente shuffliamo e dividiamo i video.
+    
+    Args:
+        dataset: CaptainCook4DTask2Subtask2_Dataset
+        lengths: [train_len, val_len, test_len]
+        generator: torch.Generator per riproducibilità
+    """
+    # ---- 1. Raggruppa per video_id (ogni record è già un video) ----
+    groups = defaultdict(list)   # video_id -> [idx]
+
+    for idx in range(len(dataset)):
+        _, _, video_id = dataset[idx]   # X, y, video_id
+        groups[video_id].append(idx)
+
+    # ---- 2. Shuffle dei video ----
+    video_ids = list(groups.keys())
+    perm = torch.randperm(len(video_ids), generator=generator)
+    video_ids = [video_ids[i] for i in perm]
+
+    # ---- 3. Assegnazione ai tre split ----
+    train_len, val_len, test_len = lengths
+    train_idx, val_idx, test_idx = [], [], []
+    count_train = count_val = count_test = 0
+
+    for vid in video_ids:
+        idxs = groups[vid]
+        group_size = len(idxs)
+
+        # Prova ad assegnare al TRAIN
+        if count_train + group_size <= train_len:
+            train_idx.extend(idxs)
+            count_train += group_size
+            continue
+
+        # Prova ad assegnare alla VALIDATION
+        if count_val + group_size <= val_len:
+            val_idx.extend(idxs)
+            count_val += group_size
+            continue
+
+        # Altrimenti finisce nel TEST
+        test_idx.extend(idxs)
+        count_test += group_size
+
+    # ---- 4. Restituisce i 3 subset ----
+    return (
+        Subset(dataset, train_idx),
+        Subset(dataset, val_idx),
+        Subset(dataset, test_idx),
+    )
+
+def print_class_balance_task2subtask2(dataset, name: str = "Dataset"):
+    """
+    Stampa il bilanciamento delle classi per il dataset Task2Subtask2.
+    Nel dataset Task2Subtask2: ogni record è un video completo con una singola label.
+    """
+    if isinstance(dataset, Subset):
+        # Estrai le label dai record del subset
+        labels = [dataset.dataset.y[i] for i in dataset.indices]
+        labels = torch.stack(labels)
+    else:
+        # Converti la lista di tensor in un singolo tensor
+        labels = torch.stack(dataset.y)
+    
+    cnt_0 = (labels == 0).sum().item()
+    cnt_1 = (labels == 1).sum().item()
+    total = cnt_0 + cnt_1
+    
+    if total == 0:
+        print(f"{name:<18} | Tot: 0      | No Err: 0     (N/A) | Has Err: 0     (N/A)")
+    else:
+        print(f"{name:<18} | Tot: {total:<6} | No Err: {cnt_0:<5} ({cnt_0/total:.1%}) | Has Err: {cnt_1:<5} ({cnt_1/total:.1%})", end="")
+        if cnt_1 > 0: 
+            print(f" | Ratio: 1:{cnt_0/cnt_1:.1f}")
+        else: 
+            print("")
+
+def get_task2_subtask2_loaders(dataset: Dataset, batch_size: int = 1, val_ratio: float = 0.1, test_ratio: float = 0.2, seed: int = 42):
+    """
+    Crea DataLoader per il dataset Task2Subtask2 (video completi).
+    Ogni record è un video completo con label che indica se contiene errori.
+    
+    Args:
+        dataset: CaptainCook4DTask2Subtask2_Dataset
+        batch_size: dimensione del batch (tipicamente 1 per sequenze di lunghezza variabile)
+        val_ratio: proporzione del validation set
+        test_ratio: proporzione del test set
+        seed: seed per riproducibilità
+    
+    Returns:
+        tuple: (train_loader, val_loader, test_loader)
+    """
+    # 1. Stampa Info Generali
+    print("\n" + "="*85)
+    shape_info = dataset.shape()
+    print(f"DATASET INFO [TASK2-SUBTASK2 - VIDEO-BASED]")
+    print(f"   Total Videos: {shape_info['num_videos']}")
+    print(f"   Features per second: {shape_info['n_features']}")
+    print(f"   Video duration: min={shape_info['min_duration']}s, max={shape_info['max_duration']}s, avg={shape_info['avg_duration']:.2f}s")
+    print("="*85)
+
+    # 2. Split (solo per video, non c'è split per step)
+    total = len(dataset)
+    test_len = int(test_ratio * total)
+    val_len = int(val_ratio * total)
+    train_len = total - test_len - val_len
+    
+    gen = torch.Generator().manual_seed(seed)
+    train_ds, val_ds, test_ds = split_by_video_task2subtask2(dataset, [train_len, val_len, test_len], generator=gen)
+
+    # 3. Stampa Bilanciamento
+    print_class_balance_task2subtask2(dataset, "FULL DATASET")
+    print("-" * 85)
+    print_class_balance_task2subtask2(train_ds, "TRAIN SET")
+    print_class_balance_task2subtask2(val_ds, "VALIDATION SET")
+    print_class_balance_task2subtask2(test_ds, "TEST SET")
+    
+    print("="*85 + "\n")
+    
+    # 4. Crea Loaders
+    kwargs = {'num_workers': 2, 'pin_memory': True}
+    
+    return (
+        DataLoader(train_ds, batch_size=batch_size, shuffle=True, **kwargs),
+        DataLoader(val_ds, batch_size=batch_size, shuffle=False, **kwargs),
+        DataLoader(test_ds, batch_size=batch_size, shuffle=False, **kwargs)
+    )
