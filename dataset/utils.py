@@ -487,8 +487,8 @@ def get_task2_subtask2_loaders(dataset: Dataset, batch_size: int = 1, val_ratio:
     shape_info = dataset.shape()
     print(f"DATASET INFO [TASK2-SUBTASK2 - VIDEO-BASED]")
     print(f"   Total Videos: {shape_info['num_videos']}")
-    print(f"   Features per second: {shape_info['n_features']}")
-    print(f"   Video duration: min={shape_info['min_duration']}s, max={shape_info['max_duration']}s, avg={shape_info['avg_duration']:.2f}s")
+    print(f"   Features per step: {shape_info['n_features']}")
+    print(f"   Steps per video: min={shape_info['min_steps']}, max={shape_info['max_steps']}, avg={shape_info['avg_steps']:.2f}")
     print("="*85)
 
     # 2. Split (solo per video, non c'è split per step)

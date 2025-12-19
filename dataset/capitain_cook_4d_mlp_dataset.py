@@ -15,9 +15,10 @@ from exceptions import (
 class DatasetSource(Enum):
     OMNIVORE = "omnivore"
     SLOWFAST = "slowfast"
+    HIERO = "hiero"
 
     def input_dims(self) -> int:
-        if self == DatasetSource.OMNIVORE:
+        if self == DatasetSource.OMNIVORE or self == DatasetSource.HIERO:
             return 1024
         elif self == DatasetSource.SLOWFAST:
             return 400

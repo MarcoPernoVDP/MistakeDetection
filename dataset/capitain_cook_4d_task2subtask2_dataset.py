@@ -3,44 +3,45 @@ from torch.utils.data import Dataset
 import numpy as np
 import json
 import os
-from .capitain_cook_4d_mlp_dataset import CaptainCook4DMLP_Dataset, DatasetSource
+from glob import glob
 
 
 class CaptainCook4DTask2Subtask2_Dataset(Dataset):
     """
     Dataset per CaptainCook4D dove ogni record rappresenta un video completo.
     
-    A differenza del dataset base (dove ogni record è 1 secondo di uno step),
-    qui ogni record contiene TUTTI i secondi di un intero video.
+    Ogni record contiene TUTTI gli step di un intero video.
+    Carica i dati direttamente dalla cartella data/hiero dove ogni file .npz
+    contiene gli step di un video.
     
-    Ogni elemento X[i] ha shape: (durata_video_in_secondi, n_features)
+    Ogni elemento X[i] ha shape: (num_steps, n_features)
     
     La label indica se il video contiene errori (1) o no (0), basandosi
     sulle annotazioni a livello video.
     """
     
-    def __init__(self, dataset_source: DatasetSource, root_dir: str):
+    def __init__(self, root_dir: str):
         """
         Args:
-            dataset_source (DatasetSource): fonte delle feature (OMNIVORE o SLOWFAST)
             root_dir (str): path alla cartella root del dataset
         """
-        # Carica il dataset base (1 secondo per record)
-        self.base_dataset = CaptainCook4DMLP_Dataset(dataset_source, root_dir)
+        self.root_dir = root_dir
+        
+        print(f"Loading from: {self.features_dir()}...")
         
         # Carica le annotazioni a livello video
         self.video_annotations = self._load_video_annotations(root_dir)
         
-        # Raggruppa i record per video_id
-        self.X, self.y, self.video_ids = self._group_by_videos()
+        # Carica i dati da hiero
+        self.X, self.y, self.video_ids = self._load_from_hiero()
         
-        print(f"Dataset creato: {len(self)} video completi da {len(self.base_dataset)} secondi")
+        print(f"Dataset creato: {len(self)} video completi")
     
     def features_dir(self) -> str:
-        return self.base_dataset.features_dir()
+        return os.path.join(self.root_dir, 'data', 'hiero')
     
     def annotations_dir(self) -> str:
-        return self.base_dataset.annotations_dir()
+        return os.path.join(self.root_dir, 'data', 'annotation_json')
     
     def _load_video_annotations(self, root_dir: str):
         """
@@ -60,46 +61,60 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
         video_annotations = {video_id: info['has_errors'] for video_id, info in data.items()}
         return video_annotations
 
-    def _group_by_videos(self):
+    def _load_from_hiero(self):
         """
-        Raggruppa i record del dataset base per video_id.
+        Carica i dati dai file .npz nella cartella hiero.
+        Ogni file corrisponde a un video e contiene tutti i suoi step.
         
         Returns:
             tuple: (X_list, y_list, video_ids_list)
-                - X_list: lista di matrici (durata_video, n_features)
+                - X_list: lista di matrici (num_steps, n_features)
                 - y_list: lista di label (0=no errors, 1=has errors)
                 - video_ids_list: lista di video_id
         """
-        X_grouped = []
-        y_grouped = []
-        video_ids_grouped = []
+        X_list = []
+        y_list = []
+        video_ids_list = []
         
-        # Dizionario per raggruppare: chiave = video_id
-        groups = {}
+        # Trova tutti i file .npz nella cartella hiero
+        hiero_dir = self.features_dir()
+        npz_files = sorted(glob(os.path.join(hiero_dir, '*.npz')))
         
-        # Raggruppa tutti i record per video_id
-        for idx in range(len(self.base_dataset)):
-            features, label, step_id, video_id, start_time = self.base_dataset[idx]
+        if len(npz_files) == 0:
+            print(f"Warning: No .npz files found in {hiero_dir}")
+            return [], [], []
+        
+        for npz_path in npz_files:
+            # Estrai il video_id dal nome del file
+            # Esempio: "1_10_360p.mp4_1s_1s_steps.npz" -> "1_10_360"
+            filename = os.path.basename(npz_path)
+            video_id = filename.replace('_360p.mp4_1s_1s_steps.npz', '')
             
-            if video_id not in groups:
-                groups[video_id] = {'features': []}
+            # Carica il file npz
+            data = np.load(npz_path, allow_pickle=True)['data']
             
-            groups[video_id]['features'].append(features.numpy())
-        
-        # Converte i gruppi in liste
-        for video_id in sorted(groups.keys()):
-            # Stack dei features: da lista di vettori a matrice (n_secondi, n_features)
-            video_features = np.stack(groups[video_id]['features'], axis=0)
+            # Estrai gli embeddings da tutti gli step
+            step_embeddings = []
+            for step_data in data:
+                embedding = step_data['embedding']
+                step_embeddings.append(embedding)
+            
+            if len(step_embeddings) == 0:
+                print(f"Warning: No steps found in {filename}, skipping...")
+                continue
+            
+            # Stack degli embeddings: (num_steps, n_features)
+            video_features = np.stack(step_embeddings, axis=0)
             
             # Determina la label dal file JSON
             has_errors = self.video_annotations.get(video_id, False)
             label = 1 if has_errors else 0
             
-            X_grouped.append(torch.from_numpy(video_features).float())
-            y_grouped.append(torch.tensor(label, dtype=torch.long))
-            video_ids_grouped.append(video_id)
+            X_list.append(torch.from_numpy(video_features).float())
+            y_list.append(torch.tensor(label, dtype=torch.long))
+            video_ids_list.append(video_id)
         
-        return X_grouped, y_grouped, video_ids_grouped
+        return X_list, y_list, video_ids_list
     
     def __len__(self):
         return len(self.X)
@@ -127,20 +142,20 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
             return {
                 'num_videos': 0,
                 'n_features': 0,
-                'min_duration': 0,
-                'max_duration': 0,
-                'avg_duration': 0.0
+                'min_steps': 0,
+                'max_steps': 0,
+                'avg_steps': 0.0
             }
         
-        durations = [x.shape[0] for x in self.X]
+        num_steps = [x.shape[0] for x in self.X]
         n_features = self.X[0].shape[1] if len(self.X) > 0 else 0
         
         return {
             'num_videos': len(self),
             'n_features': n_features,
-            'min_duration': min(durations),
-            'max_duration': max(durations),
-            'avg_duration': np.mean(durations)
+            'min_steps': min(num_steps),
+            'max_steps': max(num_steps),
+            'avg_steps': np.mean(num_steps)
         }
     
     def print_item(self, idx):
@@ -155,8 +170,8 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
         print("=" * 80)
         print(f"VIDEO DATASET ITEM [{idx}]")
         print("=" * 80)
-        print(f"Features shape:       {X.shape} (durata_video, n_features)")
-        print(f"Video duration:       {X.shape[0]} secondi")
+        print(f"Features shape:       {X.shape} (num_steps, n_features)")
+        print(f"Number of steps:      {X.shape[0]}")
         print(f"Label:                {y.item()} ({'No Errors' if y.item() == 0 else 'Has Errors'})")
         print(f"Video ID:             {video_id}")
         print("=" * 80)
@@ -171,10 +186,10 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
         print("DATASET SUMMARY")
         print("=" * 80)
         print(f"Total videos:         {shape_info['num_videos']}")
-        print(f"Features per second:  {shape_info['n_features']}")
-        print(f"Video duration (min): {shape_info['min_duration']} secondi")
-        print(f"Video duration (max): {shape_info['max_duration']} secondi")
-        print(f"Video duration (avg): {shape_info['avg_duration']:.2f} secondi")
+        print(f"Features per step:    {shape_info['n_features']}")
+        print(f"Steps per video (min):{shape_info['min_steps']}")
+        print(f"Steps per video (max):{shape_info['max_steps']}")
+        print(f"Steps per video (avg):{shape_info['avg_steps']:.2f}")
         
         # Conta label
         num_errors = sum(1 for y in self.y if y.item() == 1)
