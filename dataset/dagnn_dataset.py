@@ -197,37 +197,6 @@ class DAGNNDataset(Dataset):
         return torch.tensor(0, dtype=torch.long)
 
 
-class ProjectionLayer(torch.nn.Module):
-    """
-    Learnable projection layer to combine text and visual embeddings.
-    
-    This can be trained as part of the DAGNN model.
-    """
-    
-    def __init__(self, input_dim: int = 1536, output_dim: int = 256):
-        """
-        Args:
-            input_dim: Dimension of concatenated embeddings (768*2 = 1536)
-            output_dim: Target projection dimension
-        """
-        super().__init__()
-        self.projection = torch.nn.Sequential(
-            torch.nn.Linear(input_dim, output_dim),
-            torch.nn.ReLU(),
-            torch.nn.LayerNorm(output_dim),
-        )
-    
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """
-        Args:
-            x: [N_nodes, input_dim] - concatenated text + visual embeddings
-        
-        Returns:
-            [N_nodes, output_dim] - projected features
-        """
-        return self.projection(x)
-
-
 def collate_fn(batch: List[Dict]) -> Dict:
     """
     Custom collate function for batching graphs with different sizes.

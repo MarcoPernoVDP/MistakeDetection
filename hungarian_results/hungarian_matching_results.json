@@ -31,7 +31,8 @@
       "total_cost": 6.05390739440918,
       "avg_similarity": 0.24326154589653015,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -92,7 +93,8 @@
       "total_cost": 5.919755458831787,
       "avg_similarity": 0.2600305676460266,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -151,9 +153,10 @@
         7
       ],
       "total_cost": 6.389927864074707,
-      "avg_similarity": 0.20125901699066162,
+      "avg_similarity": 0.20125898718833923,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -211,10 +214,11 @@
         6,
         10
       ],
-      "total_cost": 6.171289443969727,
-      "avg_similarity": 0.22858883440494537,
+      "total_cost": 6.171289920806885,
+      "avg_similarity": 0.2285887598991394,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -273,9 +277,10 @@
         4
       ],
       "total_cost": 5.437277317047119,
-      "avg_similarity": 0.3203403353691101,
+      "avg_similarity": 0.3203403055667877,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -333,10 +338,11 @@
         10,
         11
       ],
-      "total_cost": 5.780050754547119,
-      "avg_similarity": 0.2774936556816101,
+      "total_cost": 5.780050277709961,
+      "avg_similarity": 0.2774937152862549,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -397,7 +403,8 @@
       "total_cost": 6.036510467529297,
       "avg_similarity": 0.24543622136116028,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -456,9 +463,10 @@
         2
       ],
       "total_cost": 6.561473369598389,
-      "avg_similarity": 0.1798158437013626,
+      "avg_similarity": 0.17981581389904022,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -516,10 +524,11 @@
         11,
         1
       ],
-      "total_cost": 6.278469085693359,
-      "avg_similarity": 0.21519139409065247,
+      "total_cost": 6.278468132019043,
+      "avg_similarity": 0.21519142389297485,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -580,7 +589,8 @@
       "total_cost": 5.559476852416992,
       "avg_similarity": 0.305065393447876,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -638,10 +648,11 @@
         2,
         7
       ],
-      "total_cost": 6.117799282073975,
-      "avg_similarity": 0.23527511954307556,
+      "total_cost": 6.117798805236816,
+      "avg_similarity": 0.23527514934539795,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -699,10 +710,11 @@
         6,
         9
       ],
-      "total_cost": 5.9835591316223145,
+      "total_cost": 5.983558654785156,
       "avg_similarity": 0.2520551383495331,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -763,7 +775,8 @@
       "total_cost": 5.838653564453125,
       "avg_similarity": 0.2701683044433594,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -821,10 +834,11 @@
         25,
         7
       ],
-      "total_cost": 5.729913234710693,
+      "total_cost": 5.729912757873535,
       "avg_similarity": 0.2837608754634857,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -885,7 +899,8 @@
       "total_cost": 6.298032760620117,
       "avg_similarity": 0.21274590492248535,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -942,9 +957,10 @@
         1
       ],
       "total_cost": 5.957688808441162,
-      "avg_similarity": 0.14890168607234955,
+      "avg_similarity": 0.14890167117118835,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -997,9 +1013,10 @@
         5
       ],
       "total_cost": 5.9291582107543945,
-      "avg_similarity": 0.1529773771762848,
+      "avg_similarity": 0.15297739207744598,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -1053,10 +1070,11 @@
         9,
         3
       ],
-      "total_cost": 6.057337284088135,
-      "avg_similarity": 0.24283283948898315,
+      "total_cost": 6.057336807250977,
+      "avg_similarity": 0.24283286929130554,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -1115,9 +1133,10 @@
         4
       ],
       "total_cost": 5.816558837890625,
-      "avg_similarity": 0.27293017506599426,
+      "avg_similarity": 0.2729301452636719,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -1176,9 +1195,10 @@
         2
       ],
       "total_cost": 6.411413192749023,
-      "avg_similarity": 0.19857336580753326,
+      "avg_similarity": 0.19857338070869446,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -1239,7 +1259,8 @@
       "total_cost": 5.662195682525635,
       "avg_similarity": 0.29222553968429565,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -1300,7 +1321,8 @@
       "total_cost": 5.759521007537842,
       "avg_similarity": 0.2800598740577698,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -1358,10 +1380,11 @@
         16,
         12
       ],
-      "total_cost": 5.724616527557373,
+      "total_cost": 5.724616050720215,
       "avg_similarity": 0.28442293405532837,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -1419,10 +1442,11 @@
         7,
         9
       ],
-      "total_cost": 6.227973937988281,
-      "avg_similarity": 0.22150328755378723,
+      "total_cost": 6.227973461151123,
+      "avg_similarity": 0.22150330245494843,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -1481,9 +1505,10 @@
         7
       ],
       "total_cost": 5.865556716918945,
-      "avg_similarity": 0.2668054699897766,
+      "avg_similarity": 0.2668054401874542,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -1544,7 +1569,8 @@
       "total_cost": 5.992134094238281,
       "avg_similarity": 0.25098323822021484,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -1602,10 +1628,11 @@
         4,
         8
       ],
-      "total_cost": 6.582874774932861,
-      "avg_similarity": 0.17714065313339233,
+      "total_cost": 6.5828752517700195,
+      "avg_similarity": 0.17714060842990875,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -1664,9 +1691,10 @@
         9
       ],
       "total_cost": 5.678610801696777,
-      "avg_similarity": 0.2901736795902252,
+      "avg_similarity": 0.29017361998558044,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -1724,10 +1752,11 @@
         10,
         4
       ],
-      "total_cost": 5.590319633483887,
+      "total_cost": 5.5903191566467285,
       "avg_similarity": 0.30121010541915894,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -1786,9 +1815,10 @@
         9
       ],
       "total_cost": 5.73445463180542,
-      "avg_similarity": 0.2831931412220001,
+      "avg_similarity": 0.2831931710243225,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -1849,7 +1879,8 @@
       "total_cost": 6.330548286437988,
       "avg_similarity": 0.20868149399757385,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -1908,9 +1939,10 @@
         7
       ],
       "total_cost": 6.145384311676025,
-      "avg_similarity": 0.23182693123817444,
+      "avg_similarity": 0.23182696104049683,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -1969,9 +2001,10 @@
         16
       ],
       "total_cost": 6.149559497833252,
-      "avg_similarity": 0.2313050627708435,
+      "avg_similarity": 0.2313050478696823,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -2030,9 +2063,10 @@
         15
       ],
       "total_cost": 6.19523811340332,
-      "avg_similarity": 0.22559522092342377,
+      "avg_similarity": 0.22559520602226257,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -2090,10 +2124,11 @@
         10,
         9
       ],
-      "total_cost": 6.471474647521973,
+      "total_cost": 6.4714741706848145,
       "avg_similarity": 0.1910656988620758,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -2151,10 +2186,11 @@
         14,
         2
       ],
-      "total_cost": 5.836504936218262,
-      "avg_similarity": 0.2704368531703949,
+      "total_cost": 5.83650541305542,
+      "avg_similarity": 0.2704368233680725,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -2212,10 +2248,11 @@
         5,
         3
       ],
-      "total_cost": 5.781263828277588,
-      "avg_similarity": 0.2773420214653015,
+      "total_cost": 5.781264305114746,
+      "avg_similarity": 0.2773419916629791,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -2273,10 +2310,11 @@
         7,
         15
       ],
-      "total_cost": 6.184871196746826,
-      "avg_similarity": 0.22689110040664673,
+      "total_cost": 6.184870719909668,
+      "avg_similarity": 0.22689111530780792,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -2334,10 +2372,11 @@
         4,
         10
       ],
-      "total_cost": 5.916732311248779,
-      "avg_similarity": 0.2604084610939026,
+      "total_cost": 5.916731834411621,
+      "avg_similarity": 0.260408490896225,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -2396,9 +2435,10 @@
         12
       ],
       "total_cost": 6.383637428283691,
-      "avg_similarity": 0.20204535126686096,
+      "avg_similarity": 0.20204532146453857,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -2459,7 +2499,8 @@
       "total_cost": 5.836026191711426,
       "avg_similarity": 0.2704967260360718,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -2520,7 +2561,8 @@
       "total_cost": 5.7026519775390625,
       "avg_similarity": 0.2871685028076172,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -2578,10 +2620,11 @@
         1,
         11
       ],
-      "total_cost": 6.304935932159424,
-      "avg_similarity": 0.2118830382823944,
+      "total_cost": 6.304935455322266,
+      "avg_similarity": 0.2118830531835556,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -2642,7 +2685,8 @@
       "total_cost": 6.5109148025512695,
       "avg_similarity": 0.1861356645822525,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -2703,7 +2747,8 @@
       "total_cost": 5.081393241882324,
       "avg_similarity": 0.3648258447647095,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -2761,10 +2806,11 @@
         4,
         2
       ],
-      "total_cost": 5.488024711608887,
-      "avg_similarity": 0.31399694085121155,
+      "total_cost": 5.4880242347717285,
+      "avg_similarity": 0.31399697065353394,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -2822,10 +2868,11 @@
         9,
         2
       ],
-      "total_cost": 5.957968235015869,
-      "avg_similarity": 0.25525397062301636,
+      "total_cost": 5.957967758178711,
+      "avg_similarity": 0.25525403022766113,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -2886,7 +2933,8 @@
       "total_cost": 6.375282287597656,
       "avg_similarity": 0.20308971405029297,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -2945,9 +2993,10 @@
         7
       ],
       "total_cost": 5.803670883178711,
-      "avg_similarity": 0.27454113960266113,
+      "avg_similarity": 0.2745411694049835,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -3005,10 +3054,11 @@
         9,
         16
       ],
-      "total_cost": 6.149482250213623,
-      "avg_similarity": 0.2313147336244583,
+      "total_cost": 6.149482727050781,
+      "avg_similarity": 0.23131465911865234,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -3067,9 +3117,10 @@
         8
       ],
       "total_cost": 5.857914924621582,
-      "avg_similarity": 0.26776063442230225,
+      "avg_similarity": 0.26776066422462463,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -3130,7 +3181,8 @@
       "total_cost": 5.6709747314453125,
       "avg_similarity": 0.2911281883716583,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -3189,9 +3241,10 @@
         8
       ],
       "total_cost": 6.230083465576172,
-      "avg_similarity": 0.2212395966053009,
+      "avg_similarity": 0.2212395817041397,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -3249,10 +3302,11 @@
         7,
         16
       ],
-      "total_cost": 5.717586994171143,
+      "total_cost": 5.717586517333984,
       "avg_similarity": 0.2853016257286072,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -3311,9 +3365,10 @@
         11
       ],
       "total_cost": 6.139204978942871,
-      "avg_similarity": 0.2325993925333023,
+      "avg_similarity": 0.2325993776321411,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -3372,9 +3427,10 @@
         2
       ],
       "total_cost": 6.111154079437256,
-      "avg_similarity": 0.2361057698726654,
+      "avg_similarity": 0.2361057549715042,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -3435,7 +3491,8 @@
       "total_cost": 6.350472450256348,
       "avg_similarity": 0.20619091391563416,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -3496,7 +3553,8 @@
       "total_cost": 6.049160003662109,
       "avg_similarity": 0.24385496973991394,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -3555,9 +3613,10 @@
         2
       ],
       "total_cost": 6.278347015380859,
-      "avg_similarity": 0.21520662307739258,
+      "avg_similarity": 0.21520660817623138,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -3615,10 +3674,11 @@
         15,
         20
       ],
-      "total_cost": 5.823073387145996,
-      "avg_similarity": 0.2721157968044281,
+      "total_cost": 5.823073863983154,
+      "avg_similarity": 0.2721157670021057,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -3677,9 +3737,10 @@
         11
       ],
       "total_cost": 6.512754440307617,
-      "avg_similarity": 0.18590566515922546,
+      "avg_similarity": 0.18590572476387024,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -3737,10 +3798,11 @@
         7,
         3
       ],
-      "total_cost": 6.025160312652588,
-      "avg_similarity": 0.24685494601726532,
+      "total_cost": 6.025160789489746,
+      "avg_similarity": 0.24685490131378174,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -3798,10 +3860,11 @@
         7,
         4
       ],
-      "total_cost": 5.950932025909424,
-      "avg_similarity": 0.256133496761322,
+      "total_cost": 5.950931549072266,
+      "avg_similarity": 0.2561335563659668,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -3862,7 +3925,8 @@
       "total_cost": 6.009779453277588,
       "avg_similarity": 0.2487775683403015,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -3923,7 +3987,8 @@
       "total_cost": 6.497933864593506,
       "avg_similarity": 0.18775826692581177,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -3981,10 +4046,11 @@
         6,
         2
       ],
-      "total_cost": 5.962248802185059,
-      "avg_similarity": 0.2547188699245453,
+      "total_cost": 5.962249279022217,
+      "avg_similarity": 0.2547188401222229,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -4042,10 +4108,11 @@
         8,
         3
       ],
-      "total_cost": 5.6533203125,
-      "avg_similarity": 0.2933349311351776,
+      "total_cost": 5.653320789337158,
+      "avg_similarity": 0.2933349013328552,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -4103,10 +4170,11 @@
         14,
         1
       ],
-      "total_cost": 5.869144439697266,
-      "avg_similarity": 0.266356885433197,
+      "total_cost": 5.869145393371582,
+      "avg_similarity": 0.26635685563087463,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -4164,10 +4232,11 @@
         7,
         5
       ],
-      "total_cost": 6.195163249969482,
+      "total_cost": 6.195163726806641,
       "avg_similarity": 0.2256045639514923,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -4225,10 +4294,11 @@
         6,
         5
       ],
-      "total_cost": 6.507258415222168,
-      "avg_similarity": 0.186592698097229,
+      "total_cost": 6.50725793838501,
+      "avg_similarity": 0.1865927278995514,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -4289,7 +4359,8 @@
       "total_cost": 6.165563583374023,
       "avg_similarity": 0.22930455207824707,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -4350,7 +4421,8 @@
       "total_cost": 5.770535945892334,
       "avg_similarity": 0.27868300676345825,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -4408,10 +4480,11 @@
         14,
         4
       ],
-      "total_cost": 5.3463134765625,
-      "avg_similarity": 0.3317108154296875,
+      "total_cost": 5.346312999725342,
+      "avg_similarity": 0.3317108452320099,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -4469,10 +4542,11 @@
         12,
         2
       ],
-      "total_cost": 6.0630784034729,
-      "avg_similarity": 0.24211518466472626,
+      "total_cost": 6.063077926635742,
+      "avg_similarity": 0.24211522936820984,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -4531,9 +4605,10 @@
         6
       ],
       "total_cost": 6.202099323272705,
-      "avg_similarity": 0.22473756968975067,
+      "avg_similarity": 0.22473758459091187,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -4591,10 +4666,11 @@
         9,
         19
       ],
-      "total_cost": 6.205042362213135,
-      "avg_similarity": 0.22436967492103577,
+      "total_cost": 6.205042839050293,
+      "avg_similarity": 0.22436964511871338,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -4653,9 +4729,10 @@
         6
       ],
       "total_cost": 6.747450828552246,
-      "avg_similarity": 0.15656867623329163,
+      "avg_similarity": 0.15656866133213043,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -4713,10 +4790,11 @@
         8,
         6
       ],
-      "total_cost": 5.687658309936523,
-      "avg_similarity": 0.2890426516532898,
+      "total_cost": 5.68765926361084,
+      "avg_similarity": 0.2890426218509674,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -4774,10 +4852,11 @@
         8,
         4
       ],
-      "total_cost": 5.833074569702148,
-      "avg_similarity": 0.2708657383918762,
+      "total_cost": 5.833073616027832,
+      "avg_similarity": 0.2708657681941986,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -4836,9 +4915,10 @@
         10
       ],
       "total_cost": 6.439522743225098,
-      "avg_similarity": 0.1950596421957016,
+      "avg_similarity": 0.1950596272945404,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -4899,7 +4979,8 @@
       "total_cost": 5.594385147094727,
       "avg_similarity": 0.30070191621780396,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -4960,7 +5041,8 @@
       "total_cost": 5.54056453704834,
       "avg_similarity": 0.30742940306663513,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -5019,9 +5101,10 @@
         2
       ],
       "total_cost": 5.930771827697754,
-      "avg_similarity": 0.2586534917354584,
+      "avg_similarity": 0.258653461933136,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -5080,9 +5163,10 @@
         17
       ],
       "total_cost": 5.923040390014648,
-      "avg_similarity": 0.25961995124816895,
+      "avg_similarity": 0.25961992144584656,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -5141,9 +5225,10 @@
         9
       ],
       "total_cost": 5.876666069030762,
-      "avg_similarity": 0.2654167115688324,
+      "avg_similarity": 0.2654167413711548,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -5201,10 +5286,11 @@
         7,
         11
       ],
-      "total_cost": 5.9085469245910645,
-      "avg_similarity": 0.26143163442611694,
+      "total_cost": 5.908547401428223,
+      "avg_similarity": 0.26143157482147217,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -5262,10 +5348,11 @@
         5,
         9
       ],
-      "total_cost": 5.841124534606934,
+      "total_cost": 5.841125011444092,
       "avg_similarity": 0.2698593735694885,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -5326,7 +5413,8 @@
       "total_cost": 5.946001052856445,
       "avg_similarity": 0.25674986839294434,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -5384,10 +5472,11 @@
         6,
         11
       ],
-      "total_cost": 5.632786750793457,
+      "total_cost": 5.632787227630615,
       "avg_similarity": 0.2959015965461731,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -5445,10 +5534,11 @@
         9,
         4
       ],
-      "total_cost": 6.477289199829102,
-      "avg_similarity": 0.19033879041671753,
+      "total_cost": 6.47728967666626,
+      "avg_similarity": 0.19033882021903992,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -5506,10 +5596,11 @@
         6,
         1
       ],
-      "total_cost": 5.9714131355285645,
+      "total_cost": 5.971412658691406,
       "avg_similarity": 0.25357335805892944,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -5567,10 +5658,11 @@
         4,
         6
       ],
-      "total_cost": 5.4890594482421875,
-      "avg_similarity": 0.31386756896972656,
+      "total_cost": 5.489058971405029,
+      "avg_similarity": 0.31386759877204895,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -5628,10 +5720,11 @@
         7,
         2
       ],
-      "total_cost": 6.671908855438232,
-      "avg_similarity": 0.16601139307022095,
+      "total_cost": 6.671908378601074,
+      "avg_similarity": 0.16601142287254333,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -5689,10 +5782,11 @@
         6,
         9
       ],
-      "total_cost": 5.698421478271484,
-      "avg_similarity": 0.28769731521606445,
+      "total_cost": 5.698421955108643,
+      "avg_similarity": 0.2876972556114197,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -5753,7 +5847,8 @@
       "total_cost": 5.932056427001953,
       "avg_similarity": 0.25849291682243347,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -5812,9 +5907,10 @@
         7
       ],
       "total_cost": 6.1852312088012695,
-      "avg_similarity": 0.2268460988998413,
+      "avg_similarity": 0.22684606909751892,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -5872,10 +5968,11 @@
         3,
         5
       ],
-      "total_cost": 6.147950649261475,
-      "avg_similarity": 0.23150616884231567,
+      "total_cost": 6.147950172424316,
+      "avg_similarity": 0.23150618374347687,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -5936,7 +6033,8 @@
       "total_cost": 5.63326358795166,
       "avg_similarity": 0.2958420515060425,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -5995,7 +6093,8 @@
       "total_cost": 5.361420631408691,
       "avg_similarity": 0.23408278822898865,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -6049,10 +6148,11 @@
         10,
         4
       ],
-      "total_cost": 5.852456569671631,
+      "total_cost": 5.852457046508789,
       "avg_similarity": 0.26844286918640137,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -6113,7 +6213,8 @@
       "total_cost": 5.887940406799316,
       "avg_similarity": 0.26400741934776306,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -6169,10 +6270,11 @@
         4,
         5
       ],
-      "total_cost": 5.984983444213867,
-      "avg_similarity": 0.14500238001346588,
+      "total_cost": 5.984982967376709,
+      "avg_similarity": 0.14500239491462708,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -6227,9 +6329,10 @@
         16
       ],
       "total_cost": 5.965888500213623,
-      "avg_similarity": 0.2542639672756195,
+      "avg_similarity": 0.2542639374732971,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -6288,9 +6391,10 @@
         8
       ],
       "total_cost": 6.55998420715332,
-      "avg_similarity": 0.18000200390815735,
+      "avg_similarity": 0.18000198900699615,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -6351,7 +6455,8 @@
       "total_cost": 5.782018661499023,
       "avg_similarity": 0.27724769711494446,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -6410,9 +6515,10 @@
         6
       ],
       "total_cost": 6.042135715484619,
-      "avg_similarity": 0.2447330355644226,
+      "avg_similarity": 0.24473300576210022,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -6470,10 +6576,11 @@
         15,
         19
       ],
-      "total_cost": 6.431125640869141,
-      "avg_similarity": 0.1961093246936798,
+      "total_cost": 6.431125164031982,
+      "avg_similarity": 0.1961093544960022,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -6531,10 +6638,11 @@
         14,
         9
       ],
-      "total_cost": 5.650575160980225,
-      "avg_similarity": 0.2936781048774719,
+      "total_cost": 5.650575637817383,
+      "avg_similarity": 0.29367804527282715,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -6592,10 +6700,11 @@
         10,
         9
       ],
-      "total_cost": 5.496794700622559,
+      "total_cost": 5.4967942237854,
       "avg_similarity": 0.31290072202682495,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -6654,9 +6763,10 @@
         13
       ],
       "total_cost": 5.658688545227051,
-      "avg_similarity": 0.2926639914512634,
+      "avg_similarity": 0.29266396164894104,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -6715,9 +6825,10 @@
         9
       ],
       "total_cost": 6.166429042816162,
-      "avg_similarity": 0.22919638454914093,
+      "avg_similarity": 0.22919639945030212,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -6778,7 +6889,8 @@
       "total_cost": 5.909460067749023,
       "avg_similarity": 0.2613174617290497,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -6839,7 +6951,8 @@
       "total_cost": 5.767852306365967,
       "avg_similarity": 0.27901843190193176,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -6897,10 +7010,11 @@
         8,
         6
       ],
-      "total_cost": 5.757205009460449,
-      "avg_similarity": 0.28034934401512146,
+      "total_cost": 5.757205963134766,
+      "avg_similarity": 0.2803493142127991,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -6958,10 +7072,11 @@
         4,
         14
       ],
-      "total_cost": 5.651173114776611,
+      "total_cost": 5.6511735916137695,
       "avg_similarity": 0.2936033606529236,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -7022,7 +7137,8 @@
       "total_cost": 6.371862888336182,
       "avg_similarity": 0.2035171389579773,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -7083,7 +7199,8 @@
       "total_cost": 6.137310028076172,
       "avg_similarity": 0.23283624649047852,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -7141,10 +7258,11 @@
         8,
         2
       ],
-      "total_cost": 6.505589962005615,
-      "avg_similarity": 0.1868012547492981,
+      "total_cost": 6.505589485168457,
+      "avg_similarity": 0.18680128455162048,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -7203,9 +7321,10 @@
         2
       ],
       "total_cost": 6.10780668258667,
-      "avg_similarity": 0.23652417957782745,
+      "avg_similarity": 0.23652416467666626,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -7263,10 +7382,11 @@
         5,
         2
       ],
-      "total_cost": 5.981773853302002,
-      "avg_similarity": 0.25227826833724976,
+      "total_cost": 5.98177433013916,
+      "avg_similarity": 0.252278208732605,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -7327,7 +7447,8 @@
       "total_cost": 5.685819149017334,
       "avg_similarity": 0.28927260637283325,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -7388,7 +7509,8 @@
       "total_cost": 6.064593315124512,
       "avg_similarity": 0.24192583560943604,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -7446,10 +7568,11 @@
         8,
         2
       ],
-      "total_cost": 5.771739959716797,
-      "avg_similarity": 0.278532475233078,
+      "total_cost": 5.771740436553955,
+      "avg_similarity": 0.2785325050354004,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -7507,10 +7630,11 @@
         13,
         16
       ],
-      "total_cost": 6.230639457702637,
-      "avg_similarity": 0.22117005288600922,
+      "total_cost": 6.230639934539795,
+      "avg_similarity": 0.22117002308368683,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -7569,9 +7693,10 @@
         10
       ],
       "total_cost": 6.358410835266113,
-      "avg_similarity": 0.20519866049289703,
+      "avg_similarity": 0.20519867539405823,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -7632,7 +7757,8 @@
       "total_cost": 6.1904120445251465,
       "avg_similarity": 0.2261984944343567,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -7693,7 +7819,8 @@
       "total_cost": 5.761049270629883,
       "avg_similarity": 0.27986884117126465,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -7754,7 +7881,8 @@
       "total_cost": 5.192905902862549,
       "avg_similarity": 0.3508867621421814,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -7813,9 +7941,10 @@
         5
       ],
       "total_cost": 6.472103118896484,
-      "avg_similarity": 0.19098709523677826,
+      "avg_similarity": 0.19098708033561707,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -7873,10 +8002,11 @@
         20,
         12
       ],
-      "total_cost": 5.759298801422119,
-      "avg_similarity": 0.2800876498222351,
+      "total_cost": 5.759298324584961,
+      "avg_similarity": 0.2800876796245575,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -7935,9 +8065,10 @@
         6
       ],
       "total_cost": 6.417563438415527,
-      "avg_similarity": 0.1978045403957367,
+      "avg_similarity": 0.19780458509922028,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -7995,10 +8126,11 @@
         10,
         7
       ],
-      "total_cost": 5.716510772705078,
-      "avg_similarity": 0.2854361832141876,
+      "total_cost": 5.71651029586792,
+      "avg_similarity": 0.28543621301651,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -8059,7 +8191,8 @@
       "total_cost": 6.134848594665527,
       "avg_similarity": 0.23314392566680908,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -8120,7 +8253,8 @@
       "total_cost": 5.975790977478027,
       "avg_similarity": 0.2530261278152466,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -8178,10 +8312,11 @@
         15,
         14
       ],
-      "total_cost": 6.4111223220825195,
-      "avg_similarity": 0.19860973954200745,
+      "total_cost": 6.411121845245361,
+      "avg_similarity": 0.19860975444316864,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -8240,9 +8375,10 @@
         10
       ],
       "total_cost": 5.885560035705566,
-      "avg_similarity": 0.2643049657344818,
+      "avg_similarity": 0.2643049359321594,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -8303,7 +8439,8 @@
       "total_cost": 6.483180999755859,
       "avg_similarity": 0.18960240483283997,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -8362,9 +8499,10 @@
         9
       ],
       "total_cost": 6.37069845199585,
-      "avg_similarity": 0.2036626935005188,
+      "avg_similarity": 0.2036626785993576,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -8422,10 +8560,11 @@
         14,
         2
       ],
-      "total_cost": 5.860763072967529,
-      "avg_similarity": 0.26740461587905884,
+      "total_cost": 5.8607635498046875,
+      "avg_similarity": 0.26740455627441406,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -8486,7 +8625,8 @@
       "total_cost": 5.745949745178223,
       "avg_similarity": 0.28175628185272217,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -8547,7 +8687,8 @@
       "total_cost": 6.304360866546631,
       "avg_similarity": 0.21195486187934875,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -8608,7 +8749,8 @@
       "total_cost": 5.6987385749816895,
       "avg_similarity": 0.28765764832496643,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -8665,9 +8807,10 @@
         1
       ],
       "total_cost": 5.773343086242676,
-      "avg_similarity": 0.17523670196533203,
+      "avg_similarity": 0.17523667216300964,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           1,
@@ -8721,10 +8864,11 @@
         17,
         12
       ],
-      "total_cost": 5.911246299743652,
-      "avg_similarity": 0.26109421253204346,
+      "total_cost": 5.911245822906494,
+      "avg_similarity": 0.26109427213668823,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -8782,10 +8926,11 @@
         8,
         4
       ],
-      "total_cost": 6.2493109703063965,
-      "avg_similarity": 0.21883609890937805,
+      "total_cost": 6.249310493469238,
+      "avg_similarity": 0.21883615851402283,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -8843,10 +8988,11 @@
         9,
         11
       ],
-      "total_cost": 6.4742913246154785,
-      "avg_similarity": 0.190713569521904,
+      "total_cost": 6.47429084777832,
+      "avg_similarity": 0.19071358442306519,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -8907,7 +9053,8 @@
       "total_cost": 5.990907669067383,
       "avg_similarity": 0.2511364817619324,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -8968,7 +9115,8 @@
       "total_cost": 5.264531135559082,
       "avg_similarity": 0.34193360805511475,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -9029,7 +9177,8 @@
       "total_cost": 5.984943866729736,
       "avg_similarity": 0.25188201665878296,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -9090,7 +9239,8 @@
       "total_cost": 6.109358310699463,
       "avg_similarity": 0.23633021116256714,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -9148,10 +9298,11 @@
         9,
         8
       ],
-      "total_cost": 5.718551158905029,
+      "total_cost": 5.718550682067871,
       "avg_similarity": 0.28518110513687134,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -9209,10 +9360,11 @@
         6,
         2
       ],
-      "total_cost": 5.346930503845215,
-      "avg_similarity": 0.33163371682167053,
+      "total_cost": 5.346930027008057,
+      "avg_similarity": 0.3316337466239929,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -9273,7 +9425,8 @@
       "total_cost": 6.130788803100586,
       "avg_similarity": 0.23365139961242676,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -9331,10 +9484,11 @@
         3,
         9
       ],
-      "total_cost": 6.1132354736328125,
-      "avg_similarity": 0.23584553599357605,
+      "total_cost": 6.113235950469971,
+      "avg_similarity": 0.23584552109241486,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -9393,9 +9547,10 @@
         15
       ],
       "total_cost": 5.441872596740723,
-      "avg_similarity": 0.31976592540740967,
+      "avg_similarity": 0.31976595520973206,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -9454,9 +9609,10 @@
         6
       ],
       "total_cost": 5.2591776847839355,
-      "avg_similarity": 0.34260284900665283,
+      "avg_similarity": 0.34260278940200806,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -9515,9 +9671,10 @@
         10
       ],
       "total_cost": 6.215036869049072,
-      "avg_similarity": 0.22312040627002716,
+      "avg_similarity": 0.22312036156654358,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -9576,9 +9733,10 @@
         4
       ],
       "total_cost": 5.926773548126221,
-      "avg_similarity": 0.2591533362865448,
+      "avg_similarity": 0.2591533660888672,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -9636,10 +9794,11 @@
         8,
         6
       ],
-      "total_cost": 5.990759372711182,
-      "avg_similarity": 0.2511550784111023,
+      "total_cost": 5.990758895874023,
+      "avg_similarity": 0.25115513801574707,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -9700,7 +9859,8 @@
       "total_cost": 5.722912788391113,
       "avg_similarity": 0.28463590145111084,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -9758,10 +9918,11 @@
         10,
         16
       ],
-      "total_cost": 5.513923168182373,
-      "avg_similarity": 0.31075960397720337,
+      "total_cost": 5.513922691345215,
+      "avg_similarity": 0.31075963377952576,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -9820,9 +9981,10 @@
         12
       ],
       "total_cost": 5.891074180603027,
-      "avg_similarity": 0.2636157274246216,
+      "avg_similarity": 0.2636156976222992,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -9880,10 +10042,11 @@
         12,
         7
       ],
-      "total_cost": 5.927244663238525,
-      "avg_similarity": 0.2590944468975067,
+      "total_cost": 5.927244186401367,
+      "avg_similarity": 0.2590944170951843,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -9941,10 +10104,11 @@
         4,
         3
       ],
-      "total_cost": 5.9707112312316895,
-      "avg_similarity": 0.2536610960960388,
+      "total_cost": 5.970710754394531,
+      "avg_similarity": 0.2536611557006836,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -10005,7 +10169,8 @@
       "total_cost": 5.297445297241211,
       "avg_similarity": 0.33781933784484863,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -10064,9 +10229,10 @@
         15
       ],
       "total_cost": 5.939619064331055,
-      "avg_similarity": 0.25754764676094055,
+      "avg_similarity": 0.25754761695861816,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -10124,10 +10290,11 @@
         8,
         6
       ],
-      "total_cost": 6.027464866638184,
-      "avg_similarity": 0.24656690657138824,
+      "total_cost": 6.027464389801025,
+      "avg_similarity": 0.24656692147254944,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -10186,9 +10353,10 @@
         2
       ],
       "total_cost": 6.35540246963501,
-      "avg_similarity": 0.2055746614933014,
+      "avg_similarity": 0.20557467639446259,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -10246,10 +10414,11 @@
         10,
         11
       ],
-      "total_cost": 5.492293357849121,
+      "total_cost": 5.4922943115234375,
       "avg_similarity": 0.3134632706642151,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -10307,10 +10476,11 @@
         15,
         24
       ],
-      "total_cost": 5.67115592956543,
-      "avg_similarity": 0.2911054491996765,
+      "total_cost": 5.671156883239746,
+      "avg_similarity": 0.29110538959503174,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -10369,9 +10539,10 @@
         1
       ],
       "total_cost": 5.761844635009766,
-      "avg_similarity": 0.2797693908214569,
+      "avg_similarity": 0.2797694206237793,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -10430,9 +10601,10 @@
         4
       ],
       "total_cost": 6.386722564697266,
-      "avg_similarity": 0.20165963470935822,
+      "avg_similarity": 0.2016596496105194,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -10493,7 +10665,8 @@
       "total_cost": 5.812841415405273,
       "avg_similarity": 0.2733948826789856,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -10551,10 +10724,11 @@
         11,
         10
       ],
-      "total_cost": 5.674860954284668,
-      "avg_similarity": 0.2906424105167389,
+      "total_cost": 5.67486047744751,
+      "avg_similarity": 0.29064247012138367,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -10615,7 +10789,8 @@
       "total_cost": 5.67624568939209,
       "avg_similarity": 0.29046928882598877,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -10674,9 +10849,10 @@
         11
       ],
       "total_cost": 5.846992492675781,
-      "avg_similarity": 0.26912593841552734,
+      "avg_similarity": 0.26912590861320496,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -10734,10 +10910,11 @@
         3,
         6
       ],
-      "total_cost": 6.186462879180908,
+      "total_cost": 6.18646240234375,
       "avg_similarity": 0.22669216990470886,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -10795,10 +10972,11 @@
         15,
         2
       ],
-      "total_cost": 5.919852256774902,
-      "avg_similarity": 0.2600184679031372,
+      "total_cost": 5.919851779937744,
+      "avg_similarity": 0.260018527507782,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -10859,7 +11037,8 @@
       "total_cost": 6.833957672119141,
       "avg_similarity": 0.14575526118278503,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -10918,9 +11097,10 @@
         13
       ],
       "total_cost": 5.557544708251953,
-      "avg_similarity": 0.30530691146850586,
+      "avg_similarity": 0.30530694127082825,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -10981,7 +11161,8 @@
       "total_cost": 6.179088592529297,
       "avg_similarity": 0.2276138961315155,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -11039,10 +11220,11 @@
         11,
         10
       ],
-      "total_cost": 6.582841396331787,
-      "avg_similarity": 0.1771448254585266,
+      "total_cost": 6.582841873168945,
+      "avg_similarity": 0.17714481055736542,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -11101,9 +11283,10 @@
         11
       ],
       "total_cost": 5.808417797088623,
-      "avg_similarity": 0.2739478051662445,
+      "avg_similarity": 0.2739477753639221,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -11161,10 +11344,11 @@
         6,
         8
       ],
-      "total_cost": 6.181359767913818,
-      "avg_similarity": 0.2273300439119339,
+      "total_cost": 6.181360244750977,
+      "avg_similarity": 0.22732996940612793,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -11223,9 +11407,10 @@
         4
       ],
       "total_cost": 6.8682146072387695,
-      "avg_similarity": 0.14147312939167023,
+      "avg_similarity": 0.1414731740951538,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -11283,10 +11468,11 @@
         15,
         16
       ],
-      "total_cost": 5.850949287414551,
+      "total_cost": 5.850949764251709,
       "avg_similarity": 0.2686312794685364,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -11347,7 +11533,8 @@
       "total_cost": 5.549501895904541,
       "avg_similarity": 0.3063122630119324,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -11406,9 +11593,10 @@
         9
       ],
       "total_cost": 5.952183723449707,
-      "avg_similarity": 0.2559770941734314,
+      "avg_similarity": 0.255977064371109,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -11466,10 +11654,11 @@
         2,
         9
       ],
-      "total_cost": 6.455090522766113,
-      "avg_similarity": 0.19311368465423584,
+      "total_cost": 6.4550909996032715,
+      "avg_similarity": 0.19311365485191345,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -11530,7 +11719,8 @@
       "total_cost": 6.49622917175293,
       "avg_similarity": 0.18797138333320618,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -11586,10 +11776,11 @@
         2,
         6
       ],
-      "total_cost": 6.096001625061035,
+      "total_cost": 6.096001148223877,
       "avg_similarity": 0.1291426718235016,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -11643,10 +11834,11 @@
         18,
         2
       ],
-      "total_cost": 5.991037368774414,
-      "avg_similarity": 0.25112035870552063,
+      "total_cost": 5.991036415100098,
+      "avg_similarity": 0.251120388507843,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -11704,10 +11896,11 @@
         8,
         4
       ],
-      "total_cost": 5.979377746582031,
+      "total_cost": 5.979377269744873,
       "avg_similarity": 0.2525778114795685,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -11766,9 +11959,10 @@
         9
       ],
       "total_cost": 6.605764865875244,
-      "avg_similarity": 0.17427939176559448,
+      "avg_similarity": 0.17427942156791687,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -11829,7 +12023,8 @@
       "total_cost": 5.659026622772217,
       "avg_similarity": 0.2926216721534729,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -11887,10 +12082,11 @@
         7,
         19
       ],
-      "total_cost": 5.942958831787109,
+      "total_cost": 5.942959785461426,
       "avg_similarity": 0.25713008642196655,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -11948,10 +12144,11 @@
         12,
         15
       ],
-      "total_cost": 5.9608964920043945,
-      "avg_similarity": 0.25488799810409546,
+      "total_cost": 5.960896015167236,
+      "avg_similarity": 0.25488802790641785,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -12009,10 +12206,11 @@
         9,
         14
       ],
-      "total_cost": 6.293880462646484,
-      "avg_similarity": 0.21326488256454468,
+      "total_cost": 6.293880939483643,
+      "avg_similarity": 0.21326489746570587,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -12073,7 +12271,8 @@
       "total_cost": 6.874843597412109,
       "avg_similarity": 0.14064455032348633,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -12132,9 +12331,10 @@
         5
       ],
       "total_cost": 6.184811592102051,
-      "avg_similarity": 0.22689855098724365,
+      "avg_similarity": 0.22689856588840485,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -12192,10 +12392,11 @@
         8,
         6
       ],
-      "total_cost": 5.795156478881836,
-      "avg_similarity": 0.27560538053512573,
+      "total_cost": 5.795156955718994,
+      "avg_similarity": 0.2756054103374481,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -12253,10 +12454,11 @@
         15,
         19
       ],
-      "total_cost": 6.128300189971924,
-      "avg_similarity": 0.23396247625350952,
+      "total_cost": 6.128299713134766,
+      "avg_similarity": 0.23396249115467072,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -12317,7 +12519,8 @@
       "total_cost": 6.246023178100586,
       "avg_similarity": 0.21924710273742676,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -12378,7 +12581,8 @@
       "total_cost": 5.579865455627441,
       "avg_similarity": 0.30251678824424744,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -12437,9 +12641,10 @@
         18
       ],
       "total_cost": 5.840007305145264,
-      "avg_similarity": 0.26999902725219727,
+      "avg_similarity": 0.26999905705451965,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -12497,10 +12702,11 @@
         6,
         13
       ],
-      "total_cost": 5.899094581604004,
-      "avg_similarity": 0.2626132071018219,
+      "total_cost": 5.899094104766846,
+      "avg_similarity": 0.2626132369041443,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -12559,9 +12765,10 @@
         6
       ],
       "total_cost": 6.325628280639648,
-      "avg_similarity": 0.20929643511772156,
+      "avg_similarity": 0.20929640531539917,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -12620,9 +12827,10 @@
         2
       ],
       "total_cost": 6.132457733154297,
-      "avg_similarity": 0.2334427833557129,
+      "avg_similarity": 0.2334427684545517,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -12681,7 +12889,8 @@
       "total_cost": 5.8354620933532715,
       "avg_similarity": 0.16636259853839874,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -12735,10 +12944,11 @@
         7,
         3
       ],
-      "total_cost": 5.936188697814941,
-      "avg_similarity": 0.2579764425754547,
+      "total_cost": 5.936187744140625,
+      "avg_similarity": 0.2579765021800995,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -12796,10 +13006,11 @@
         4,
         3
       ],
-      "total_cost": 5.449364185333252,
-      "avg_similarity": 0.3188294470310211,
+      "total_cost": 5.44936466217041,
+      "avg_similarity": 0.3188294768333435,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -12860,7 +13071,8 @@
       "total_cost": 6.401346206665039,
       "avg_similarity": 0.19983169436454773,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -12921,7 +13133,8 @@
       "total_cost": 5.595525741577148,
       "avg_similarity": 0.30055928230285645,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -12980,9 +13193,10 @@
         2
       ],
       "total_cost": 6.528576850891113,
-      "avg_similarity": 0.18392793834209442,
+      "avg_similarity": 0.18392792344093323,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -13041,9 +13255,10 @@
         9
       ],
       "total_cost": 5.790626525878906,
-      "avg_similarity": 0.2761716842651367,
+      "avg_similarity": 0.27617165446281433,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -13101,10 +13316,11 @@
         6,
         9
       ],
-      "total_cost": 5.802284240722656,
-      "avg_similarity": 0.27471449971199036,
+      "total_cost": 5.802283763885498,
+      "avg_similarity": 0.27471455931663513,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -13162,10 +13378,11 @@
         9,
         6
       ],
-      "total_cost": 5.875744342803955,
-      "avg_similarity": 0.2655319571495056,
+      "total_cost": 5.875744819641113,
+      "avg_similarity": 0.2655319273471832,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -13223,10 +13440,11 @@
         24,
         2
       ],
-      "total_cost": 6.032209396362305,
-      "avg_similarity": 0.24597378075122833,
+      "total_cost": 6.032210350036621,
+      "avg_similarity": 0.24597367644309998,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -13285,9 +13503,10 @@
         5
       ],
       "total_cost": 6.209942817687988,
-      "avg_similarity": 0.22375714778900146,
+      "avg_similarity": 0.22375710308551788,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -13345,10 +13564,11 @@
         5,
         19
       ],
-      "total_cost": 5.920439720153809,
-      "avg_similarity": 0.25994500517845154,
+      "total_cost": 5.920440196990967,
+      "avg_similarity": 0.25994497537612915,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -13405,9 +13625,10 @@
         1
       ],
       "total_cost": 6.088574409484863,
-      "avg_similarity": 0.13020364940166473,
+      "avg_similarity": 0.13020369410514832,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -13464,7 +13685,8 @@
       "total_cost": 5.984417915344238,
       "avg_similarity": 0.2519477903842926,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -13522,10 +13744,11 @@
         6,
         8
       ],
-      "total_cost": 5.729602813720703,
-      "avg_similarity": 0.2837996184825897,
+      "total_cost": 5.729603290557861,
+      "avg_similarity": 0.28379958868026733,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -13581,10 +13804,11 @@
         7,
         1
       ],
-      "total_cost": 5.350278854370117,
-      "avg_similarity": 0.2356744110584259,
+      "total_cost": 5.350279331207275,
+      "avg_similarity": 0.23567445576190948,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -13641,7 +13865,8 @@
       "total_cost": 6.160830497741699,
       "avg_similarity": 0.2298961579799652,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -13702,7 +13927,8 @@
       "total_cost": 5.8705315589904785,
       "avg_similarity": 0.2661835551261902,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -13760,10 +13986,11 @@
         4,
         5
       ],
-      "total_cost": 6.362188339233398,
-      "avg_similarity": 0.2047264277935028,
+      "total_cost": 6.362189292907715,
+      "avg_similarity": 0.20472636818885803,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -13821,10 +14048,11 @@
         1,
         5
       ],
-      "total_cost": 5.727804183959961,
+      "total_cost": 5.727804660797119,
       "avg_similarity": 0.2840244472026825,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -13882,10 +14110,11 @@
         12,
         18
       ],
-      "total_cost": 5.950947284698486,
-      "avg_similarity": 0.2561315894126892,
+      "total_cost": 5.9509477615356445,
+      "avg_similarity": 0.2561315596103668,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -13943,10 +14172,11 @@
         6,
         4
       ],
-      "total_cost": 5.615818023681641,
-      "avg_similarity": 0.2980227768421173,
+      "total_cost": 5.615817546844482,
+      "avg_similarity": 0.2980228066444397,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -14007,7 +14237,8 @@
       "total_cost": 5.5944695472717285,
       "avg_similarity": 0.30069130659103394,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -14066,9 +14297,10 @@
         13
       ],
       "total_cost": 5.8336381912231445,
-      "avg_similarity": 0.27079522609710693,
+      "avg_similarity": 0.2707952558994293,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -14127,9 +14359,10 @@
         9
       ],
       "total_cost": 6.113694667816162,
-      "avg_similarity": 0.23578816652297974,
+      "avg_similarity": 0.23578813672065735,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -14186,9 +14419,10 @@
         6
       ],
       "total_cost": 6.038496971130371,
-      "avg_similarity": 0.13735757768154144,
+      "avg_similarity": 0.13735759258270264,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           1,
@@ -14242,10 +14476,11 @@
         11,
         7
       ],
-      "total_cost": 5.821742057800293,
+      "total_cost": 5.821741580963135,
       "avg_similarity": 0.27228230237960815,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -14304,9 +14539,10 @@
         4
       ],
       "total_cost": 5.903871536254883,
-      "avg_similarity": 0.2620159983634949,
+      "avg_similarity": 0.26201602816581726,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -14364,10 +14600,11 @@
         4,
         22
       ],
-      "total_cost": 5.728953838348389,
-      "avg_similarity": 0.2838807702064514,
+      "total_cost": 5.728954315185547,
+      "avg_similarity": 0.28388071060180664,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -14425,10 +14662,11 @@
         10,
         4
       ],
-      "total_cost": 5.817850589752197,
+      "total_cost": 5.8178510665893555,
       "avg_similarity": 0.27276867628097534,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -14489,7 +14727,8 @@
       "total_cost": 5.8972578048706055,
       "avg_similarity": 0.2628427743911743,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -14550,7 +14789,8 @@
       "total_cost": 5.874662399291992,
       "avg_similarity": 0.265667200088501,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -14608,10 +14848,11 @@
         7,
         18
       ],
-      "total_cost": 5.318971157073975,
-      "avg_similarity": 0.3351286053657532,
+      "total_cost": 5.318971633911133,
+      "avg_similarity": 0.3351285457611084,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -14670,9 +14911,10 @@
         2
       ],
       "total_cost": 5.982414722442627,
-      "avg_similarity": 0.252198189496994,
+      "avg_similarity": 0.25219815969467163,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -14733,7 +14975,8 @@
       "total_cost": 6.366700172424316,
       "avg_similarity": 0.20416252315044403,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -14794,7 +15037,8 @@
       "total_cost": 5.502283096313477,
       "avg_similarity": 0.31221458315849304,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -14852,10 +15096,11 @@
         2,
         19
       ],
-      "total_cost": 5.611091613769531,
-      "avg_similarity": 0.2986135482788086,
+      "total_cost": 5.611091136932373,
+      "avg_similarity": 0.29861360788345337,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -14913,10 +15158,11 @@
         11,
         9
       ],
-      "total_cost": 6.04227352142334,
-      "avg_similarity": 0.24471580982208252,
+      "total_cost": 6.042273998260498,
+      "avg_similarity": 0.24471575021743774,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -14975,9 +15221,10 @@
         10
       ],
       "total_cost": 5.790879249572754,
-      "avg_similarity": 0.276140034198761,
+      "avg_similarity": 0.2761400640010834,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -15036,9 +15283,10 @@
         10
       ],
       "total_cost": 6.542470932006836,
-      "avg_similarity": 0.1821911334991455,
+      "avg_similarity": 0.18219110369682312,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -15094,10 +15342,11 @@
         6,
         4
       ],
-      "total_cost": 5.678379535675049,
+      "total_cost": 5.678379058837891,
       "avg_similarity": 0.18880292773246765,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -15152,9 +15401,10 @@
         2
       ],
       "total_cost": 6.439842224121094,
-      "avg_similarity": 0.1950196921825409,
+      "avg_similarity": 0.1950196623802185,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -15215,7 +15465,8 @@
       "total_cost": 5.352482795715332,
       "avg_similarity": 0.3309396505355835,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -15273,10 +15524,11 @@
         7,
         2
       ],
-      "total_cost": 6.102957248687744,
+      "total_cost": 6.102957725524902,
       "avg_similarity": 0.23713034391403198,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -15334,10 +15586,11 @@
         2,
         1
       ],
-      "total_cost": 5.802489280700684,
-      "avg_similarity": 0.27468886971473694,
+      "total_cost": 5.802488803863525,
+      "avg_similarity": 0.2746888995170593,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -15398,7 +15651,8 @@
       "total_cost": 5.803677558898926,
       "avg_similarity": 0.27454033493995667,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -15456,10 +15710,11 @@
         5,
         14
       ],
-      "total_cost": 5.554542064666748,
-      "avg_similarity": 0.3056822717189789,
+      "total_cost": 5.55454158782959,
+      "avg_similarity": 0.3056822419166565,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -15520,7 +15775,8 @@
       "total_cost": 6.031306266784668,
       "avg_similarity": 0.24608668684959412,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -15579,9 +15835,10 @@
         2
       ],
       "total_cost": 5.732189178466797,
-      "avg_similarity": 0.2834763526916504,
+      "avg_similarity": 0.283476322889328,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -15640,9 +15897,10 @@
         16
       ],
       "total_cost": 5.525927543640137,
-      "avg_similarity": 0.3092591166496277,
+      "avg_similarity": 0.3092590570449829,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -15701,9 +15959,10 @@
         4
       ],
       "total_cost": 6.1953511238098145,
-      "avg_similarity": 0.22558113932609558,
+      "avg_similarity": 0.2255811095237732,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -15764,7 +16023,8 @@
       "total_cost": 5.634124755859375,
       "avg_similarity": 0.2957344055175781,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -15822,10 +16082,11 @@
         13,
         12
       ],
-      "total_cost": 5.674288749694824,
-      "avg_similarity": 0.290713906288147,
+      "total_cost": 5.674288272857666,
+      "avg_similarity": 0.29071396589279175,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -15883,10 +16144,11 @@
         5,
         1
       ],
-      "total_cost": 6.240589141845703,
-      "avg_similarity": 0.21992632746696472,
+      "total_cost": 6.240589618682861,
+      "avg_similarity": 0.21992629766464233,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -15944,10 +16206,11 @@
         1,
         5
       ],
-      "total_cost": 6.036997318267822,
-      "avg_similarity": 0.24537533521652222,
+      "total_cost": 6.0369977951049805,
+      "avg_similarity": 0.24537530541419983,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -16008,7 +16271,8 @@
       "total_cost": 6.492894172668457,
       "avg_similarity": 0.18838822841644287,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -16069,7 +16333,8 @@
       "total_cost": 6.494339942932129,
       "avg_similarity": 0.1882075071334839,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -16127,10 +16392,11 @@
         9,
         8
       ],
-      "total_cost": 6.25311803817749,
-      "avg_similarity": 0.21836024522781372,
+      "total_cost": 6.253118515014648,
+      "avg_similarity": 0.21836017072200775,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -16187,9 +16453,10 @@
         1
       ],
       "total_cost": 5.377432823181152,
-      "avg_similarity": 0.2317953109741211,
+      "avg_similarity": 0.2317952811717987,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -16244,9 +16511,10 @@
         4
       ],
       "total_cost": 5.9109601974487305,
-      "avg_similarity": 0.2611299753189087,
+      "avg_similarity": 0.2611300051212311,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -16304,10 +16572,11 @@
         8,
         4
       ],
-      "total_cost": 5.734428405761719,
-      "avg_similarity": 0.28319647908210754,
+      "total_cost": 5.7344279289245605,
+      "avg_similarity": 0.28319650888442993,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -16368,7 +16637,8 @@
       "total_cost": 5.483047962188721,
       "avg_similarity": 0.3146190047264099,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -16426,10 +16696,11 @@
         4,
         10
       ],
-      "total_cost": 5.794816017150879,
+      "total_cost": 5.794816493988037,
       "avg_similarity": 0.27564793825149536,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -16488,9 +16759,10 @@
         4
       ],
       "total_cost": 5.935477256774902,
-      "avg_similarity": 0.2580653131008148,
+      "avg_similarity": 0.2580653727054596,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -16547,9 +16819,10 @@
         5
       ],
       "total_cost": 5.1025495529174805,
-      "avg_similarity": 0.2710643410682678,
+      "avg_similarity": 0.27106431126594543,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -16604,9 +16877,10 @@
         10
       ],
       "total_cost": 6.158347129821777,
-      "avg_similarity": 0.23020662367343903,
+      "avg_similarity": 0.23020657896995544,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -16665,9 +16939,10 @@
         15
       ],
       "total_cost": 5.574921131134033,
-      "avg_similarity": 0.30313482880592346,
+      "avg_similarity": 0.30313485860824585,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -16726,7 +17001,8 @@
       "total_cost": 5.866123676300049,
       "avg_similarity": 0.16198229789733887,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -16780,10 +17056,11 @@
         12,
         4
       ],
-      "total_cost": 6.131948471069336,
-      "avg_similarity": 0.233506441116333,
+      "total_cost": 6.131948947906494,
+      "avg_similarity": 0.23350639641284943,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -16842,9 +17119,10 @@
         4
       ],
       "total_cost": 6.258155822753906,
-      "avg_similarity": 0.21773050725460052,
+      "avg_similarity": 0.21773049235343933,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -16903,9 +17181,10 @@
         5
       ],
       "total_cost": 5.898828506469727,
-      "avg_similarity": 0.26264649629592896,
+      "avg_similarity": 0.2626464366912842,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -16966,7 +17245,8 @@
       "total_cost": 5.873251914978027,
       "avg_similarity": 0.26584354043006897,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -17024,10 +17304,11 @@
         11,
         2
       ],
-      "total_cost": 5.810739994049072,
-      "avg_similarity": 0.27365750074386597,
+      "total_cost": 5.810739517211914,
+      "avg_similarity": 0.27365756034851074,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -17086,7 +17367,8 @@
       "total_cost": 6.019510746002197,
       "avg_similarity": 0.1400698870420456,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -17141,9 +17423,10 @@
         2
       ],
       "total_cost": 6.301466941833496,
-      "avg_similarity": 0.212316632270813,
+      "avg_similarity": 0.2123166024684906,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -17202,9 +17485,10 @@
         3
       ],
       "total_cost": 6.556951999664307,
-      "avg_similarity": 0.18038101494312286,
+      "avg_similarity": 0.18038100004196167,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -17263,9 +17547,10 @@
         8
       ],
       "total_cost": 6.232155799865723,
-      "avg_similarity": 0.22098056972026825,
+      "avg_similarity": 0.22098055481910706,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -17326,7 +17611,8 @@
       "total_cost": 5.614741325378418,
       "avg_similarity": 0.29815733432769775,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -17384,10 +17670,11 @@
         8,
         9
       ],
-      "total_cost": 6.06326961517334,
+      "total_cost": 6.063269138336182,
       "avg_similarity": 0.2420913428068161,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -17446,9 +17733,10 @@
         11
       ],
       "total_cost": 6.098971366882324,
-      "avg_similarity": 0.23762854933738708,
+      "avg_similarity": 0.2376285344362259,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -17507,9 +17795,10 @@
         4
       ],
       "total_cost": 6.346400260925293,
-      "avg_similarity": 0.20669998228549957,
+      "avg_similarity": 0.20669999718666077,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -17567,10 +17856,11 @@
         13,
         19
       ],
-      "total_cost": 5.753153324127197,
-      "avg_similarity": 0.28085580468177795,
+      "total_cost": 5.7531538009643555,
+      "avg_similarity": 0.28085577487945557,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -17629,9 +17919,10 @@
         22
       ],
       "total_cost": 6.046188831329346,
-      "avg_similarity": 0.24422644078731537,
+      "avg_similarity": 0.2442263960838318,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -17689,10 +17980,11 @@
         11,
         14
       ],
-      "total_cost": 5.694969177246094,
-      "avg_similarity": 0.2881287932395935,
+      "total_cost": 5.694969654083252,
+      "avg_similarity": 0.2881288230419159,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -17753,7 +18045,8 @@
       "total_cost": 5.886869430541992,
       "avg_similarity": 0.264141321182251,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -17814,7 +18107,8 @@
       "total_cost": 6.0957794189453125,
       "avg_similarity": 0.23802757263183594,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -17873,9 +18167,10 @@
         8
       ],
       "total_cost": 6.431027412414551,
-      "avg_similarity": 0.19612154364585876,
+      "avg_similarity": 0.19612155854701996,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -17936,7 +18231,8 @@
       "total_cost": 5.626129150390625,
       "avg_similarity": 0.2967338263988495,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -17995,9 +18291,10 @@
         3
       ],
       "total_cost": 5.646529197692871,
-      "avg_similarity": 0.2941838800907135,
+      "avg_similarity": 0.2941839098930359,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -18055,10 +18352,11 @@
         13,
         11
       ],
-      "total_cost": 5.9218926429748535,
-      "avg_similarity": 0.2597634196281433,
+      "total_cost": 5.921892166137695,
+      "avg_similarity": 0.2597634494304657,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -18117,9 +18415,10 @@
         15
       ],
       "total_cost": 5.541055679321289,
-      "avg_similarity": 0.3073680102825165,
+      "avg_similarity": 0.30736804008483887,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -18178,9 +18477,10 @@
         8
       ],
       "total_cost": 6.024014949798584,
-      "avg_similarity": 0.246998131275177,
+      "avg_similarity": 0.2469981610774994,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -18241,7 +18541,8 @@
       "total_cost": 5.936550617218018,
       "avg_similarity": 0.2579311728477478,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -18302,7 +18603,8 @@
       "total_cost": 5.91486930847168,
       "avg_similarity": 0.26064133644104004,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -18361,9 +18663,10 @@
         2
       ],
       "total_cost": 6.322187423706055,
-      "avg_similarity": 0.20972654223442078,
+      "avg_similarity": 0.20972657203674316,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -18421,10 +18724,11 @@
         10,
         11
       ],
-      "total_cost": 5.770763874053955,
+      "total_cost": 5.770763397216797,
       "avg_similarity": 0.2786545157432556,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -18485,7 +18789,8 @@
       "total_cost": 5.830289363861084,
       "avg_similarity": 0.2712137997150421,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -18543,10 +18848,11 @@
         15,
         14
       ],
-      "total_cost": 5.897216320037842,
-      "avg_similarity": 0.2628479599952698,
+      "total_cost": 5.897215843200684,
+      "avg_similarity": 0.26284798979759216,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -18605,7 +18911,8 @@
       "total_cost": 5.864353179931641,
       "avg_similarity": 0.162235289812088,
       "n_video_steps": 8,
-      "n_recipe_steps": 7,
+      "n_recipe_steps": 9,
+      "n_matched_recipe_steps": 7,
       "matches": [
         [
           0,
@@ -18662,7 +18969,8 @@
       "total_cost": 6.106684684753418,
       "avg_similarity": 0.23666444420814514,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -18720,10 +19028,11 @@
         12,
         5
       ],
-      "total_cost": 6.390037536621094,
-      "avg_similarity": 0.2012452930212021,
+      "total_cost": 6.390038013458252,
+      "avg_similarity": 0.2012452483177185,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -18781,10 +19090,11 @@
         8,
         2
       ],
-      "total_cost": 6.232113838195801,
-      "avg_similarity": 0.22098581492900848,
+      "total_cost": 6.232113361358643,
+      "avg_similarity": 0.2209858000278473,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -18845,7 +19155,8 @@
       "total_cost": 6.182269096374512,
       "avg_similarity": 0.22721636295318604,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -18904,9 +19215,10 @@
         5
       ],
       "total_cost": 6.1121826171875,
-      "avg_similarity": 0.2359771430492401,
+      "avg_similarity": 0.2359771728515625,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -18964,10 +19276,11 @@
         7,
         9
       ],
-      "total_cost": 5.548814296722412,
+      "total_cost": 5.54881477355957,
       "avg_similarity": 0.3063982129096985,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -19026,9 +19339,10 @@
         5
       ],
       "total_cost": 6.2716288566589355,
-      "avg_similarity": 0.21604639291763306,
+      "avg_similarity": 0.21604636311531067,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -19087,9 +19401,10 @@
         5
       ],
       "total_cost": 5.726413726806641,
-      "avg_similarity": 0.2841983139514923,
+      "avg_similarity": 0.2841982841491699,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -19148,9 +19463,10 @@
         10
       ],
       "total_cost": 6.100929260253906,
-      "avg_similarity": 0.23738382756710052,
+      "avg_similarity": 0.23738381266593933,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -19209,9 +19525,10 @@
         4
       ],
       "total_cost": 6.00759220123291,
-      "avg_similarity": 0.24905098974704742,
+      "avg_similarity": 0.24905097484588623,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -19270,9 +19587,10 @@
         13
       ],
       "total_cost": 6.221733093261719,
-      "avg_similarity": 0.22228336334228516,
+      "avg_similarity": 0.22228333353996277,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -19333,7 +19651,8 @@
       "total_cost": 6.1563944816589355,
       "avg_similarity": 0.23045068979263306,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -19391,10 +19710,11 @@
         12,
         15
       ],
-      "total_cost": 6.4634575843811035,
-      "avg_similarity": 0.19206780195236206,
+      "total_cost": 6.463457107543945,
+      "avg_similarity": 0.19206784665584564,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -19453,9 +19773,10 @@
         3
       ],
       "total_cost": 6.062649726867676,
-      "avg_similarity": 0.24216881394386292,
+      "avg_similarity": 0.24216879904270172,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -19516,7 +19837,8 @@
       "total_cost": 5.736244201660156,
       "avg_similarity": 0.28296947479248047,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -19577,7 +19899,8 @@
       "total_cost": 6.004863262176514,
       "avg_similarity": 0.2493920922279358,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -19638,7 +19961,8 @@
       "total_cost": 6.175024509429932,
       "avg_similarity": 0.22812193632125854,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -19699,7 +20023,8 @@
       "total_cost": 6.334789276123047,
       "avg_similarity": 0.20815131068229675,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -19757,10 +20082,11 @@
         7,
         9
       ],
-      "total_cost": 6.130102157592773,
-      "avg_similarity": 0.2337372601032257,
+      "total_cost": 6.130101680755615,
+      "avg_similarity": 0.2337372899055481,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -19818,10 +20144,11 @@
         22,
         2
       ],
-      "total_cost": 6.036745071411133,
-      "avg_similarity": 0.245406836271286,
+      "total_cost": 6.036745548248291,
+      "avg_similarity": 0.24540677666664124,
       "n_video_steps": 8,
-      "n_recipe_steps": 25,
+      "n_recipe_steps": 27,
+      "n_matched_recipe_steps": 25,
       "matches": [
         [
           0,
@@ -19880,9 +20207,10 @@
         15
       ],
       "total_cost": 5.518938064575195,
-      "avg_similarity": 0.310132771730423,
+      "avg_similarity": 0.3101327419281006,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -19940,10 +20268,11 @@
         2,
         15
       ],
-      "total_cost": 5.538285732269287,
-      "avg_similarity": 0.3077142536640167,
+      "total_cost": 5.538285255432129,
+      "avg_similarity": 0.3077143430709839,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -20004,7 +20333,8 @@
       "total_cost": 5.990656852722168,
       "avg_similarity": 0.251167893409729,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -20062,10 +20392,11 @@
         3,
         7
       ],
-      "total_cost": 6.5545549392700195,
-      "avg_similarity": 0.18068061769008636,
+      "total_cost": 6.554555416107178,
+      "avg_similarity": 0.18068057298660278,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -20126,7 +20457,8 @@
       "total_cost": 5.59785795211792,
       "avg_similarity": 0.30026775598526,
       "n_video_steps": 8,
-      "n_recipe_steps": 18,
+      "n_recipe_steps": 20,
+      "n_matched_recipe_steps": 18,
       "matches": [
         [
           0,
@@ -20184,10 +20516,11 @@
         14,
         5
       ],
-      "total_cost": 5.664583206176758,
+      "total_cost": 5.6645827293396,
       "avg_similarity": 0.29192715883255005,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -20246,9 +20579,10 @@
         13
       ],
       "total_cost": 6.017193794250488,
-      "avg_similarity": 0.24785076081752777,
+      "avg_similarity": 0.24785077571868896,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -20306,10 +20640,11 @@
         1,
         7
       ],
-      "total_cost": 6.101232528686523,
-      "avg_similarity": 0.2373458743095398,
+      "total_cost": 6.10123348236084,
+      "avg_similarity": 0.2373458594083786,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -20368,9 +20703,10 @@
         12
       ],
       "total_cost": 6.24571418762207,
-      "avg_similarity": 0.2192857414484024,
+      "avg_similarity": 0.21928569674491882,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -20429,9 +20765,10 @@
         10
       ],
       "total_cost": 6.02178955078125,
-      "avg_similarity": 0.24727630615234375,
+      "avg_similarity": 0.24727626144886017,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -20489,10 +20826,11 @@
         4,
         2
       ],
-      "total_cost": 6.422186851501465,
-      "avg_similarity": 0.1972266435623169,
+      "total_cost": 6.422187328338623,
+      "avg_similarity": 0.1972266137599945,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -20553,7 +20891,8 @@
       "total_cost": 6.728124618530273,
       "avg_similarity": 0.15898442268371582,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -20611,10 +20950,11 @@
         5,
         2
       ],
-      "total_cost": 5.987038612365723,
-      "avg_similarity": 0.25162017345428467,
+      "total_cost": 5.987039089202881,
+      "avg_similarity": 0.2516201138496399,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -20673,9 +21013,10 @@
         6
       ],
       "total_cost": 5.826559543609619,
-      "avg_similarity": 0.27168008685112,
+      "avg_similarity": 0.2716800570487976,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -20733,10 +21074,11 @@
         3,
         4
       ],
-      "total_cost": 6.172684192657471,
-      "avg_similarity": 0.22841447591781616,
+      "total_cost": 6.1726837158203125,
+      "avg_similarity": 0.22841453552246094,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -20795,9 +21137,10 @@
         1
       ],
       "total_cost": 5.928342819213867,
-      "avg_similarity": 0.2589571475982666,
+      "avg_similarity": 0.2589571177959442,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -20858,7 +21201,8 @@
       "total_cost": 5.763361930847168,
       "avg_similarity": 0.279579758644104,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -20916,10 +21260,11 @@
         3,
         18
       ],
-      "total_cost": 5.7742156982421875,
+      "total_cost": 5.774216175079346,
       "avg_similarity": 0.27822303771972656,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -20978,9 +21323,10 @@
         2
       ],
       "total_cost": 5.904071807861328,
-      "avg_similarity": 0.261991024017334,
+      "avg_similarity": 0.26199105381965637,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -21041,7 +21387,8 @@
       "total_cost": 5.931099891662598,
       "avg_similarity": 0.2586125135421753,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -21102,7 +21449,8 @@
       "total_cost": 5.859895706176758,
       "avg_similarity": 0.2675130069255829,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -21161,9 +21509,10 @@
         14
       ],
       "total_cost": 5.430108070373535,
-      "avg_similarity": 0.3212364912033081,
+      "avg_similarity": 0.3212365210056305,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -21222,9 +21571,10 @@
         2
       ],
       "total_cost": 6.174271583557129,
-      "avg_similarity": 0.22821606695652008,
+      "avg_similarity": 0.22821608185768127,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -21285,7 +21635,8 @@
       "total_cost": 6.014397144317627,
       "avg_similarity": 0.24820037186145782,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -21343,10 +21694,11 @@
         5,
         14
       ],
-      "total_cost": 5.896442890167236,
-      "avg_similarity": 0.26294463872909546,
+      "total_cost": 5.8964433670043945,
+      "avg_similarity": 0.26294460892677307,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -21407,7 +21759,8 @@
       "total_cost": 6.366091251373291,
       "avg_similarity": 0.20423859357833862,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -21468,7 +21821,8 @@
       "total_cost": 6.4180192947387695,
       "avg_similarity": 0.1977475881576538,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -21527,9 +21881,10 @@
         6
       ],
       "total_cost": 6.109033584594727,
-      "avg_similarity": 0.23637083172798157,
+      "avg_similarity": 0.23637084662914276,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -21588,9 +21943,10 @@
         2
       ],
       "total_cost": 5.395705223083496,
-      "avg_similarity": 0.3255368173122406,
+      "avg_similarity": 0.3255367875099182,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -21651,7 +22007,8 @@
       "total_cost": 5.827916145324707,
       "avg_similarity": 0.27151045203208923,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -21709,10 +22066,11 @@
         4,
         13
       ],
-      "total_cost": 5.306373596191406,
+      "total_cost": 5.306373119354248,
       "avg_similarity": 0.336703360080719,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -21771,9 +22129,10 @@
         20
       ],
       "total_cost": 5.282495498657227,
-      "avg_similarity": 0.3396880626678467,
+      "avg_similarity": 0.3396880030632019,
       "n_video_steps": 8,
-      "n_recipe_steps": 23,
+      "n_recipe_steps": 25,
+      "n_matched_recipe_steps": 23,
       "matches": [
         [
           0,
@@ -21834,7 +22193,8 @@
       "total_cost": 5.957998752593994,
       "avg_similarity": 0.25525015592575073,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -21893,9 +22253,10 @@
         4
       ],
       "total_cost": 6.067898750305176,
-      "avg_similarity": 0.24151265621185303,
+      "avg_similarity": 0.24151268601417542,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -21954,9 +22315,10 @@
         14
       ],
       "total_cost": 5.752626419067383,
-      "avg_similarity": 0.2809216380119324,
+      "avg_similarity": 0.28092169761657715,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -22017,7 +22379,8 @@
       "total_cost": 6.144701957702637,
       "avg_similarity": 0.2319122552871704,
       "n_video_steps": 8,
-      "n_recipe_steps": 9,
+      "n_recipe_steps": 11,
+      "n_matched_recipe_steps": 9,
       "matches": [
         [
           0,
@@ -22078,7 +22441,8 @@
       "total_cost": 5.822997093200684,
       "avg_similarity": 0.27212533354759216,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -22136,10 +22500,11 @@
         13,
         15
       ],
-      "total_cost": 5.237813472747803,
-      "avg_similarity": 0.34527331590652466,
+      "total_cost": 5.237813949584961,
+      "avg_similarity": 0.3452732563018799,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -22200,7 +22565,8 @@
       "total_cost": 6.136259078979492,
       "avg_similarity": 0.23296761512756348,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -22259,9 +22625,10 @@
         9
       ],
       "total_cost": 5.96474552154541,
-      "avg_similarity": 0.2544068396091461,
+      "avg_similarity": 0.25440680980682373,
       "n_video_steps": 8,
-      "n_recipe_steps": 16,
+      "n_recipe_steps": 18,
+      "n_matched_recipe_steps": 16,
       "matches": [
         [
           0,
@@ -22320,9 +22687,10 @@
         10
       ],
       "total_cost": 5.892770767211914,
-      "avg_similarity": 0.26340365409851074,
+      "avg_similarity": 0.26340368390083313,
       "n_video_steps": 8,
-      "n_recipe_steps": 17,
+      "n_recipe_steps": 19,
+      "n_matched_recipe_steps": 17,
       "matches": [
         [
           0,
@@ -22380,10 +22748,11 @@
         7,
         19
       ],
-      "total_cost": 6.06527042388916,
-      "avg_similarity": 0.24184122681617737,
+      "total_cost": 6.065269470214844,
+      "avg_similarity": 0.24184130132198334,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -22444,7 +22813,8 @@
       "total_cost": 6.4471330642700195,
       "avg_similarity": 0.19410836696624756,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -22505,7 +22875,8 @@
       "total_cost": 6.478975772857666,
       "avg_similarity": 0.19012805819511414,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -22564,9 +22935,10 @@
         12
       ],
       "total_cost": 6.03096866607666,
-      "avg_similarity": 0.24612891674041748,
+      "avg_similarity": 0.24612894654273987,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -22627,7 +22999,8 @@
       "total_cost": 6.0076904296875,
       "avg_similarity": 0.2490387260913849,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -22685,10 +23058,11 @@
         11,
         2
       ],
-      "total_cost": 6.076178550720215,
+      "total_cost": 6.076179027557373,
       "avg_similarity": 0.24047765135765076,
       "n_video_steps": 8,
-      "n_recipe_steps": 13,
+      "n_recipe_steps": 15,
+      "n_matched_recipe_steps": 13,
       "matches": [
         [
           0,
@@ -22749,7 +23123,8 @@
       "total_cost": 6.18720817565918,
       "avg_similarity": 0.22659894824028015,
       "n_video_steps": 8,
-      "n_recipe_steps": 12,
+      "n_recipe_steps": 14,
+      "n_matched_recipe_steps": 12,
       "matches": [
         [
           0,
@@ -22807,10 +23182,11 @@
         5,
         2
       ],
-      "total_cost": 6.260418891906738,
-      "avg_similarity": 0.21744763851165771,
+      "total_cost": 6.26041841506958,
+      "avg_similarity": 0.21744772791862488,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -22868,10 +23244,11 @@
         9,
         2
       ],
-      "total_cost": 6.289357662200928,
-      "avg_similarity": 0.21383024752140045,
+      "total_cost": 6.289358139038086,
+      "avg_similarity": 0.21383020281791687,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -22930,9 +23307,10 @@
         13
       ],
       "total_cost": 5.801085472106934,
-      "avg_similarity": 0.2748643457889557,
+      "avg_similarity": 0.2748643159866333,
       "n_video_steps": 8,
-      "n_recipe_steps": 14,
+      "n_recipe_steps": 16,
+      "n_matched_recipe_steps": 14,
       "matches": [
         [
           0,
@@ -22993,7 +23371,8 @@
       "total_cost": 6.155735015869141,
       "avg_similarity": 0.23053312301635742,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -23051,10 +23430,11 @@
         6,
         1
       ],
-      "total_cost": 5.666191577911377,
-      "avg_similarity": 0.2917260527610779,
+      "total_cost": 5.666191101074219,
+      "avg_similarity": 0.29172608256340027,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -23115,7 +23495,8 @@
       "total_cost": 6.628614902496338,
       "avg_similarity": 0.17142313718795776,
       "n_video_steps": 8,
-      "n_recipe_steps": 11,
+      "n_recipe_steps": 13,
+      "n_matched_recipe_steps": 11,
       "matches": [
         [
           0,
@@ -23174,9 +23555,10 @@
         19
       ],
       "total_cost": 6.105404853820801,
-      "avg_similarity": 0.23682436347007751,
+      "avg_similarity": 0.23682434856891632,
       "n_video_steps": 8,
-      "n_recipe_steps": 20,
+      "n_recipe_steps": 22,
+      "n_matched_recipe_steps": 20,
       "matches": [
         [
           0,
@@ -23237,7 +23619,8 @@
       "total_cost": 5.699474334716797,
       "avg_similarity": 0.2875657081604004,
       "n_video_steps": 8,
-      "n_recipe_steps": 19,
+      "n_recipe_steps": 21,
+      "n_matched_recipe_steps": 19,
       "matches": [
         [
           0,
@@ -23298,7 +23681,8 @@
       "total_cost": 5.425581932067871,
       "avg_similarity": 0.3218022584915161,
       "n_video_steps": 8,
-      "n_recipe_steps": 15,
+      "n_recipe_steps": 17,
+      "n_matched_recipe_steps": 15,
       "matches": [
         [
           0,
@@ -23336,9 +23720,9 @@
     }
   },
   "config": {
-    "video_features_path": "c:\\Users\\enric\\Desktop\\MistakeDetection\\data\\hiero_all_video_steps.npz",
-    "recipe_embeddings_dir": "c:\\Users\\enric\\Desktop\\MistakeDetection\\data\\recipe_embeddings",
-    "annotation_json_path": "c:\\Users\\enric\\Desktop\\MistakeDetection\\data\\annotation_json\\complete_step_annotations.json"
+    "video_features_path": "/content/drive/MyDrive/MistakeDetection/hiero_all_video_steps.npz",
+    "recipe_embeddings_dir": "/content/drive/MyDrive/MistakeDetection/recipe_text_step_embeddings",
+    "annotation_json_path": "/content/drive/MyDrive/MistakeDetection/annotation_json/complete_step_annotations.json"
   },
-  "note": "recipe_steps are 1-based (1 to N), video_steps are 0-based (0 to 7)"
+  "note": "START (index 0) and END (last index) were EXCLUDED from matching. recipe_steps indices refer to actual recipe steps only (1 to N-2 in 0-based, or 1 to N-1 in 1-based where N is total including START/END)"
 }
