@@ -113,9 +113,6 @@ class DAGNNDataset(Dataset):
         video_key = sample_info['video_key']
         recipe_name = sample_info['recipe_name']
         recipe_path = sample_info['recipe_path']
-
-        if video_key == "13_5_360p_224.mp4_1s_1s":
-            print("Debugging sample:", video_key, recipe_name)
         
         # Load visual embeddings (8x768)
         visual_embeddings = torch.from_numpy(
