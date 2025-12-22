@@ -1,0 +1,146 @@
+{
+    "1": {
+        "num_entries": 18,
+        "min_steps": 12,
+        "max_steps": 12,
+        "avg_steps": 12
+    },
+    "2": {
+        "num_entries": 16,
+        "min_steps": 16,
+        "max_steps": 18,
+        "avg_steps": 16.1875
+    },
+    "3": {
+        "num_entries": 13,
+        "min_steps": 14,
+        "max_steps": 16,
+        "avg_steps": 14.153846153846153
+    },
+    "4": {
+        "num_entries": 17,
+        "min_steps": 15,
+        "max_steps": 17,
+        "avg_steps": 15.235294117647058
+    },
+    "5": {
+        "num_entries": 15,
+        "min_steps": 16,
+        "max_steps": 16,
+        "avg_steps": 16
+    },
+    "7": {
+        "num_entries": 16,
+        "min_steps": 11,
+        "max_steps": 11,
+        "avg_steps": 11
+    },
+    "8": {
+        "num_entries": 16,
+        "min_steps": 7,
+        "max_steps": 7,
+        "avg_steps": 7
+    },
+    "9": {
+        "num_entries": 14,
+        "min_steps": 11,
+        "max_steps": 11,
+        "avg_steps": 11
+    },
+    "10": {
+        "num_entries": 12,
+        "min_steps": 19,
+        "max_steps": 20,
+        "avg_steps": 19.083333333333332
+    },
+    "12": {
+        "num_entries": 18,
+        "min_steps": 9,
+        "max_steps": 9,
+        "avg_steps": 9
+    },
+    "13": {
+        "num_entries": 14,
+        "min_steps": 12,
+        "max_steps": 12,
+        "avg_steps": 12
+    },
+    "15": {
+        "num_entries": 15,
+        "min_steps": 19,
+        "max_steps": 19,
+        "avg_steps": 19
+    },
+    "16": {
+        "num_entries": 16,
+        "min_steps": 23,
+        "max_steps": 24,
+        "avg_steps": 23.0625
+    },
+    "17": {
+        "num_entries": 20,
+        "min_steps": 11,
+        "max_steps": 12,
+        "avg_steps": 11.05
+    },
+    "18": {
+        "num_entries": 15,
+        "min_steps": 13,
+        "max_steps": 13,
+        "avg_steps": 13
+    },
+    "20": {
+        "num_entries": 14,
+        "min_steps": 18,
+        "max_steps": 18,
+        "avg_steps": 18
+    },
+    "21": {
+        "num_entries": 19,
+        "min_steps": 14,
+        "max_steps": 15,
+        "avg_steps": 14.052631578947368
+    },
+    "22": {
+        "num_entries": 17,
+        "min_steps": 15,
+        "max_steps": 16,
+        "avg_steps": 15.058823529411764
+    },
+    "23": {
+        "num_entries": 16,
+        "min_steps": 25,
+        "max_steps": 26,
+        "avg_steps": 25.0625
+    },
+    "25": {
+        "num_entries": 15,
+        "min_steps": 19,
+        "max_steps": 19,
+        "avg_steps": 19
+    },
+    "26": {
+        "num_entries": 17,
+        "min_steps": 20,
+        "max_steps": 20,
+        "avg_steps": 20
+    },
+    "27": {
+        "num_entries": 15,
+        "min_steps": 11,
+        "max_steps": 11,
+        "avg_steps": 11
+    },
+    "28": {
+        "num_entries": 18,
+        "min_steps": 17,
+        "max_steps": 18,
+        "avg_steps": 17.055555555555557
+    },
+    "29": {
+        "num_entries": 18,
+        "min_steps": 11,
+        "max_steps": 11,
+        "avg_steps": 11
+    }
+}
