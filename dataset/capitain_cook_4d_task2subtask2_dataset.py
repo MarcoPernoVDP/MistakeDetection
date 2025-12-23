@@ -20,14 +20,21 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
     sulle annotazioni a livello video.
     """
     
-    def __init__(self, root_dir: str):
+    def __init__(self, root_dir: str, npz_file_path: str = None):
         """
         Args:
             root_dir (str): path alla cartella root del dataset
+            npz_file_path (str): path al file .npz contenente tutti gli step di tutti i video.
+                                 Se None, usa il percorso di default.
         """
         self.root_dir = root_dir
         
-        print(f"Loading from: {self.features_dir()}...")
+        # Path di default se non specificato
+        if npz_file_path is None:
+            npz_file_path = "/content/drive/MyDrive/MistakeDetection/hiero_all_video_steps.npz"
+        
+        self.npz_file_path = npz_file_path
+        print(f"Loading from: {self.npz_file_path}...")
         
         # Carica le annotazioni a livello video
         self.video_annotations = self._load_video_annotations(root_dir)
@@ -63,8 +70,7 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
 
     def _load_from_hiero(self):
         """
-        Carica i dati dai file .npz nella cartella hiero.
-        Ogni file corrisponde a un video e contiene tutti i suoi step.
+        Carica i dati dal file .npz centralizzato che contiene tutti gli step di tutti i video.
         
         Returns:
             tuple: (X_list, y_list, video_ids_list)
@@ -76,43 +82,83 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
         y_list = []
         video_ids_list = []
         
-        # Trova tutti i file .npz nella cartella hiero
-        hiero_dir = self.features_dir()
-        npz_files = sorted(glob(os.path.join(hiero_dir, '*.npz')))
-        
-        if len(npz_files) == 0:
-            print(f"Warning: No .npz files found in {hiero_dir}")
+        # Carica il file npz centralizzato
+        if not os.path.exists(self.npz_file_path):
+            print(f"Error: File not found at {self.npz_file_path}")
             return [], [], []
         
-        for npz_path in npz_files:
-            # Estrai il video_id dal nome del file
-            # Esempio: "1_10_360p.mp4_1s_1s_steps.npz" -> "1_10_360"
-            filename = os.path.basename(npz_path)
-            video_id = filename.replace('_360p.mp4_1s_1s_steps.npz', '')
-            
-            # Carica il file npz
-            data = np.load(npz_path, allow_pickle=True)['data']
-            
-            # Estrai gli embeddings da tutti gli step
-            step_embeddings = []
-            for step_data in data:
-                embedding = step_data['embedding']
-                step_embeddings.append(embedding)
-            
-            if len(step_embeddings) == 0:
-                print(f"Warning: No steps found in {filename}, skipping...")
-                continue
-            
-            # Stack degli embeddings: (num_steps, n_features)
-            video_features = np.stack(step_embeddings, axis=0)
-            
-            # Determina la label dal file JSON
-            has_errors = self.video_annotations.get(video_id, False)
-            label = 1 if has_errors else 0
-            
-            X_list.append(torch.from_numpy(video_features).float())
-            y_list.append(torch.tensor(label, dtype=torch.long))
-            video_ids_list.append(video_id)
+        print(f"Loading data from {self.npz_file_path}...")
+        npz_data = np.load(self.npz_file_path, allow_pickle=True)
+        
+        # Il file contiene un array/dizionario con tutti i dati
+        # Assumo che la struttura sia: npz_data['data'] è un dizionario o array
+        # dove ogni elemento corrisponde a un video con i suoi step
+        
+        if 'data' in npz_data:
+            all_data = npz_data['data'].item() if npz_data['data'].shape == () else npz_data['data']
+        else:
+            # Se non c'è 'data', prova ad accedere direttamente
+            all_data = npz_data
+        
+        # Se è un dizionario, itera sulle chiavi (video_id)
+        if isinstance(all_data, dict):
+            for video_id, video_steps in all_data.items():
+                # Estrai gli embeddings da tutti gli step
+                step_embeddings = []
+                for step_data in video_steps:
+                    if isinstance(step_data, dict) and 'embedding' in step_data:
+                        embedding = step_data['embedding']
+                    else:
+                        embedding = step_data
+                    step_embeddings.append(embedding)
+                
+                if len(step_embeddings) == 0:
+                    print(f"Warning: No steps found for video {video_id}, skipping...")
+                    continue
+                
+                # Stack degli embeddings: (num_steps, n_features)
+                video_features = np.stack(step_embeddings, axis=0)
+                
+                # Determina la label dal file JSON
+                has_errors = self.video_annotations.get(str(video_id), False)
+                label = 1 if has_errors else 0
+                
+                X_list.append(torch.from_numpy(video_features).float())
+                y_list.append(torch.tensor(label, dtype=torch.long))
+                video_ids_list.append(str(video_id))
+        else:
+            # Se è un array, ogni elemento è un video
+            for idx, video_data in enumerate(all_data):
+                if isinstance(video_data, dict):
+                    video_id = video_data.get('video_id', f'video_{idx}')
+                    video_steps = video_data.get('steps', [])
+                else:
+                    video_id = f'video_{idx}'
+                    video_steps = video_data
+                
+                # Estrai gli embeddings da tutti gli step
+                step_embeddings = []
+                for step_data in video_steps:
+                    if isinstance(step_data, dict) and 'embedding' in step_data:
+                        embedding = step_data['embedding']
+                    else:
+                        embedding = step_data
+                    step_embeddings.append(embedding)
+                
+                if len(step_embeddings) == 0:
+                    print(f"Warning: No steps found for {video_id}, skipping...")
+                    continue
+                
+                # Stack degli embeddings: (num_steps, n_features)
+                video_features = np.stack(step_embeddings, axis=0)
+                
+                # Determina la label dal file JSON
+                has_errors = self.video_annotations.get(str(video_id), False)
+                label = 1 if has_errors else 0
+                
+                X_list.append(torch.from_numpy(video_features).float())
+                y_list.append(torch.tensor(label, dtype=torch.long))
+                video_ids_list.append(str(video_id))
         
         return X_list, y_list, video_ids_list
     
