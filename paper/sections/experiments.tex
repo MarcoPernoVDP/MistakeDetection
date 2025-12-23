@@ -5,18 +5,24 @@
 \subsection{Experimental Setup}
 
 \paragraph{Dataset.} 
-We conduct experiments on the \textbf{Captain Cook 4D} dataset, a large-scale egocentric cooking video dataset containing procedural error annotations. The dataset provides two evaluation splits: (i) \textit{step-level} split, where errors are annotated at the granularity of individual cooking steps, and (ii) \textit{recording-level} split, where the entire video recording is labeled as containing errors or being correct. We follow the official train/validation/test splits provided by the benchmark.
+We evaluate our approaches on \textbf{Captain Cook 4D}, a large-scale egocentric cooking video dataset with procedural error annotations. The dataset provides two evaluation protocols with different data partitioning strategies: (i) \textit{Recordings (R) split}: complete video recordings are randomly assigned to train/validation/test sets according to a specified ratio, ensuring that each recording appears in only one split; (ii) \textit{Steps (S) split}: all video segments corresponding to recipe steps from all recordings are compiled, then divided into train/validation/test splits such that steps from each recording are distributed across all three splits. We adopt the official partitions provided by the benchmark for all experiments.
 
 \paragraph{Evaluation Metrics.} 
-Following the Captain Cook 4D benchmark protocol, we report F1-score, Precision, and Recall for binary error classification. For Task 1 (baseline), we evaluate models on both split configurations. For Task 2 (multimodal extension), we focus on the recording-level split as our graph-based approach naturally operates at the video level.
+Following the official benchmark protocol, we report F1-score, Precision, Recall, Accuracy, and Area Under the ROC Curve (AUC) for binary error classification. We evaluate Task 1 baselines on both step-level and recording-level splits, while Task 2 multimodal extension focuses on the recording-level split since graph-based reasoning naturally operates at the video level.
 
 \paragraph{Implementation Details.}
-For Task 1 baselines, we use pre-extracted visual features from two backbones: Omnivore (video-language model) and SlowFast (action recognition model). All models are trained with Adam optimizer, learning rate of 1e-4, and batch size of 32. We apply early stopping based on validation loss with patience of 10 epochs.
+All models are implemented in PyTorch and trained on a single NVIDIA A40 GPU. For Task 1, we leverage pre-extracted visual features from two state-of-the-art backbones: Omnivore and SlowFast. Model selection is performed based on validation set performance, with final evaluation on the held-out test set.
 
-For Task 2, we use EgoVLP for both visual and textual feature extraction. The HiERO model is applied with default hyperparameters for unsupervised step localization. The DAGNN classifier uses 3 GCN layers with hidden dimension 256, dropout of 0.5, and is trained for 50 epochs with learning rate 1e-3.
+\textbf{Task 1 - MLP (Variant-1):} A simple feedforward architecture with one hidden layer (dimensionality matching the input features) followed by a sigmoid output node. Hidden layers use ReLU activation. Training employs Adam optimizer (lr=0.001), batch size 512, and runs for 50 epochs. To handle class imbalance, we use Binary Cross Entropy Loss with weight 1.5 for positive (error) classes.
+
+\textbf{Task 1 - Transformer (Variant-2):} A transformer encoder processes sequences of 1-second sub-segment features with positional encodings, enabling temporal context awareness across variable-length video segments. The encoder output feeds into an MLP head (one hidden layer + sigmoid node). Training uses Adam optimizer (lr=1e-5), batch size of 1 video segment, and 50 epochs with weighted BCE Loss (weight 1.5 for positive classes).
+
+\textbf{Task 1 - LSTM (Variant-3):} A recurrent architecture with 2 stacked LSTM layers (hidden size 1024) followed by an MLP classification head. Training employs Adam optimizer (lr=1e-5) for 50 epochs with the same weighted loss configuration.
+
+\textbf{Task 2 - DAGNN:} Our graph-based approach uses EgoVLP encoders for both visual and textual feature extraction. Step localization is performed via the HiERO model in zero-shot unsupervised mode. The DAGNN classifier consists of 3 GCN layers (hidden dimension 256, dropout 0.5), trained for 50 epochs with Adam optimizer (lr=1e-3).
 
 \paragraph{Baselines.}
-We compare against: (i) the official Captain Cook 4D baseline results reported in their paper, (ii) our reproduction of three temporal aggregation architectures (MLP, Transformer, LSTM), and (iii) a dummy classifier that always predicts the majority class.
+We benchmark against: (i) official Captain Cook 4D results reported in the original paper, and (ii) our reproduction of three architectures (MLP, Transformer, LSTM).
 
 \subsection{Task 1: Baseline Reproduction Results}
 
