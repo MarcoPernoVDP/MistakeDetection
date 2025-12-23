@@ -18,8 +18,10 @@ class DatasetSource(Enum):
     HIERO = "hiero"
 
     def input_dims(self) -> int:
-        if self == DatasetSource.OMNIVORE or self == DatasetSource.HIERO:
+        if self == DatasetSource.OMNIVORE:
             return 1024
+        elif self == DatasetSource.HIERO:
+            return 768
         elif self == DatasetSource.SLOWFAST:
             return 400
 
