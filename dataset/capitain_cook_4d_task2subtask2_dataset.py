@@ -93,24 +93,30 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
         
         # Itera su tutte le chiavi (video_id) nel file npz
         for video_key in video_embeddings.files:
-            video_id = video_key
+            # Estrai il recording_id dal video_key
+            # Formato: "activityID_recordingID_..." -> "activityID_recordingID"
+            parts = video_key.split('_')
+            if len(parts) >= 2:
+                recording_id = f"{parts[0]}_{parts[1]}"
+            else:
+                recording_id = video_key
             
             # Carica gli embeddings per questo video: (num_steps, n_features)
             video_features = video_embeddings[video_key]
             
             # Controlla che ci siano step validi
             if video_features.shape[0] == 0:
-                print(f"Warning: No steps found for video {video_id}, skipping...")
+                print(f"Warning: No steps found for video {video_key}, skipping...")
                 continue
             
-            # Determina la label dal file JSON
-            has_errors = self.video_annotations.get(str(video_id), False)
+            # Determina la label dal file JSON usando il recording_id
+            has_errors = self.video_annotations.get(recording_id, False)
             label = 1 if has_errors else 0
             
             # Converti in tensori PyTorch
             X_list.append(torch.from_numpy(video_features).float())
             y_list.append(torch.tensor(label, dtype=torch.long))
-            video_ids_list.append(str(video_id))
+            video_ids_list.append(recording_id)
         
         return X_list, y_list, video_ids_list
     
