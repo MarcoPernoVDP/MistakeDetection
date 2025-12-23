@@ -2,10 +2,18 @@
 \section{Related Work}
 \label{sec:related}
 
-This section reviews relevant prior work. Organize related work by theme or approach rather than simply listing papers. Show how your work differs from and builds upon existing methods.
+Our work intersects several research areas including egocentric video understanding, procedural activity recognition, multimodal learning, and graph neural networks.
 
-\subsection{Category 1}
-Discussion of related work in category 1.
+\subsection{Egocentric Video Understanding and Vision-Language Models}
 
-\subsection{Category 2}
-Discussion of related work in category 2.
+Recent advances in egocentric video analysis have introduced large-scale datasets such as EPIC-KITCHENS, Ego4D, and Captain Cook 4D for action recognition and temporal segmentation. Vision-language models like EgoVLP~\cite{egovlp} learn joint embeddings of egocentric videos and natural language through contrastive learning, demonstrating strong zero-shot capabilities. We leverage EgoVLP embeddings to extract semantic visual features from video segments for multimodal alignment with recipe instructions.
+
+\subsection{Procedural Activity Recognition and Error Detection}
+
+Understanding procedural activities requires modeling causal and temporal constraints. HiERO~\cite{hiero} proposes unsupervised step discovery in instructional videos using feature clustering and temporal coherence. However, our experiments reveal that zero-shot unsupervised localization quality significantly impacts downstream error detection performance. Other approaches use Hidden Markov Models to model procedural flows and flag deviations. Our graph-based approach differs by explicitly encoding recipe structure and using multimodal alignment rather than treating errors as statistical outliers.
+
+\subsection{Graph Neural Networks and Multimodal Alignment}
+
+Graph neural networks have been applied to procedural understanding by representing task plans as directed acyclic graphs (DAGs) where nodes represent steps and edges encode dependencies. We extend this paradigm by integrating multimodal information at the node level, concatenating text embeddings with aligned visual embeddings. For alignment, we employ the Hungarian algorithm for optimal bipartite matching between visual observations and recipe steps based on cosine similarity in the embedding space. This provides a principled framework for handling mismatched sequence lengths and explicitly identifying unmatched recipe steps, which we encode with zero visual features to signal absence of visual evidence.
+
+Our approach combines graph neural networks, multimodal embeddings, and optimal matching into a unified framework for procedural error detection that respects causal structure while grounding visual observations in textual instructions.
