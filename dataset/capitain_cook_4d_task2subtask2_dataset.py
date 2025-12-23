@@ -1,5 +1,6 @@
 import torch
 from torch.utils.data import Dataset
+from torch.nn.utils.rnn import pad_sequence
 import numpy as np
 import json
 import os
@@ -204,3 +205,46 @@ class CaptainCook4DTask2Subtask2_Dataset(Dataset):
         print(f"  Has Errors (1):     {num_errors} ({num_errors/len(self)*100:.1f}%)")
         
         print("=" * 80)
+
+
+def collate_fn_with_padding(batch):
+    """
+    Collate function per gestire sequenze di lunghezza variabile.
+    
+    Args:
+        batch: lista di tuple (features, label, video_id)
+            - features: Tensor (num_steps, n_features)
+            - label: Tensor scalare
+            - video_id: str
+    
+    Returns:
+        dict con:
+            - 'features': Tensor (batch_size, max_steps, n_features) - padded
+            - 'attention_mask': Tensor (batch_size, max_steps) - 1 per token reali, 0 per padding
+            - 'labels': Tensor (batch_size)
+            - 'video_ids': List[str]
+    """
+    features_list = [item[0] for item in batch]  # List of (num_steps_i, n_features)
+    labels = torch.stack([item[1] for item in batch])  # (batch_size,)
+    video_ids = [item[2] for item in batch]  # List[str]
+    
+    # Ottieni le lunghezze originali
+    lengths = torch.tensor([f.shape[0] for f in features_list])
+    
+    # Padding delle sequenze: pad_sequence si aspetta (seq_len, batch, features)
+    # quindi trasponiamo prima e dopo
+    features_padded = pad_sequence(features_list, batch_first=True, padding_value=0.0)
+    # features_padded: (batch_size, max_steps, n_features)
+    
+    # Crea attention mask: 1 per token reali, 0 per padding
+    batch_size, max_steps = features_padded.shape[0], features_padded.shape[1]
+    attention_mask = torch.zeros(batch_size, max_steps, dtype=torch.bool)
+    for i, length in enumerate(lengths):
+        attention_mask[i, :length] = 1
+    
+    return {
+        'features': features_padded,
+        'attention_mask': attention_mask,
+        'labels': labels,
+        'video_ids': video_ids
+    }
