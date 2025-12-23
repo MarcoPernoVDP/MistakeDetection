@@ -4,6 +4,13 @@
 
 The proliferation of egocentric video content, particularly in instructional domains such as cooking, has created unprecedented opportunities for developing intelligent assistive systems. These systems can help users learn new skills, identify mistakes in real-time, and provide personalized guidance. However, detecting procedural errors in such videos remains a challenging task that requires understanding both visual observations and their semantic relationship to the underlying procedural knowledge encoded in textual instructions.
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure_1.png}
+  \caption{Overview of our procedural error detection framework. We model cooking recipes as directed acyclic graphs and align visual observations from egocentric videos with textual recipe steps using multimodal embeddings.}
+  \label{fig:overview}
+\end{figure}
+
 Cooking is a particularly suitable domain for studying procedural error detection due to its rich structure: recipes naturally form directed acyclic graphs (DAGs) where steps must be executed in a specific causal order, and deviations from this order or execution errors can significantly impact the final outcome. Moreover, egocentric cooking videos capture the natural first-person perspective of task execution, making them highly relevant for real-world applications in augmented reality, assistive robotics, and personalized education systems.
 
 Despite recent advances in video understanding and multimodal learning, procedural error detection faces several fundamental challenges. First, there exists a significant \textbf{semantic gap} between low-level visual features extracted from videos and high-level procedural concepts described in recipe instructions. Second, the \textbf{temporal alignment problem} requires establishing correspondences between variable-length sequences of observed actions and prescribed recipe steps, which may not be in perfect temporal alignment. Third, the \textbf{causal structure} of recipes introduces dependencies that must be respected: an action can only be identified as erroneous when considering its context within the broader procedural graph.
