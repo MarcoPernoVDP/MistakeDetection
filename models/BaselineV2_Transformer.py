@@ -43,16 +43,34 @@ class BaselineV2_Transformer(nn.Module):
             nn.Linear(feature_dim, 1),
         )
 
-    def forward(self, x):
+    def forward(self, x, attention_mask=None):
         """
-        x: (B=1, T, D)
-        returns: (B=1) probabilità per l'intero step
+        x: (B, T, D) - input features (può essere padded)
+        attention_mask: (B, T) - boolean tensor, True per token reali, False per padding
+        returns: (B,) probabilità per l'intero video
         """
         x = self.pos_enc(x)
-        x = self.transformer(x)  # (B, T, D)
+        
+        # Converti attention_mask per il transformer
+        # TransformerEncoder usa src_key_padding_mask dove True = IGNORA
+        # Il nostro attention_mask ha True = REALE, quindi invertiamo
+        src_key_padding_mask = None
+        if attention_mask is not None:
+            src_key_padding_mask = ~attention_mask  # Inverti: True dove c'è padding
+        
+        x = self.transformer(x, src_key_padding_mask=src_key_padding_mask)  # (B, T, D)
 
-        # mean pooling sui sub-segmenti
-        x = x.mean(dim=1)  # (B, D)
+        # Mean pooling solo sui token reali (non sul padding)
+        if attention_mask is not None:
+            # Maschera i token di padding prima del pooling
+            mask_expanded = attention_mask.unsqueeze(-1)  # (B, T, 1)
+            x_masked = x * mask_expanded  # (B, T, D)
+            # Somma e dividi per il numero di token reali
+            sum_embeddings = x_masked.sum(dim=1)  # (B, D)
+            num_real_tokens = attention_mask.sum(dim=1, keepdim=True).float()  # (B, 1)
+            x = sum_embeddings / num_real_tokens.clamp(min=1.0)  # (B, D)
+        else:
+            x = x.mean(dim=1)  # (B, D)
 
         logits = self.mlp(x).squeeze(-1)  # (B,)
         probs = torch.sigmoid(logits)
