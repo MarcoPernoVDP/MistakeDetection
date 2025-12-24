@@ -103,30 +103,31 @@ To gain deeper insights into the LSTM's error detection capabilities, we analyze
 
 \begin{table}[ht]
 \centering
-\caption{LSTM predictions vs. actual error categories on test set (48 samples). The model struggles to distinguish between different error types, with 37.5\% of predicted errors being false positives (No Error samples).}
+\caption{LSTM predictions vs. actual error categories on test set (1206 samples). The model struggles to distinguish between different error types, with 44.1\% of predicted errors being false positives (No Error samples).}
 \label{tab:error_categories}
 \small
 \begin{tabular}{@{}lrrr@{}}
 \toprule
 \textbf{Actual Category} & \textbf{Error Pred.} & \textbf{No Error Pred.} & \textbf{Total} \\
 \midrule
-No Error & 6 (37.50\%) & 18 (56.25\%) & 24 \\
+No Error & 213 & 507 & 720 \\
 \midrule
-Order Error & 3 (18.75\%) & 4 (12.5\%) & 7 \\
-Timing Error & 3 (18.75\%) & 3 (9.38\%) & 6 \\
-Temperature Error & 3 (18.75\%) & 2 (6.25\%) & 5 \\
-Preparation Error & 1 (6.25\%) & 2 (6.25\%) & 3 \\
-Measurement Error & 0 (0.0\%) & 1 (3.12\%) & 1 \\
-Technique Error & 0 (0.0\%) & 1 (3.12\%) & 1 \\
-Other & 0 (0.0\%) & 1 (3.12\%) & 1 \\
+Measurement Error & 40  & 25  & 65 \\
+Missing Step & 1  & 0  & 1 \\
+Order Error & 97 & 66  & 163 \\
+Other & 1  & 0  & 1 \\
+Preparation Error & 44  & 37  & 81 \\
+Technique Error & 60 & 42  & 102 \\
+Temperature Error & 9  & 13  & 22 \\
+Timing Error & 18  & 33  & 51 \\
 \midrule
-\textbf{Total} & 16 (100\%) & 32 (100\%) & 48 \\
+\textbf{Total} & 483 & 723 & 1206 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Category-specific Performance Insights.}
-Among the 16 samples predicted as errors, 6 (37.5\%) are correct executions, indicating significant false positives. The model better detects Order (42.9\%), Timing (50\%), and Temperature (60\%) errors, while rare categories like Measurement and Technique errors are consistently missed due to insufficient training examples. This highlights a fundamental challenge: binary classification treats all error types uniformly, while different procedural errors have vastly different visual signatures.
+Among the 483 samples predicted as errors, 213 are correct executions, indicating substantial false positives. The model shows variable performance across error categories: it better detects Measurement, Order, and Technique errors, while struggling with Temperature and Timing errors. The improved detection rates for previously challenging categories (Measurement, Technique) suggest the model has learned discriminative features, though temporal errors (Timing, Temperature) remain difficult to identify. This highlights a fundamental challenge: binary classification treats all error types uniformly, while different procedural errors have vastly different visual signatures requiring specialized feature representations.
 
 \subsection{Task 2: Multimodal Graph-Based Extension}
 
@@ -145,8 +146,8 @@ Our Task 2 pipeline consists of four main stages implemented across multiple not
 
 \textbf{Stage 2 - Step Localization:} To align visual observations with recipe instructions, we employ HiERO~\cite{hiero}, a hierarchical event recognition model. HiERO temporally segments each cooking video into candidate step intervals, producing a sequence of video segments corresponding to hypothesized recipe step executions. We evaluate two HiERO configurations with different supervision strategies:
 \begin{itemize}
-    \item \textbf{Fixed 8 steps (unsupervised):} Operates in zero-shot unsupervised mode, forcing HiERO to segment each video into exactly 8 steps without using any recipe-specific information. This provides uniform graph structure across all videos but may not adapt well to recipes with varying complexity.
-    \item \textbf{Max+1 steps (supervised):} Operates in supervised mode by leveraging recipe-specific information. For each recipe, HiERO segments the video into exactly (max+1) steps, where max is the actual number of steps prescribed in that specific recipe. The additional "+1" step provides HiERO with a margin of error, allowing it to detect an extra potential step that may account for procedural variations, errors, or transitional actions not explicitly listed in the recipe.
+    \item \textbf{Fixed 8 steps:} Forcing HiERO to segment each video into exactly 8 steps without using any recipe-specific information. This provides uniform graph structure across all videos but may not adapt well to recipes with varying complexity.
+    \item \textbf{Max+1 steps:} For each recipe, HiERO segments the video into exactly (max+1) steps, where max is the actual number of steps prescribed in that specific recipe. The additional "+1" step provides HiERO with a margin of error, allowing it to detect an extra potential step that may account for procedural variations, errors, or transitional actions not explicitly listed in the recipe.
 \end{itemize}
 
 \textbf{Stage 3 - Hungarian Matching:} We apply the Hungarian algorithm to find optimal bipartite matching between HiERO-projected visual step embeddings (768-dim) and textual step embeddings (768-dim), minimizing cumulative cosine distance to establish semantic correspondences.
