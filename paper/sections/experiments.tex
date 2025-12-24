@@ -143,48 +143,123 @@ Notably, 18 out of 24 correct executions (75\%) are correctly classified as No E
 
 This category breakdown highlights a fundamental challenge: the binary classification framework treats all error types uniformly, while in reality, different procedural errors may have vastly different visual signatures. Order and timing errors, which involve sequential deviations, appear more detectable than preparation or technique errors, which may require finer-grained visual understanding. Future work could explore multi-class classification or hierarchical error taxonomies to better capture this diversity.
 
-\subsection{Task 2: Multimodal Extension Results}
+\subsection{Task 2: Multimodal Graph-Based Extension}
 
-Table~\ref{tab:task2_results} presents results for our proposed DAGNN-based multimodal approach compared against the Task 1 baselines and a dummy classifier on the recording-level split.
+\paragraph{Motivation and Approach.}
+While Task 1 baselines operate on isolated video segments, real-world procedural error detection requires understanding relationships between sequential steps. To address this limitation, we develop Task 2 as a multimodal graph-based extension that:
+\begin{itemize}
+    \item \textbf{Leverages recipe structure:} Models cooking procedures as directed acyclic graphs (DAGs) where nodes represent recipe steps and edges encode temporal dependencies
+    \item \textbf{Integrates multimodal information:} Combines visual evidence from video with textual recipe descriptions through feature concatenation
+    \item \textbf{Performs video-level reasoning:} Operates at the recording (video) level rather than individual segments, enabling holistic error assessment
+\end{itemize}
 
-\begin{table}[ht]
+\paragraph{Pipeline Overview.}
+Our Task 2 pipeline consists of four main stages implemented across multiple notebooks:
+
+\textbf{Stage 1 - Feature Extraction:} We extract multimodal embeddings using EgoVLP~\cite{egovlp}, a state-of-the-art egocentric vision-language model pre-trained on large-scale first-person video datasets. For each video, the EgoVLP visual encoder produces 256-dimensional embeddings capturing appearance and motion patterns. Similarly, we encode recipe step descriptions using the EgoVLP text encoder, generating 256-dimensional semantic embeddings for each procedural instruction. These embeddings are then processed by HiERO, which projects them to 768 dimensions through its internal projection layers.
+
+\textbf{Stage 2 - Step Localization:} To align visual observations with recipe instructions, we employ HiERO~\cite{hiero}, a hierarchical event recognition model. HiERO temporally segments each cooking video into candidate step intervals, producing a sequence of video segments corresponding to hypothesized recipe step executions. We evaluate two HiERO configurations with different supervision strategies:
+\begin{itemize}
+    \item \textbf{Fixed 8 steps (unsupervised):} Operates in zero-shot unsupervised mode, forcing HiERO to segment each video into exactly 8 steps without using any recipe-specific information. This provides uniform graph structure across all videos but may not adapt well to recipes with varying complexity.
+    \item \textbf{Max+1 steps (supervised):} Operates in supervised mode by leveraging recipe-specific information. For each recipe, HiERO segments the video into exactly (max+1) steps, where max is the actual number of steps prescribed in that specific recipe. The additional "+1" step provides HiERO with a margin of error, allowing it to detect an extra potential step that may account for procedural variations, errors, or transitional actions not explicitly listed in the recipe.
+\end{itemize}
+
+\textbf{Stage 3 - Hungarian Matching:} We apply the Hungarian algorithm to find optimal bipartite matching between HiERO-projected visual step embeddings (768-dim) and textual step embeddings (768-dim), minimizing cumulative cosine distance to establish semantic correspondences.
+
+Figure~\ref{fig:hungarian_similarity_matrix} shows an example similarity matrix for a Coffee recipe (max+1 configuration). As expected, one video step remains unmatched. However, the matrix reveals significant ambiguity: many video steps show comparable similarity to multiple textual steps, indicating poor temporal clustering by HiERO. This uncertainty introduces noise into downstream node features.
+
+\begin{figure}[t]
 \centering
-\caption{Task 2 results: Multimodal DAGNN approach compared to baselines on the recording-level split. Our method performs below the dummy classifier, revealing critical limitations in zero-shot step localization and dataset size.}
-\label{tab:task2_results}
-\begin{tabular}{@{}lccc@{}}
-\toprule
-\textbf{Method} & \textbf{F1} & \textbf{Precision} & \textbf{Recall} \\
-\midrule
-Dummy Classifier & 0.XXX & 0.XXX & 0.XXX \\
-MLP + Omnivore & 0.509 & 0.453 & 0.581 \\
-MLP + SlowFast & 0.309 & 0.408 & 0.249 \\
-\midrule
-DAGNN (Ours) & 0.XXX & 0.XXX & 0.XXX \\
-\bottomrule
-\end{tabular}
-\end{table}
+\includegraphics[width=0.8\linewidth]{figures/figure_2}
+\caption{Hungarian matching similarity matrix for Coffee recipe execution (max+1 configuration). Ambiguous matches reveal challenges in visual-textual alignment with zero-shot step localization.}
+\label{fig:hungarian_similarity_matrix}
+\end{figure}
 
-\paragraph{Negative Results and Analysis.}
-Our multimodal DAGNN approach achieves performance below the dummy baseline classifier. This negative result, while disappointing, provides valuable insights into the challenges of procedural error detection:
+\textbf{Stage 4 - Graph Construction and Classification:} For each video, we construct a directed acyclic graph where:
+\begin{itemize}
+    \item \textbf{Nodes:} Represent matched recipe steps, with features formed by concatenating visual embeddings (from matched video segment) and textual embeddings (from recipe step description), resulting in 1536-dimensional node features
+    \item \textbf{Edges:} Encode the sequential dependency structure defined by the recipe (e.g., "dice onions" $\rightarrow$ "sauté onions")
+\end{itemize}
 
-\textbf{Impact of Zero-Shot Step Localization:} The HiERO model, operating in a completely unsupervised zero-shot manner, produces noisy step segmentations that introduce significant alignment errors. Our analysis reveals that the Hungarian matching often produces semantically incorrect correspondences, meaning visual segments are matched to unrelated recipe steps. This misalignment fundamentally corrupts the multimodal node features, preventing the DAGNN from learning meaningful patterns.
-
-\textbf{Limited Dataset Size:} The Captain Cook 4D dataset, while valuable, contains a limited number of training samples with error annotations. Graph neural networks typically require substantially larger datasets to learn robust representations, especially when dealing with noisy input features. The combination of limited training data and corrupted features creates a challenging learning scenario.
-
-\textbf{Multimodal Fusion Challenges:} Our concatenation-based fusion strategy assumes that text and visual embeddings are well-aligned in semantic space. However, the modality gap between EgoVLP visual and text encoders, combined with the step localization noise, prevents effective fusion. The model struggles to distinguish between correct and erroneous procedures when the visual evidence is unreliably matched to recipe steps.
-
-\subsection{Lessons Learned}
-
-Despite the negative quantitative results, this work provides important lessons for future research in procedural error detection:
+\paragraph{DAGNN Architecture.}
+We implement a Directed Acyclic Graph Neural Network (DAGNN) for video-level error classification:
 
 \begin{enumerate}
-    \item \textbf{Step localization quality is critical:} Zero-shot unsupervised methods like HiERO, while appealing for their annotation-free nature, produce insufficient quality for downstream tasks requiring precise step-level understanding. Supervised or semi-supervised step localization approaches are necessary for reliable performance.
-    
-    \item \textbf{Dataset scale matters:} Graph-based multimodal approaches require substantially larger datasets than currently available. Future work should explore data augmentation strategies, synthetic data generation, or transfer learning from related domains.
-    
-    \item \textbf{Threshold sensitivity:} Our reproduction experiments highlight the importance of careful threshold selection for binary classification tasks. Future benchmarks should provide clear guidelines or validation-based threshold optimization procedures.
-    
-    \item \textbf{Modality gap is non-trivial:} Simply concatenating visual and text embeddings from different encoders may not be sufficient. Learnable cross-modal attention mechanisms or contrastive alignment losses could improve fusion quality.
+    \item \textbf{Projection Layer:} Maps concatenated 1536-dimensional features to a 128-dimensional hidden space via MLP with ReLU activation and LayerNorm for stability
+    \item \textbf{Graph Convolution:} Single GCN layer propagates information along graph edges, enabling each node to aggregate context from neighboring steps
+    \item \textbf{Global Pooling:} Mean pooling over all nodes produces a single 128-dimensional video-level representation
+    \item \textbf{Binary Classifier:} Two-layer MLP (128 $\rightarrow$ 64 $\rightarrow$ 1) with ReLU and dropout (0.4) outputs binary error prediction
 \end{enumerate}
 
-These insights, while derived from negative results, contribute to a more realistic understanding of the challenges in procedural video understanding and provide concrete directions for future research.
+
+\paragraph{Experimental Setup.}
+Due to the limited dataset size (384 annotated videos across 24 recipes), we employ Leave-One-Out Cross-Validation (LOO) to maximize training data while ensuring complete recipe-level separation between train and test sets. Each of the 24 unique recipes serves as test set once, with the remaining 23 recipes forming the training set, preventing data leakage from multiple recordings of the same recipe.
+
+We evaluate both HiERO configurations with the following training setup:
+\begin{itemize}
+    \item \textbf{8 steps configuration:} 15 epochs, batch size 32, hidden dimension 256, single GCN layer, dropout 0.3
+    \item \textbf{Max+1 steps configuration:} 20 epochs, batch size 32, hidden dimension 256, single GCN layer, dropout 0.3
+\end{itemize}
+
+Both configurations use Adam optimizer (lr=1e-4, weight decay 1e-6), Binary Cross-Entropy loss with positive class weight 0.75 to handle class imbalance, and gradient clipping (max norm 1.0). Model selection is based on training loss, with the best checkpoint used for final evaluation.
+
+\paragraph{Results.}
+Table~\ref{tab:task2_dagnn_results} presents results for both DAGNN and Transformer baseline across both HiERO configurations using Leave-One-Out cross-validation. To isolate the contribution of graph-based reasoning, we compare DAGNN against a Transformer baseline that processes the same HiERO-extracted features but treats them as sequential temporal data without explicit graph structure. The Transformer uses self-attention over step sequences with the same training setup (batch size 8, Adam optimizer lr=1e-5, BCE loss with pos\_weight 0.75), trained for 30 epochs (8 steps) and 100 epochs (max+1 steps).
+
+\begin{table*}[t]
+\centering
+\caption{Task 2 Leave-One-Out Cross-Validation results comparing DAGNN (graph-based) with Transformer baseline (sequential). Values show mean ± standard deviation across 24 folds (one per recipe). High variance indicates substantial performance variability across different recipe contexts.}
+\label{tab:task2_dagnn_results}
+\small
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+\textbf{Model} & \textbf{HiERO Config} & \textbf{Accuracy} & \textbf{F1} & \textbf{Precision} & \textbf{Recall} & \textbf{AUC} \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{Transformer Baseline (Sequential)}} \\
+\midrule
+Transformer & 8 steps & 0.508 $\pm$ 0.152 & 0.503 $\pm$ 0.288 & 0.465 $\pm$ 0.270 & 0.610 $\pm$ 0.379 & 0.533 $\pm$ 0.166 \\
+Transformer & Max+1 steps & 0.516 $\pm$ 0.128 & 0.547 $\pm$ 0.162 & 0.590 $\pm$ 0.181 & 0.549 $\pm$ 0.193 & 0.516 $\pm$ 0.197 \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{DAGNN (Graph-Based)}} \\
+\midrule
+DAGNN & 8 steps & 0.546 $\pm$ 0.127 & 0.578 $\pm$ 0.194 & 0.620 $\pm$ 0.195 & 0.643 $\pm$ 0.298 & 0.549 $\pm$ 0.149 \\
+DAGNN & Max+1 steps & 0.515 $\pm$ 0.133 & 0.587 $\pm$ 0.155 & 0.591 $\pm$ 0.184 & 0.658 $\pm$ 0.233 & 0.517 $\pm$ 0.180 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Performance Analysis.}
+Comparing DAGNN with the Transformer baseline reveals modest improvements from graph-based reasoning. For the 8-step configuration, DAGNN achieves higher accuracy (0.546 vs 0.508), F1 (0.578 vs 0.503), and precision (0.620 vs 0.465) compared to the Transformer, while maintaining comparable recall and AUC. The max+1 configuration shows similar trends, with DAGNN achieving marginally better F1 (0.587 vs 0.547) and recall (0.658 vs 0.549). Notably, DAGNN exhibits slightly lower variance in F1 for both configurations (0.194 vs 0.288 for 8 steps; 0.155 vs 0.162 for max+1), suggesting that explicit graph structure provides somewhat more stable predictions compared to pure sequential modeling.
+
+However, both approaches suffer from high standard deviations across all metrics, indicating that neither architecture consistently generalizes across different recipe contexts. The large variance (e.g., recall std > 0.23 for DAGNN, > 0.37 for Transformer on 8 steps) stems from limited training data (~16 videos per LOO fold), noisy HiERO segmentation varying by recipe complexity, and for DAGNN specifically, ambiguous Hungarian matching producing inconsistent multimodal node features. While graph-based modeling offers incremental gains, the fundamental challenge remains the quality of input features from zero-shot step localization.
+
+\paragraph{Analysis and Challenges.}
+Our multimodal graph-based approach faces several fundamental challenges that impact performance:
+
+\textbf{Zero-Shot Step Localization Noise:} HiERO operates without supervision, producing temporally imprecise step boundaries. Misaligned segments corrupt the visual embeddings, introducing noise that propagates through the entire pipeline. Qualitative inspection reveals that HiERO occasionally merges multiple recipe steps into single segments or over-segments atomic actions.
+
+\textbf{Hungarian Matching Errors:} While optimal for the assignment problem, Hungarian matching relies purely on embedding similarity and ignores temporal order. In error scenarios where steps are executed out-of-sequence, this semantic matching may incorrectly align video segments to recipe steps, fundamentally corrupting the node features used for graph construction.
+
+\textbf{Limited Training Data:} With only 28 annotated videos distributed across 8 recipes, the dataset is insufficient for training deep graph neural networks. The LOO strategy leaves only ~20-24 training videos per fold, severely limiting the model's capacity to learn robust error patterns. This is exacerbated by class imbalance, with error samples being minority class.
+
+\textbf{Modality Gap:} Despite using the same EgoVLP encoder for both visual and textual embeddings, the semantic spaces may not be perfectly aligned. Concatenating these embeddings assumes they are comparable, but the projection layer alone may be insufficient to bridge domain differences, especially given limited training data.
+
+\textbf{Graph Structure Simplification:} Our DAG construction uses only sequential edges from the recipe, ignoring richer dependencies (e.g., ingredient sharing, tool reuse). More sophisticated graph structures might capture procedural relationships better, but would require additional supervision or domain knowledge.
+
+\subsection{Lessons Learned and Future Directions}
+
+This work provides valuable insights for future research in procedural video understanding:
+
+\begin{enumerate}
+    \item \textbf{Step localization quality is critical:} Zero-shot methods like HiERO, while annotation-free, produce insufficient precision for error detection tasks requiring fine-grained step alignment. Future work should explore weakly-supervised or few-shot step localization, or develop robust error detection methods that are invariant to segmentation noise.
+    
+    \item \textbf{Dataset scale matters:} Graph-based multimodal approaches require substantially more training data. Promising directions include: (i) data augmentation via temporal transformations or synthetic errors, (ii) pre-training on unlabeled cooking videos with self-supervised objectives, (iii) transfer learning from related procedural domains (e.g., assembly, surgery).
+    
+    \item \textbf{Cross-validation strategy impacts results:} LOO provides recipe-level generalization estimates but suffers from high variance due to single-recipe test sets. Stratified K-Fold allows larger test sets but may overestimate performance by including same-recipe videos in train/test. Both perspectives are valuable for understanding model robustness.
+    
+    \item \textbf{Improved multimodal fusion:} Simple concatenation may not suffice. Future architectures should explore: (i) cross-modal attention mechanisms to dynamically weight visual vs. textual evidence, (ii) contrastive learning to align visual and text embeddings, (iii) gated fusion to allow adaptive integration based on input characteristics.
+    
+    \item \textbf{Interpretability matters:} Graph-based models offer potential for interpretability through attention visualization over graph structure. Understanding which step transitions or node features contribute to error predictions could provide actionable insights for users and improve model debugging.
+\end{enumerate}
+
+These lessons, while stemming from a challenging problem setting, provide concrete directions for advancing procedural error detection in egocentric video understanding.
