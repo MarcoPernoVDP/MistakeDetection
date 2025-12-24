@@ -5,17 +5,17 @@
 \subsection{Experimental Setup}
 
 \paragraph{Dataset.} 
-We evaluate on \textbf{Captain Cook 4D}, an egocentric cooking video dataset with procedural error annotations. The dataset provides two evaluation protocols: (i) \textit{Recordings split}: videos assigned to train/validation/test ensuring each recording appears in only one split; (ii) \textit{Steps split}: video segments divided across splits such that steps from each recording are distributed across all splits. We adopt the official partitions for all experiments.
+We evaluate on \textbf{Captain Cook 4D}, an egocentric cooking video dataset with procedural error annotations. The dataset provides two evaluation protocols for the first task: (i) \textit{Recordings split}: videos assigned to train/validation/test ensuring each recording appears in only one split; (ii) \textit{Steps split}: video segments divided across splits such that steps from each recording are distributed across all splits. We adopt the official partitions for all experiments. For the second task, we focus on the recording-level split since graph-based reasoning operates at the video level.
 
 \paragraph{Evaluation Metrics.} 
 Following the official benchmark protocol, we report F1-score, Precision, Recall, Accuracy, and Area Under the ROC Curve (AUC) for binary error classification. We evaluate Task 1 baselines on both step-level and recording-level splits, while Task 2 multimodal extension focuses on the recording-level split since graph-based reasoning naturally operates at the video level.
 
 \paragraph{Implementation Details.}
-All models are implemented in PyTorch and trained on a single NVIDIA A40 GPU. For Task 1, we use pre-extracted features from Omnivore and SlowFast backbones.
+All models are implemented in PyTorch and trained on a single NVIDIA A40 GPU (NVIDIA A40 GPU in the original paper). For Task 1, we use pre-extracted features from Omnivore and SlowFast backbones.
 
-\textbf{Task 1 - MLP:} Feedforward architecture with one hidden layer, ReLU activation, and sigmoid output. Trained with Adam (lr=0.001), batch size 512, 50 epochs, using weighted BCE Loss (weight 1.5 for errors).
+\textbf{Task 1 - MLP:} Feedforward architecture with one hidden layer, ReLU activation, and sigmoid output. Trained with Adam (lr=0.001), batch size 512, 50 epochs, using weighted BCE Loss (weight 1.5 for errors) and processing 1-second sub-step.
 
-\textbf{Task 1 - Transformer:} Encoder with positional encodings processing 1-second sub-segments, feeding into MLP head. Trained with Adam (lr=1e-5), batch size 1, 50 epochs, weighted BCE Loss.
+\textbf{Task 1 - Transformer:} Encoder with positional encodings processing all steps of a recording, feeding into MLP head. Trained with Adam (lr=1e-5), batch size 1, 50 epochs, weighted BCE Loss.
 
 \textbf{Task 1 - LSTM:} 2 stacked LSTM layers (hidden size 1024) with MLP head. Trained with Adam (lr=1e-5), 50 epochs, weighted BCE Loss.
 
@@ -174,7 +174,7 @@ We implement a Directed Acyclic Graph Neural Network (DAGNN) for video-level err
     \item \textbf{Projection Layer:} Maps concatenated 1536-dimensional features to a 128-dimensional hidden space via MLP with ReLU activation and LayerNorm for stability
     \item \textbf{Graph Convolution:} Single GCN layer propagates information along graph edges, enabling each node to aggregate context from neighboring steps
     \item \textbf{Global Pooling:} Mean pooling over all nodes produces a single 128-dimensional video-level representation
-    \item \textbf{Binary Classifier:} Two-layer MLP (128 $\rightarrow$ 64 $\rightarrow$ 1) with ReLU and dropout (0.4) outputs binary error prediction
+    \item \textbf{Binary Classifier:} Two-layer MLP (128 $\rightarrow$ 64 $\rightarrow$ 1) with ReLU and dropout outputs binary error prediction
 \end{enumerate}
 
 
@@ -222,11 +222,11 @@ However, both approaches suffer from high standard deviations across all metrics
 \paragraph{Analysis and Challenges.}
 Our multimodal graph-based approach faces several fundamental challenges that impact performance:
 
-\textbf{Zero-Shot Step Localization Noise:} HiERO operates without supervision, producing temporally imprecise step boundaries. Misaligned segments corrupt the visual embeddings, introducing noise that propagates through the entire pipeline. Qualitative inspection reveals that HiERO occasionally merges multiple recipe steps into single segments or over-segments atomic actions.
+\textbf{Zero-Shot Step Localization Noise:} HiERO operates with weakly-supervision, producing temporally imprecise step boundaries. Misaligned segments corrupt the visual embeddings, introducing noise that propagates through the entire pipeline. Qualitative inspection reveals that HiERO occasionally merges multiple recipe steps into single segments or over-segments atomic actions.
 
-\textbf{Hungarian Matching Errors:} While optimal for the assignment problem, Hungarian matching relies purely on embedding similarity and ignores temporal order. In error scenarios where steps are executed out-of-sequence, this semantic matching may incorrectly align video segments to recipe steps, fundamentally corrupting the node features used for graph construction.
+\textbf{Hungarian Matching Errors:} While optimal for the assignment problem, Hungarian matching relies purely on embedding similarity and ignores temporal order. In error scenarios where steps are executed out-of-sequence, this semantic matching may incorrectly align video segments to recipe steps, fundamentally corrupting the node features used for graph construction.  A new approach is to use 1-to-N matching instead of strict 1-to-1 Hungarian matching, allowing multiple video segments to correspond to a single recipe step, potentially mitigating segmentation errors.
 
-\textbf{Limited Training Data:} With only 28 annotated videos distributed across 8 recipes, the dataset is insufficient for training deep graph neural networks. The LOO strategy leaves only ~20-24 training videos per fold, severely limiting the model's capacity to learn robust error patterns. This is exacerbated by class imbalance, with error samples being minority class.
+\textbf{Limited Training Data:} With only 28 annotated videos distributed across 8 recipes, the dataset is insufficient for training deep graph neural networks. The LOO strategy leaves only ~20-24 training videos per fold, severely limiting the model's capacity to learn robust error patterns. This is exacerbated by class imbalance, with no-error samples being minority class.
 
 \textbf{Modality Gap:} Despite using the same EgoVLP encoder for both visual and textual embeddings, the semantic spaces may not be perfectly aligned. Concatenating these embeddings assumes they are comparable, but the projection layer alone may be insufficient to bridge domain differences, especially given limited training data.
 
@@ -237,7 +237,7 @@ Our multimodal graph-based approach faces several fundamental challenges that im
 This work provides valuable insights for future research in procedural video understanding:
 
 \begin{enumerate}
-    \item \textbf{Step localization quality is critical:} Zero-shot methods like HiERO, while annotation-free, produce insufficient precision for error detection tasks requiring fine-grained step alignment. Future work should explore weakly-supervised or few-shot step localization, or develop robust error detection methods that are invariant to segmentation noise.
+    \item \textbf{Step localization quality is critical:} Zero-shot methods like HiERO, while annotation-free, produce insufficient precision for error detection tasks requiring fine-grained step alignment. Future work should explore supervised or few-shot step localization, or develop robust error detection methods that are invariant to segmentation noise.
     
     \item \textbf{Dataset scale matters:} Graph-based multimodal approaches require substantially more training data. Promising directions include: (i) data augmentation via temporal transformations or synthetic errors, (ii) pre-training on unlabeled cooking videos with self-supervised objectives, (iii) transfer learning from related procedural domains (e.g., assembly, surgery).
     
