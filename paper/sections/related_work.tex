@@ -2,18 +2,15 @@
 \section{Related Work}
 \label{sec:related}
 
-Our work intersects several research areas including egocentric video understanding, procedural activity recognition, multimodal learning, and graph neural networks.
+Our work spans egocentric video understanding, procedural activity recognition, multimodal learning, and graph neural networks.
 
-\subsection{Egocentric Video Understanding and Vision-Language Models}
+\subsection{Egocentric Video Understanding}
+Large-scale egocentric datasets (EPIC-KITCHENS, Ego4D, Captain Cook 4D~\cite{captaincook4d}) enable action recognition and temporal segmentation. Vision-language models like EgoVLP~\cite{egovlp} learn joint embeddings through contrastive learning, providing strong zero-shot capabilities. We leverage EgoVLP for semantic visual features aligned with recipe instructions.
 
-Recent advances in egocentric video analysis have introduced large-scale datasets such as EPIC-KITCHENS, Ego4D, and Captain Cook 4D~\cite{captaincook4d} for action recognition and temporal segmentation. Vision-language models like EgoVLP~\cite{egovlp} learn joint embeddings of egocentric videos and natural language through contrastive learning, demonstrating strong zero-shot capabilities. We leverage EgoVLP embeddings to extract semantic visual features from video segments for multimodal alignment with recipe instructions.
+\subsection{Procedural Activity Recognition}
+Procedural understanding requires modeling causal and temporal constraints. HiERO~\cite{hiero} proposes unsupervised step discovery via feature clustering and temporal coherence. Our experiments show zero-shot localization quality critically impacts error detection. Prior work uses Hidden Markov Models to model flows and flag deviations. Our graph-based approach explicitly encodes recipe structure through multimodal alignment.
 
-\subsection{Procedural Activity Recognition and Error Detection}
+\subsection{Graph Neural Networks and Alignment}
+Graph neural networks represent task plans as directed acyclic graphs where nodes are steps and edges encode dependencies. We extend this by integrating multimodal information (text + aligned visual embeddings) at nodes. We employ the Hungarian algorithm for optimal matching between visual observations and recipe steps based on cosine similarity. This handles mismatched sequence lengths and identifies unmatched steps, encoded with zero visual features to signal absence.
 
-Understanding procedural activities requires modeling causal and temporal constraints. HiERO~\cite{hiero} proposes unsupervised step discovery in instructional videos using feature clustering and temporal coherence. However, our experiments reveal that zero-shot unsupervised localization quality significantly impacts downstream error detection performance. Other approaches use Hidden Markov Models to model procedural flows and flag deviations. Our graph-based approach differs by explicitly encoding recipe structure and using multimodal alignment rather than treating errors as statistical outliers.
-
-\subsection{Graph Neural Networks and Multimodal Alignment}
-
-Graph neural networks have been applied to procedural understanding by representing task plans as directed acyclic graphs (DAGs) where nodes represent steps and edges encode dependencies. We extend this paradigm by integrating multimodal information at the node level, concatenating text embeddings with aligned visual embeddings. For alignment, we employ the Hungarian algorithm for optimal bipartite matching between visual observations and recipe steps based on cosine similarity in the embedding space. This provides a principled framework for handling mismatched sequence lengths and explicitly identifying unmatched recipe steps, which we encode with zero visual features to signal absence of visual evidence.
-
-Our approach combines graph neural networks, multimodal embeddings, and optimal matching into a unified framework for procedural error detection that respects causal structure while grounding visual observations in textual instructions.
+Our approach unifies graph neural networks, multimodal embeddings, and optimal matching for procedural error detection respecting causal structure.

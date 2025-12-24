@@ -1,59 +1,42 @@
 \section{Method}
 \label{sec:method}
 
-In this section, we present our comprehensive approach for mistake detection in procedural activities. We first describe the reproduction of the supervised baseline (Task 1), highlighting the architectures utilized to establish a robust video-only reference. Subsequently, we detail our proposed multimodal extension (Task 2), a pipeline designed to explicitly leverage the semantic alignment between visual execution and textual instructions via a graph-based formulation.
+We present our approach for mistake detection in procedural activities through two tasks: reproducing supervised baselines (Task 1) and developing a multimodal graph-based extension (Task 2).
 
-% -----------------------------------------------------------------------
-% TASK 1: BASELINE
-% -----------------------------------------------------------------------
 \subsection{Task 1: Supervised Error Recognition Baseline}
 \label{subsec:task1}
-As a preliminary step, we addressed the error recognition task by reproducing the baseline methodology proposed in the CaptainCook4D benchmark~\cite{captaincook4d}. This task is formulated as a binary video classification problem where the goal is to predict whether a video segment contains an error or represents a correct execution based solely on visual cues.
+We reproduce the CaptainCook4D benchmark~\cite{captaincook4d} baseline, formulated as binary video classification to predict whether a segment contains an error based solely on visual cues.
 
-To establish a solid baseline, we experimented with three distinct temporal aggregation architectures operating on pre-extracted visual features:
+We evaluate three temporal aggregation architectures on pre-extracted visual features:
 \begin{enumerate}
-    \item \textbf{MLP Baseline:} A Multi-Layer Perceptron that processes frame-level features independently. We incorporated \textit{LayerNorm} at the input stage to stabilize the feature distribution from the backbone, followed by a sequence of Linear, ReLU, and Dropout ($p=0.5$) layers to map features to a mistake probability score.
-    \item \textbf{Transformer Baseline:} We further explored a Transformer Encoder architecture to leverage self-attention mechanisms. The model consists of 2 encoder layers with 8 attention heads and a feature dimension of 1024. We applied sinusoidal \textit{Positional Encoding} to inject temporal order information and used global mean pooling over the output sequence to obtain the final video representation.
-    \item \textbf{LSTM Baseline:} To capture temporal dependencies, we implemented a Long Short-Term Memory (LSTM) network with 2 stacked layers and a hidden size of 1024. The model processes the sequence of clip features and utilizes the final hidden state $h_T$ to perform classification, effectively summarizing the entire video context.
+    \item \textbf{MLP Baseline:} Multi-Layer Perceptron with LayerNorm, followed by Linear, ReLU, and Dropout ($p=0.5$) layers mapping features to mistake probability.
+    \item \textbf{Transformer Baseline:} 2 encoder layers with 8 attention heads and feature dimension 1024. Uses sinusoidal Positional Encoding and global mean pooling.
+    \item \textbf{LSTM Baseline:} 2 stacked LSTM layers (hidden size 1024) using final hidden state $h_T$ for classification.
 \end{enumerate}
 
-These baselines serve as a reference point to evaluate the impact of incorporating explicit procedural knowledge (text) in the subsequent extension. Our experiments highlighted that while these models can detect visually obvious errors, they struggle with semantic deviations (e.g., swapping similar ingredients) that require knowledge of the intended procedure.
+These baselines detect visually obvious errors but struggle with semantic deviations requiring procedural knowledge.
 
-% -----------------------------------------------------------------------
-% TASK 2: EXTENSION
-% -----------------------------------------------------------------------
 \subsection{Task 2: Multimodal Mistake Detection Extension}
 \label{subsec:task2}
-To overcome the limitations of purely visual baselines, we propose a multimodal architecture that explicitly aligns the visual execution with the textual steps of the recipe. A major challenge in this domain is the lack of temporal alignment between the unedited video stream and the high-level recipe steps. Our pipeline addresses this via four main stages: Feature Extraction, Visual Step Segmentation, Multimodal Alignment, and Graph-based Classification.
+We propose a multimodal architecture aligning visual execution with textual recipe steps through four stages: Feature Extraction, Visual Step Segmentation, Multimodal Alignment, and Graph-based Classification.
 
 \subsubsection{Feature Extraction and Encoding}
-We employ \textbf{EgoVLP}~\cite{egovlp} as our backbone for both video and text encoding. We selected this model due to its pre-training on large-scale egocentric datasets (Ego4D), which provides strong zero-shot capabilities for identifying object interactions in first-person views.
+We employ \textbf{EgoVLP}~\cite{egovlp} for video and text encoding, leveraging its egocentric dataset pre-training:
 \begin{itemize}
-    \item \textbf{Video Features:} Given an input video, we extract clip-level features using the pre-trained EgoVLP video encoder. The video is processed in 1-second clips, resulting in a sequence of visual embeddings $V \in \mathbb{R}^{T_v \times D}$, where $D=768$.
-    \item \textbf{Text Features:} The recipe steps are encoded using the EgoVLP text encoder, yielding a set of textual embeddings $T \in \mathbb{R}^{N_s \times D}$, where $N_s$ is the number of steps in the recipe.
+    \item \textbf{Video Features:} EgoVLP video encoder processes 1-second clips, yielding visual embeddings $V \in \mathbb{R}^{T_v \times D}$, where $D=768$.
+    \item \textbf{Text Features:} EgoVLP text encoder produces textual embeddings $T \in \mathbb{R}^{N_s \times D}$ for $N_s$ recipe steps.
 \end{itemize}
 
-\subsubsection{Visual Step Segmentation (Hiero)}
-To move from continuous video to discrete events without requiring expensive temporal annotations, we utilize \textbf{Hiero}, a zero-shot hierarchical localization method. Hiero operates by performing agglomerative clustering on the frame-level embeddings $V$ to group visually similar consecutive clips into segments.
-Since the number of visual segments may not match the number of recipe steps due to noise or execution errors, Hiero generates a set of visual step proposals $V_{step} \in \mathbb{R}^{M \times D}$. These pooled features represent the distinct actions detected in the video stream, providing a structured input for alignment.
+\subsubsection{Visual Step Segmentation (HiERO)}
+\textbf{HiERO} performs zero-shot hierarchical localization via agglomerative clustering on frame-level embeddings $V$, grouping visually similar clips into segments. This generates visual step proposals $V_{step} \in \mathbb{R}^{M \times D}$ representing detected actions.
 
 \subsubsection{Multimodal Alignment (Hungarian Matching)}
-Once visual segments are extracted, we must associate them with the corresponding textual steps. Unlike sequential alignment methods (e.g., DTW), which enforce monotonicity, mistake detection requires handling non-sequential behaviors such as step swapping, repetition, or omission.
-
-We formulate this as an optimal assignment problem. We compute a cost matrix $C$ based on the cosine distance between the visual proposals $V_{step}$ and textual embeddings $T$. To bridge the modality gap, we employ a learnable projection layer (Linear $\rightarrow$ ReLU $\rightarrow$ Linear) that maps both modalities to a common latent space before computing similarity.
-The optimal node association is obtained using the \textbf{Hungarian Algorithm}, which minimizes the total global matching cost. This produces a set of pairs $\{(v_i, t_j)\}$, effectively "assigning" a visual realization to each recipe instruction, even if the execution order is structurally incorrect.
+We associate visual segments with textual steps via optimal assignment. Computing a cost matrix $C$ based on cosine distance between $V_{step}$ and $T$, the \textbf{Hungarian Algorithm} minimizes total matching cost, producing pairs $\{(v_i, t_j)\}$ that assign visual realizations to recipe instructions.
 
 \subsubsection{Graph-Based Error Detection (DAGNN)}
-Finally, we model the aligned procedure as a graph to capture the temporal and semantic structure of the task.
-\begin{itemize}
-    \item \textbf{Graph Construction:} We construct a directed graph where nodes represent the recipe steps. Each node is initialized with a multimodal feature vector $x_i \in \mathbb{R}^{1536}$ obtained by \textbf{concatenating} the text embedding $t_j$ and its aligned visual embedding $v_i$. We explicitly chose concatenation over element-wise summation to preserve the distinct information from both modalities, allowing the network to better detect discrepancies between the expected instruction (text) and the actual execution (video). Edges are defined sequentially ($i \rightarrow i+1$) to represent the expected temporal flow.
-    
-    \item \textbf{Architecture:} We employ a \textbf{DAGNN} (Directed Acyclic Graph Neural Network) classifier designed to process this structure. The network consists of:
-    \begin{enumerate}
-        \item A projection block (Linear $\rightarrow$ \textbf{BatchNorm} $\rightarrow$ ReLU) to reduce dimensionality from $1536$ to $128$ and fuse modalities. The use of BatchNorm proved crucial for accelerating convergence and stabilizing gradients during early training phases.
-        \item A DAGNN layer with LayerNorm and high Dropout ($p=0.5$) to propagate context across steps while preventing overfitting.
-        \item A Global Mean Pooling layer to aggregate node features into a graph-level embedding.
-        \item A final MLP classifier that outputs a binary prediction (0: Correct, 1: Mistake).
-    \end{enumerate}
-\end{itemize}
+We model the aligned procedure as a directed graph where nodes represent recipe steps with multimodal features $x_i \in \mathbb{R}^{1536}$ (concatenating text embedding $t_j$ and aligned visual embedding $v_i$). Edges are defined sequentially ($i \rightarrow i+1$) to represent expected temporal flow.
+
+The DAGNN architecture consists of: (1) projection block (Linear → BatchNorm → ReLU) reducing dimensionality from 1536 to 128, (2) DAGNN layer with LayerNorm and Dropout ($p=0.5$) propagating context across steps, (3) Global Mean Pooling aggregating node features, (4) MLP classifier outputting binary prediction (0: Correct, 1: Mistake).
+
+This formulation lets the network reason over procedural dependencies and detect structural deviations (e.g., omitted steps, incorrect order) that pure video-based classifiers overlook.
 
