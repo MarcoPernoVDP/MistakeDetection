@@ -79,23 +79,32 @@ In addition to MLP and Transformer baselines, we implement and evaluate an LSTM-
 
 \begin{table}[ht]
 \centering
-\caption{LSTM baseline results on step-level split with Omnivore features. The LSTM architecture achieves intermediate performance between MLP and Transformer, demonstrating competitive F1-score through better precision-recall balance.}
+\caption{LSTM baseline results on both evaluation splits with Omnivore features. The LSTM architecture achieves intermediate performance between MLP and Transformer on step-level split, while showing competitive results on recording-level split.}
 \label{tab:lstm_results}
 \small
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{}llccccc@{}}
 \toprule
-\textbf{Model} & \textbf{F1} & \textbf{Precision} & \textbf{Recall} & \textbf{Accuracy} & \textbf{AUC} \\
+\textbf{Split} & \textbf{Model} & \textbf{F1} & \textbf{Precision} & \textbf{Recall} & \textbf{Accuracy} & \textbf{AUC} \\
 \midrule
-MLP & 0.243 & 0.661 & 0.149 & 0.711 & 0.757 \\
-Transformer & 0.554 & 0.516 & 0.598 & 0.699 & 0.756 \\
+\multicolumn{7}{@{}l}{\textit{Step-level Split}} \\
 \midrule
-LSTM (Ours) & 0.511 & 0.475 & 0.551 & 0.654 & 0.685 \\
+& MLP & 0.243 & 0.661 & 0.149 & 0.711 & 0.757 \\
+& Transformer & 0.554 & 0.516 & 0.598 & 0.699 & 0.756 \\
+& LSTM (Ours) & 0.511 & 0.475 & 0.551 & 0.654 & 0.685 \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{Recording-level Split}} \\
+\midrule
+& MLP & 0.509 & 0.453 & 0.581 & 0.598 & 0.630 \\
+& Transformer & 0.390 & 0.466 & 0.336 & 0.623 & 0.623 \\
+& LSTM (Ours) & 0.438 & 0.383 & 0.513 & 0.614 & 0.621 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{LSTM Architecture Analysis.}
-Our LSTM baseline achieves F1=0.511, intermediate between MLP (0.243) and Transformer (0.554) on step-level split with Omnivore features. The LSTM demonstrates balanced precision-recall (P=0.475, R=0.551) compared to MLP's high precision but low recall (P=0.661, R=0.149), confirming that recurrent architectures effectively capture temporal patterns. However, Transformers remain superior, likely due to better long-range dependency modeling through self-attention.
+Our LSTM baseline achieves F1=0.511 on step-level split, intermediate between MLP (0.243) and Transformer (0.554) with Omnivore features. The LSTM demonstrates balanced precision-recall (P=0.475, R=0.551) compared to MLP's high precision but low recall (P=0.661, R=0.149), confirming that recurrent architectures effectively capture temporal patterns. However, Transformers remain superior on step-level split, likely due to better long-range dependency modeling through self-attention.
+
+On recording-level split, LSTM achieves F1=0.438, outperforming Transformer (0.390) but remaining below MLP (0.509). Notably, LSTM maintains the highest accuracy (0.614) among all three architectures on this split, suggesting better generalization to video-level predictions. The consistent recall across both splits (0.551 step-level, 0.513 recording-level) indicates stable error detection capability, while precision varies more substantially (0.475 vs 0.383), reflecting the challenge of reducing false positives at different granularities.
 
 \subsubsection{Error Category Analysis}
 
