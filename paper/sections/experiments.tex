@@ -189,7 +189,7 @@ We evaluate both HiERO configurations with the following training setup:
 Both configurations use Adam optimizer (lr=1e-4, weight decay 1e-6), Binary Cross-Entropy loss with positive class weight 0.75 to handle class imbalance, and gradient clipping (max norm 1.0). Model selection is based on training loss, with the best checkpoint used for final evaluation.
 
 \paragraph{Results.}
-Table~\ref{tab:task2_dagnn_results} presents results for both DAGNN and Transformer baseline across both HiERO configurations using Leave-One-Out cross-validation. To isolate the contribution of graph-based reasoning, we compare DAGNN against a Transformer baseline that processes the same HiERO-extracted features but treats them as sequential temporal data without explicit graph structure. The Transformer uses self-attention over step sequences with the same training setup (batch size 8, Adam optimizer lr=1e-5, BCE loss with pos\_weight 0.75), trained for 30 epochs (8 steps) and 100 epochs (max+1 steps).
+Table~\ref{tab:task2_dagnn_results} presents results for both DAGNN and Transformer baseline across both HiERO configurations using Leave-One-Out cross-validation. To isolate the contribution of graph-based reasoning, we compare DAGNN against a Transformer baseline that processes the same HiERO-extracted features but treats them as sequential temporal data without explicit graph structure. The Transformer uses self-attention over step sequences with Adam optimizer (lr=1e-5) and BCE loss (pos\_weight 0.75), trained for 30 epochs with batch size 8 (8 steps configuration) and 100 epochs with batch size 32 (max+1 steps configuration).
 
 \begin{table*}[t]
 \centering
