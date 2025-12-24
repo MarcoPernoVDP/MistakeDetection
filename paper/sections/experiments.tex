@@ -17,7 +17,7 @@ All models are implemented in PyTorch and trained on a single NVIDIA A40 GPU (NV
 
 \textbf{Task 1 - Transformer:} Encoder with positional encodings processing all steps of a recording, feeding into MLP head. Trained with Adam (lr=1e-5), batch size 1, 50 epochs, weighted BCE Loss.
 
-\textbf{Task 1 - LSTM:} 2 stacked LSTM layers (hidden size 1024) with MLP head. Trained with Adam (lr=1e-5), 50 epochs, weighted BCE Loss.
+\textbf{Task 1 - LSTM:} 2 stacked LSTM layers (hidden size 1024) with MLP head. Trained with Adam (lr=1e-5), 5 epochs, weighted BCE Loss.
 
 \textbf{Task 2 - DAGNN:} Uses EgoVLP encoders and HiERO step localization. DAGNN with single GCN layer (hidden dim 256, dropout 0.3), trained 15-20 epochs with Adam (lr=1e-4).
 
