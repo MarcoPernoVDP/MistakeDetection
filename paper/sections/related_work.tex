@@ -8,9 +8,6 @@ Our work spans egocentric video understanding, procedural activity recognition, 
 Large-scale egocentric datasets (EPIC-KITCHENS, Ego4D, Captain Cook 4D~\cite{captaincook4d}) enable action recognition and temporal segmentation. Vision-language models like EgoVLP~\cite{egovlp} learn joint embeddings through contrastive learning, providing strong zero-shot capabilities. We leverage EgoVLP for semantic visual features aligned with recipe instructions.
 
 \subsection{Procedural Activity Recognition}
-Procedural understanding requires modeling causal and temporal constraints. HiERO~\cite{hiero} proposes weakly supervised step discovery via feature clustering and temporal coherence. Our experiments show zero-shot localization quality critically impacts error detection. Prior work uses Hidden Markov Models to model flows and flag deviations. Our graph-based approach explicitly encodes recipe structure through multimodal alignment.
-
-\subsection{Directed Acyclic Graph Neural Networks and Alignment}
-Directed Acyclic Graph neural networks represent task plans as directed acyclic graphs where nodes are steps and edges encode dependencies. We extend this by integrating multimodal information (text + aligned visual embeddings) at nodes. We employ the Hungarian algorithm for optimal matching between visual observations and recipe steps based on cosine similarity. This handles mismatched sequence lengths and identifies unmatched steps, encoded with zero visual features to signal absence.
+Procedural understanding requires modeling causal and temporal constraints. HiERO~\cite{hiero} proposes weakly supervised step discovery via feature clustering and temporal coherence. Our experiments show zero-shot localization quality critically impacts error detection. Our graph-based approach explicitly encodes recipe structure through multimodal alignment.
 
 Our approach unifies graph neural networks, multimodal embeddings, and optimal matching for procedural error detection respecting causal structure.
