@@ -11,18 +11,16 @@ We evaluate on \textbf{Captain Cook 4D}, an egocentric cooking video dataset wit
 Following the official benchmark protocol, we report F1-score, Precision, Recall, Accuracy, and Area Under the ROC Curve (AUC) for binary error classification. We evaluate Task 1 baselines on both step-level and recording-level splits, while Task 2 multimodal extension focuses on the recording-level split since graph-based reasoning naturally operates at the video level.
 
 \paragraph{Implementation Details.}
-All models are implemented in PyTorch and trained on a single NVIDIA A40 GPU (NVIDIA A40 GPU in the original paper). For Task 1, we use pre-extracted features from Omnivore and SlowFast backbones.
+All models are implemented in PyTorch and trained on T4 GPU. For Task 1, we use pre-extracted features from Omnivore and SlowFast backbones.
 
 \textbf{Task 1 - MLP:} Feedforward architecture with one hidden layer, ReLU activation, and sigmoid output. Trained with Adam (lr=0.001), batch size 512, 50 epochs, using weighted BCE Loss (weight 1.5 for errors) and processing 1-second sub-step.
 
-\textbf{Task 1 - Transformer:} Encoder with positional encodings processing all steps of a recording, feeding into MLP head. Trained with Adam (lr=1e-5), batch size 1, 50 epochs, weighted BCE Loss.
+\textbf{Task 1 - Transformer:} Encoder with positional encodings processing all 1s segments of a step, feeding into MLP head, producing labels at step level. Trained with Adam (lr=1e-5), batch size 1, 50 epochs, weighted BCE Loss.
 
 \textbf{Task 1 - LSTM:} 2 stacked LSTM layers (hidden size 1024) with MLP head. Trained with Adam (lr=1e-5), 5 epochs, weighted BCE Loss.
 
 \textbf{Task 2 - DAGNN:} Uses EgoVLP encoders and HiERO step localization. DAGNN with single GCN layer (hidden dim 256, dropout 0.3), trained 15-20 epochs with Adam (lr=1e-4).
 
-\paragraph{Baselines.}
-We benchmark against: (i) official Captain Cook 4D results reported in the original paper, and (ii) our reproduction of three architectures (MLP, Transformer, LSTM).
 
 \subsection{Task 1: Baseline Reproduction Results}
 
@@ -234,7 +232,7 @@ Our multimodal graph-based approach faces several fundamental challenges that im
 
 \textbf{Hungarian Matching Errors:} While optimal for the assignment problem, Hungarian matching relies purely on embedding similarity and ignores temporal order. In error scenarios where steps are executed out-of-sequence, this semantic matching may incorrectly align video segments to recipe steps, fundamentally corrupting the node features used for graph construction.  A new approach is to use 1-to-N matching instead of strict 1-to-1 Hungarian matching, allowing multiple video segments to correspond to a single recipe step, potentially mitigating segmentation errors.
 
-\textbf{Limited Training Data:} With only 28 annotated videos distributed across 8 recipes, the dataset is insufficient for training deep graph neural networks. The LOO strategy leaves only ~20-24 training videos per fold, severely limiting the model's capacity to learn robust error patterns. This is exacerbated by class imbalance, with no-error samples being minority class.
+\textbf{Limited Training Data:} With only 384 recipe videos distrubuted across 24 recipes, the dataset is insufficient for training deep graph neural networks. The LOO strategy leaves only ~16 training videos per fold, severely limiting the model's capacity to learn robust error patterns. This is exacerbated by class imbalance, with no-error samples being minority class.
 
 \textbf{Modality Gap:} Despite using the same EgoVLP encoder for both visual and textual embeddings, the semantic spaces may not be perfectly aligned. Concatenating these embeddings assumes they are comparable, but the projection layer alone may be insufficient to bridge domain differences, especially given limited training data.
 

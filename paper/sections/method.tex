@@ -23,12 +23,12 @@ We propose a multimodal architecture aligning visual execution with textual reci
 \subsubsection{Feature Extraction and Encoding}
 We employ \textbf{EgoVLP}~\cite{egovlp} for video and text encoding, leveraging its egocentric dataset pre-training:
 \begin{itemize}
-    \item \textbf{Video Features:} EgoVLP video encoder processes 1-second clips, yielding visual embeddings $V \in \mathbb{R}^{T_v \times D}$, where $D=768$.
-    \item \textbf{Text Features:} EgoVLP text encoder produces textual embeddings $T \in \mathbb{R}^{N_s \times D}$ for $N_s$ recipe steps.
+    \item \textbf{Video Features:} EgoVLP video encoder processes 1-second clips, yielding visual embeddings $V \in \mathbb{R}^{T_v \times D}$, where $T_v$ is the number of 1s segments and $D=256$.
+    \item \textbf{Text Features:} EgoVLP text encoder produces textual embeddings $T \in \mathbb{R}^{N_s \times D}$ for $N_s$ recipe steps and $D=256$.
 \end{itemize}
 
 \subsubsection{Visual Step Segmentation (HiERO)}
-\textbf{HiERO} performs zero-shot hierarchical localization via agglomerative clustering on frame-level embeddings $V$, grouping visually similar clips into segments. This generates visual step proposals $V_{step} \in \mathbb{R}^{M \times D}$ representing detected actions.
+\textbf{HiERO} performs zero-shot hierarchical localization via agglomerative clustering on frame-level embeddings $V$, grouping visually similar clips into segments. This generates visual step proposals $V_{step} \in \mathbb{R}^{M \times D}$ representing detected actions, where $M$ is the number of visual segments proposed and $D=768$. In addition we pass the text embeddings in HiERO to get embeddings for textual steps with $D=768$.
 
 \subsubsection{Multimodal Alignment (Hungarian Matching)}
 We associate visual segments with textual steps via optimal assignment. Computing a cost matrix $C$ based on cosine distance between $V_{step}$ and $T$, the \textbf{Hungarian Algorithm} minimizes total matching cost, producing pairs $\{(v_i, t_j)\}$ that assign visual realizations to recipe instructions.
@@ -36,7 +36,7 @@ We associate visual segments with textual steps via optimal assignment. Computin
 \subsubsection{Graph-Based Error Detection (DAGNN)}
 We model the aligned procedure as a directed graph where nodes represent recipe steps with multimodal features $x_i \in \mathbb{R}^{1536}$ (concatenating text embedding $t_j$ and aligned visual embedding $v_i$). Edges are defined sequentially ($i \rightarrow i+1$) to represent expected temporal flow.
 
-The DAGNN architecture consists of: (1) projection block (Linear → BatchNorm → ReLU) reducing dimensionality from 1536 to 128, (2) DAGNN layer with LayerNorm and Dropout ($p=0.5$) propagating context across steps, (3) Global Mean Pooling aggregating node features, (4) MLP classifier outputting binary prediction (0: Correct, 1: Mistake).
+The DAGNN architecture consists of: (1) projection block (Linear → ReLU → LayerNorm) reducing dimensionality from 1536 to 128, (2) DAGNN layer (GCN → LayerNorm → Dropout) ($p=0.5$) propagating context across steps, (3) Global Mean Pooling aggregating node features, (4) MLP classifier outputting binary prediction (0: Correct, 1: Mistake).
 
 This formulation lets the network reason over procedural dependencies and detect structural deviations (e.g., omitted steps, incorrect order) that pure video-based classifiers overlook.
 
